@@ -1,0 +1,3008 @@
+{
+	"info": {
+		"_postman_id": "df6134bd-8db4-4461-b865-c1a126aea294",
+		"name": "Labour",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24253958"
+	},
+	"item": [
+		{
+			"name": "Master",
+			"item": [
+				{
+					"name": "Get all user roles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1NDM2OTE3LCJleHAiOjE3NDU1MjMzMTcsIm5iZiI6MTc0NTQzNjkxNywianRpIjoiRjRZbm9Va0NwVndaVUcwNSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.d3zwlmUG29-uHBVAiVW14OBKtoOesXDxi_sc298GXAI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/master/user-roles",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"master",
+								"user-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all wages type",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NTg5OTk1LCJleHAiOjE5MDUzNTYzOTUsIm5iZiI6MTc0NzU4OTk5NSwianRpIjoiWHJLUGY0N09zczVRS2tkViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.dVg59M5rmDeuzjztC_aUb3Vbv1PMrluscX3PxvaB-IE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/master/wages-type",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"master",
+								"wages-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all module access",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1NzgwOTkxLCJleHAiOjE3NDU4NjczOTEsIm5iZiI6MTc0NTc4MDk5MSwianRpIjoiQzFkMDViU2pkQndZTUExaiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VKKiqCVSqsC9Yk0Pr7tSPzQz9K6Q7lC5AApanm_qQ5o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/master/module-access",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"master",
+								"module-access"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all group access",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1MDQyMDAyLCJleHAiOjE3NDUxMjg0MDIsIm5iZiI6MTc0NTA0MjAwMiwianRpIjoiZjRuTWNadWlOeUQ5czZLdyIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.aigNHi5dMDbyDXpBS0h9-yUKAOakQxxodjdRLFddwuA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/master/group-access",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"master",
+								"group-access"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save group access",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NTU0NzM3LCJleHAiOjE3NDQ2NDExMzcsIm5iZiI6MTc0NDU1NDczNywianRpIjoiMEhEUmZYcU9rVXRteG9nayIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.d6j50G8scOiCLj8hq25_sQE9xCX63Mpw3PDTomOixTU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"role_id\": \"2\",\r\n    \"module_access_id\": [\r\n      3\r\n    ],\r\n    \"updated_by\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/master/group-access",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"master",
+								"group-access"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Login user",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"sdev\",\r\n    \"password\":\"sdev\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{labour_url}}/users/login",
+									"host": [
+										"{{labour_url}}"
+									],
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get all staffs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NjA3MjU3LCJleHAiOjE3NDQ2OTM2NTcsIm5iZiI6MTc0NDYwNzI1NywianRpIjoiOVpVM2FXV3VFMTR6TkhpViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.uoSQYQE--DIx15uImMuzykQvjLX63stpxB_AH5PR2cs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/users",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get staffs based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NjA3MjU3LCJleHAiOjE3NDQ2OTM2NTcsIm5iZiI6MTc0NDYwNzI1NywianRpIjoiOVpVM2FXV3VFMTR6TkhpViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.uoSQYQE--DIx15uImMuzykQvjLX63stpxB_AH5PR2cs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\":2,\r\n    \"sort_field\": \"user_id\",\r\n    \"sort\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/users",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create staff",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMTQwMDI1LCJleHAiOjE3NDMyMjY0MjUsIm5iZiI6MTc0MzE0MDAyNSwianRpIjoiS2tCTlBUMzZ5UVhBSExkbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SEEDLSTsAt5FiBJ0nj_KDNlBTdEuqk-O6wDpKxmUqr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "asif",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "asif",
+									"type": "text"
+								},
+								{
+									"key": "full_name",
+									"value": "Asif Iqbal",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "aadhar_no",
+									"value": "326809031747",
+									"type": "text"
+								},
+								{
+									"key": "pan_no",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "user_role",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "created_by",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "profile_pic",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Sample pics/user_png.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/users/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update staff",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMzIwMTE1LCJleHAiOjE3NDM0MDY1MTUsIm5iZiI6MTc0MzMyMDExNSwianRpIjoibXppQTZyV21qcUJvTjlLQyIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.0i3u-qY6pqyZqr4hX0RBDP4v0VbqIUVjpvR2qF7yM7o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "dev",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "full_name",
+									"value": "Soumyanjan Dey",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "aadhar_no",
+									"value": "326809031748",
+									"type": "text"
+								},
+								{
+									"key": "pan_no",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "user_role",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "updated_by",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "profile_pic",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Sample pics/user_png.png"
+								},
+								{
+									"key": "is_active",
+									"value": "yes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/users/update?user_id=2",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users",
+								"update"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete staff",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMTQwMDI1LCJleHAiOjE3NDMyMjY0MjUsIm5iZiI6MTc0MzE0MDAyNSwianRpIjoiS2tCTlBUMzZ5UVhBSExkbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SEEDLSTsAt5FiBJ0nj_KDNlBTdEuqk-O6wDpKxmUqr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/users?user_id=3",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMTQwMDI1LCJleHAiOjE3NDMyMjY0MjUsIm5iZiI6MTc0MzE0MDAyNSwianRpIjoiS2tCTlBUMzZ5UVhBSExkbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SEEDLSTsAt5FiBJ0nj_KDNlBTdEuqk-O6wDpKxmUqr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\": \"asifs\",\r\n    \"new_password\": \"asif\",\r\n    \"confirm_password\": \"asif\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/users/change_password?user_id=3",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users",
+								"change_password"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove profile Picture",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMTQwMDI1LCJleHAiOjE3NDMyMjY0MjUsIm5iZiI6MTc0MzE0MDAyNSwianRpIjoiS2tCTlBUMzZ5UVhBSExkbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SEEDLSTsAt5FiBJ0nj_KDNlBTdEuqk-O6wDpKxmUqr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"updated_by\":\"3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/users/remove_pro_pic?user_id=3",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users",
+								"remove_pro_pic"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status change",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMTQwMDI1LCJleHAiOjE3NDMyMjY0MjUsIm5iZiI6MTc0MzE0MDAyNSwianRpIjoiS2tCTlBUMzZ5UVhBSExkbSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.SEEDLSTsAt5FiBJ0nj_KDNlBTdEuqk-O6wDpKxmUqr0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_active\": \"yes\",\r\n    \"updated_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/users/status_change?user_id=3",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"users",
+								"status_change"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Work Sites",
+			"item": [
+				{
+					"name": "Get all work sites",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjIxMzI0LCJleHAiOjE3NDY3MDc3MjQsIm5iZiI6MTc0NjYyMTMyNCwianRpIjoiRVkzMzlwZVU4d2REcTFHeCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.p52l02E02x8Ep3460BE0rqkatg12Gxmdf9aQir63HLk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/work-site",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"work-site"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get work sites based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNDAwNDU2LCJleHAiOjE3NDM0ODY4NTYsIm5iZiI6MTc0MzQwMDQ1NiwianRpIjoicUNsUHFSVU1tNXFpbHZHciIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.rinGRoXD28wh3Muiiwxsk_cFyh_1M5D5LqidMktVYcY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"work_site_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/work-site",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"work-site"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create work sites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNzY5MDk5LCJleHAiOjE3NDM4NTU0OTksIm5iZiI6MTc0Mzc2OTA5OSwianRpIjoiNWE1azhUVnFBRE1EMkhJdSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.I7DJO4-Ryjn9JOk2mNst6hSm3ErLmzIVSp4SooHee_w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"work_site_name\":\"New Town Tiles\",\r\n    \"work_site_location\":\"Rajarhat\",\r\n    \"created_by\":\"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/work-site/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"work-site",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update work sites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMjUwMDY3LCJleHAiOjE3NDMzMzY0NjcsIm5iZiI6MTc0MzI1MDA2NywianRpIjoieVFTSFdVTnNpeHJERGpKViIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D5ww4UmwVp3oF3GTlKs0bsqMqjONFaX01jmlPO2i0Sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"work_site_name\": \"New Town Tiles\",\r\n    \"work_site_location\": \"Rajarhat\",\r\n    \"is_active\": \"no\",\r\n    \"updated_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/work-site?work_site_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"work-site"
+							],
+							"query": [
+								{
+									"key": "work_site_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete work sites",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMjUwMDY3LCJleHAiOjE3NDMzMzY0NjcsIm5iZiI6MTc0MzI1MDA2NywianRpIjoieVFTSFdVTnNpeHJERGpKViIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D5ww4UmwVp3oF3GTlKs0bsqMqjONFaX01jmlPO2i0Sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/work-site?work_site_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"work-site"
+							],
+							"query": [
+								{
+									"key": "work_site_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Labour Rates",
+			"item": [
+				{
+					"name": "Get all labour rates",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NTU0NzM3LCJleHAiOjE3NDQ2NDExMzcsIm5iZiI6MTc0NDU1NDczNywianRpIjoiMEhEUmZYcU9rVXRteG9nayIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.d6j50G8scOiCLj8hq25_sQE9xCX63Mpw3PDTomOixTU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-rates",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-rates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get labour rates based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjI5MjM5LCJleHAiOjE3NDY3MTU2MzksIm5iZiI6MTc0NjYyOTIzOSwianRpIjoieE8xOVJMR0dDejMxRE5qbiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.xMbs-VBmpr8gZpLF8LcIf2cGuHesqqioGJFKdpEFpZg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[\r\n            [\"user_details.user_role\",\"=\",\"4\"]\r\n        ]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"labour_rates.rate_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-rates",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-rates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Labour Rates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NTU0NzM3LCJleHAiOjE3NDQ2NDExMzcsIm5iZiI6MTc0NDU1NDczNywianRpIjoiMEhEUmZYcU9rVXRteG9nayIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.d6j50G8scOiCLj8hq25_sQE9xCX63Mpw3PDTomOixTU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"1\",\r\n    \"labour_rate\": \"120\",\r\n    \"created_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-rates",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-rates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete labour rates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0NTU0NzM3LCJleHAiOjE3NDQ2NDExMzcsIm5iZiI6MTc0NDU1NDczNywianRpIjoiMEhEUmZYcU9rVXRteG9nayIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.d6j50G8scOiCLj8hq25_sQE9xCX63Mpw3PDTomOixTU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/labour-rates?rate_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-rates"
+							],
+							"query": [
+								{
+									"key": "rate_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Machines",
+			"item": [
+				{
+					"name": "Get all machines",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NTM0MzgxLCJleHAiOjE3NDY2MjA3ODEsIm5iZiI6MTc0NjUzNDM4MSwianRpIjoiNE8yZkFDTFAxc1hsZ2tEZSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NGGeTifgUNMexH2Zg8mfPjFPuKh4BgnwU6NMFCOCjbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/machines",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"machines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get machines based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjIxMzI0LCJleHAiOjE3NDY3MDc3MjQsIm5iZiI6MTc0NjYyMTMyNCwianRpIjoiRVkzMzlwZVU4d2REcTFHeCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.p52l02E02x8Ep3460BE0rqkatg12Gxmdf9aQir63HLk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[[\"work_site_id\", \"=\",1]]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 1,\r\n    \"sort_field\": \"work_site_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/machines",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"machines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get transfer machines based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NTM0MzgxLCJleHAiOjE3NDY2MjA3ODEsIm5iZiI6MTc0NjUzNDM4MSwianRpIjoiNE8yZkFDTFAxc1hsZ2tEZSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NGGeTifgUNMexH2Zg8mfPjFPuKh4BgnwU6NMFCOCjbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"machine_transfer_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/machines/transfer",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"machines",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save machines",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NTM0MzgxLCJleHAiOjE3NDY2MjA3ODEsIm5iZiI6MTc0NjUzNDM4MSwianRpIjoiNE8yZkFDTFAxc1hsZ2tEZSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NGGeTifgUNMexH2Zg8mfPjFPuKh4BgnwU6NMFCOCjbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"work_site\": \"2\",\r\n    \"no_of_cutting_machine\": \"100\",\r\n    \"no_of_grinder_machine\": \"50\",\r\n    \"no_of_polish_machine\": \"70\",\r\n    \"no_of_hand_machine\": \"60\",\r\n    \"no_of_aluminium_channel\": \"80\",\r\n    \"no_of_matam\":\"90\",\r\n    \"created_by\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/machines",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"machines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Machine Transfer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjI4NTY5LCJleHAiOjE3NDY3MTQ5NjksIm5iZiI6MTc0NjYyODU2OSwianRpIjoiMW9tY2lKZjdFbUEzM01SZCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.--JfFvEcbzl00nQrbaHnBnzfPyduViAtj5EnaAbgbDs",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"source_work_site\": \"1\",\r\n    \"destination_work_site\": \"1\",\r\n    \"no_of_cutting_machine\": \"10\",\r\n    \"no_of_grinder_machine\": \"0\",\r\n    \"no_of_polish_machine\": \"0\",\r\n    \"no_of_hand_machine\": \"0\",\r\n    \"no_of_aluminium_channel\": \"0\",\r\n    \"no_of_matam\":\"0\",\r\n    \"transfered_by\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/machines/transfer",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"machines",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete machine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NTM0MzgxLCJleHAiOjE3NDY2MjA3ODEsIm5iZiI6MTc0NjUzNDM4MSwianRpIjoiNE8yZkFDTFAxc1hsZ2tEZSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.NGGeTifgUNMexH2Zg8mfPjFPuKh4BgnwU6NMFCOCjbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/machine?machine_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"machine"
+							],
+							"query": [
+								{
+									"key": "machine_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Labour Attendance Reports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NjU4MjkwLCJleHAiOjE5MDU0MjQ2OTAsIm5iZiI6MTc0NzY1ODI5MCwianRpIjoiRkVVRFhNc1haeGxLTWxZdiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.A-CncoKmXVvGo0IqrJ9V7qtqVQ5yUTX7hgt0DzD4hBM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\": \"2025-05-01\",\r\n    \"to_date\":\"2025-05-31\",\r\n    \"start\": 0,\r\n    \"page_records\": 50,\r\n    \"sort_field\": \"a.full_name\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/labour-attendance",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"labour-attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Labour Details Report",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NTg5OTk1LCJleHAiOjE5MDUzNTYzOTUsIm5iZiI6MTc0NzU4OTk5NSwianRpIjoiWHJLUGY0N09zczVRS2tkViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.dVg59M5rmDeuzjztC_aUb3Vbv1PMrluscX3PxvaB-IE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/labour-details?labour=4",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"labour-details"
+							],
+							"query": [
+								{
+									"key": "labour",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Labour Normal Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NjU4MjkwLCJleHAiOjE5MDU0MjQ2OTAsIm5iZiI6MTc0NzY1ODI5MCwianRpIjoiRkVVRFhNc1haeGxLTWxZdiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.A-CncoKmXVvGo0IqrJ9V7qtqVQ5yUTX7hgt0DzD4hBM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\": \"2025-05-01\",\r\n    \"to_date\": \"2025-05-31\",\r\n    \"start\": \"0\",\r\n    \"page_records\": \"20\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/labour-normal-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"labour-normal-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Labour Special Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2MTIzNTEyLCJleHAiOjE3NDYyMDk5MTIsIm5iZiI6MTc0NjEyMzUxMiwianRpIjoiTmVna2VFVUpVSnk2Y1N0UyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.3FzY2w15f2G_mxC-GLRZdv8xfObcW7wvs1uEUPloszY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\": \"2025-04-26\",\r\n    \"to_date\": \"2025-04-27\",\r\n    \"start\": 0,\r\n    \"page_records\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/labour-special-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"labour-special-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Number of Machines",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NTYxMTg3LCJleHAiOjE3NDY2NDc1ODcsIm5iZiI6MTc0NjU2MTE4NywianRpIjoiQ1pXOHlMT2l1U2h6c0ZReCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.VcBiP9zRuP_V4NwU4rCorx6NOUQcA9oMVn1npwa8L6o",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/no-of-machines",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"no-of-machines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Number of Machines Transfered",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3MDc1MTQ3LCJleHAiOjE5MDQ4NDE1NDcsIm5iZiI6MTc0NzA3NTE0NywianRpIjoiRGZRTWFCUGhWSmZYZDFzVyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.oAnXg7FyD2D-R05cHPLSEyBT1yTEMVoxNE048p_kiLA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"from_date\":\"2025-05-01\",\r\n    \"to_date\":\"2025-05-13\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/reports/no-of-machines-transfered",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"reports",
+								"no-of-machines-transfered"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Labour Wages",
+			"item": [
+				{
+					"name": "Get all labour wages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0Njk2MzkwLCJleHAiOjE3NDQ3ODI3OTAsIm5iZiI6MTc0NDY5NjM5MCwianRpIjoidTduM0NhV0laQWhrTHRRNiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.QPV6ojZk3og4AQtWypf5f4741JtP8xUbZN5UeMKbGXE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get labour wages based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2MTExMTE2LCJleHAiOjE3NDYxOTc1MTYsIm5iZiI6MTc0NjExMTExNiwianRpIjoicmtNczlWcm9Qb2dBWEpNcCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.QDJdl4TO1PV0AjrY_1mIU-gZ4FJnv5fPIEpELoQ9sKQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"wages_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Payment based on dates",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0ODA2NTE4LCJleHAiOjE3NDQ4OTI5MTksIm5iZiI6MTc0NDgwNjUxOSwianRpIjoiOTV2WGRkbmFZWHBZaHRZRiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.b0aPpU6ik2a_cutOhCVp_rilxBcjPEszg6MVyCQv5QU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": 3,\r\n    \"from_date\": \"\",\r\n    \"to_date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-wages/total-payment",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-wages",
+								"total-payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Labour Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0ODA2NTE4LCJleHAiOjE3NDQ4OTI5MTksIm5iZiI6MTc0NDgwNjUxOSwianRpIjoiOTV2WGRkbmFZWHBZaHRZRiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.b0aPpU6ik2a_cutOhCVp_rilxBcjPEszg6MVyCQv5QU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"3\",\r\n    \"payment_date\": \"2025-04-16\",\r\n    \"paid_amount\": \"1500\",\r\n    \"payment_type\":\"advance\",\r\n    \"created_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-wages/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-wages",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Labour Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0Njk2MzkwLCJleHAiOjE3NDQ3ODI3OTAsIm5iZiI6MTc0NDY5NjM5MCwianRpIjoidTduM0NhV0laQWhrTHRRNiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.QPV6ojZk3og4AQtWypf5f4741JtP8xUbZN5UeMKbGXE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"3\",\r\n    \"payment_date\": \"2025-04-15\",\r\n    \"paid_amount\": \"1000\",\r\n    \"payment_type\": \"advance\",\r\n    \"updated_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-wages?wages_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-wages"
+							],
+							"query": [
+								{
+									"key": "wages_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Labour wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ0Njk2MzkwLCJleHAiOjE3NDQ3ODI3OTAsIm5iZiI6MTc0NDY5NjM5MCwianRpIjoidTduM0NhV0laQWhrTHRRNiIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.QPV6ojZk3og4AQtWypf5f4741JtP8xUbZN5UeMKbGXE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/labour-wages?wages_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-wages"
+							],
+							"query": [
+								{
+									"key": "wages_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Labour Special Wages",
+			"item": [
+				{
+					"name": "Get all labour  special wages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1NDI5MTMxLCJleHAiOjE3NDU1MTU1MzEsIm5iZiI6MTc0NTQyOTEzMSwianRpIjoiUWRHd1o4RHNpME83bk1wcyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.8hApxOPDKd53lmvJ86nJ4Flg1DZlUyhzsOYdGGPpUVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-spcl-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-spcl-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get labour special wages based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1MDg3NTgzLCJleHAiOjE3NDUxNzM5ODMsIm5iZiI6MTc0NTA4NzU4MywianRpIjoiRHpvY0R6RUFTUGEwd1NoMSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pnnB2bnuTj13xdWRbtFTSH5mTqy_T_PHxx4MOCz2Htc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"spcl_wage_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-spcl-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-spcl-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total Payment based on dates Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1NDI5MTMxLCJleHAiOjE3NDU1MTU1MzEsIm5iZiI6MTc0NTQyOTEzMSwianRpIjoiUWRHd1o4RHNpME83bk1wcyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.8hApxOPDKd53lmvJ86nJ4Flg1DZlUyhzsOYdGGPpUVM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": 3,\r\n    \"from_date\": \"\",\r\n    \"to_date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-spcl-wages/total-payment",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-spcl-wages",
+								"total-payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Labour Special Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2MTIzNTEyLCJleHAiOjE3NDYyMDk5MTIsIm5iZiI6MTc0NjEyMzUxMiwianRpIjoiTmVna2VFVUpVSnk2Y1N0UyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.3FzY2w15f2G_mxC-GLRZdv8xfObcW7wvs1uEUPloszY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"3\",\r\n    \"payment_date\": \"2025-04-27\",\r\n    \"payment\": \"500\",\r\n    \"payment_type\":\"receive\",\r\n    \"description\":\"\",\r\n    \"created_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-spcl-wages/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-spcl-wages",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Labour Special Wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1MDg3NTgzLCJleHAiOjE3NDUxNzM5ODMsIm5iZiI6MTc0NTA4NzU4MywianRpIjoiRHpvY0R6RUFTUGEwd1NoMSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pnnB2bnuTj13xdWRbtFTSH5mTqy_T_PHxx4MOCz2Htc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"3\",\r\n    \"payment_date\": \"2025-04-16\",\r\n    \"payment\": \"1500\",\r\n    \"payment_type\":\"payment\",\r\n    \"description\":\"For sister's marraiage\",\r\n    \"updated_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-spcl-wages?spcl_wage_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-spcl-wages"
+							],
+							"query": [
+								{
+									"key": "spcl_wage_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Labour Special wages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ1MDg3NTgzLCJleHAiOjE3NDUxNzM5ODMsIm5iZiI6MTc0NTA4NzU4MywianRpIjoiRHpvY0R6RUFTUGEwd1NoMSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.pnnB2bnuTj13xdWRbtFTSH5mTqy_T_PHxx4MOCz2Htc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/labour-spcl-wages?spcl_wage_id=2",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-spcl-wages"
+							],
+							"query": [
+								{
+									"key": "spcl_wage_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Labour Attendance",
+			"item": [
+				{
+					"name": "Manage attendance",
+					"item": [
+						{
+							"name": "Save attendance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjgzOTk1LCJleHAiOjE5MDQ0NTAzOTUsIm5iZiI6MTc0NjY4Mzk5NSwianRpIjoiOGtnV2ZVZGhMcFlSY28zWSIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.HkhOWYxsS_vhtuuSbSknT_0TnhUC9RJOMIYsJptcx1U",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"work_date\": \"2025-06-11\",\r\n    \"labour\": \"8\",\r\n    \"labour_rate\": \"275\",\r\n    \"work_site\": \"2\",\r\n    \"check_in\": \"2025-06-11 10:30:00\",\r\n    \"check_out\": \"2025-06-11 13:30:00\",\r\n    \"description\": \"\",\r\n    \"check_in_latitude\": \"\",\r\n    \"check_in_longitude\": \"\",\r\n    \"check_in_location\": \"Rajarhat\",\r\n    \"check_out_latitude\": \"\",\r\n    \"check_out_longitude\": \"\",\r\n    \"check_out_location\": \"Rajarhat\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{snafindia_url}}/labour-attendance/manage?attendance_id=1",
+									"host": [
+										"{{snafindia_url}}"
+									],
+									"path": [
+										"labour-attendance",
+										"manage"
+									],
+									"query": [
+										{
+											"key": "attendance_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete attendance",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNzY5MDk5LCJleHAiOjE3NDM4NTU0OTksIm5iZiI6MTc0Mzc2OTA5OSwianRpIjoiNWE1azhUVnFBRE1EMkhJdSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.I7DJO4-Ryjn9JOk2mNst6hSm3ErLmzIVSp4SooHee_w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{snafindia_url}}/labour-attendance/manage?attendance_id=1",
+									"host": [
+										"{{snafindia_url}}"
+									],
+									"path": [
+										"labour-attendance",
+										"manage"
+									],
+									"query": [
+										{
+											"key": "attendance_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get all attendances",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjQxNDY3LCJleHAiOjE5MDQ0MDc4NjcsIm5iZiI6MTc0NjY0MTQ2NywianRpIjoiRllVNUo0VzZBZTUweFlCQiIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.wzzPCG3MHJ2X17B2qh5IJZXjnXwkTJeuiQL8BD_6ujo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get attendances based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ5NzMzMTkzLCJleHAiOjE5MDc0OTk1OTMsIm5iZiI6MTc0OTczMzE5MywianRpIjoicWZvaWVHelVJbVBTMkFpSCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.iB24BiObv1zs4dsmScYulBdoemoj2UO2qcdNPFRoCoo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[\r\n            [\"attendance_id\",\"=\",1]\r\n        ]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"attendance_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get no. of wages by date range",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ5MTI3ODYyLCJleHAiOjE5MDY4OTQyNjIsIm5iZiI6MTc0OTEyNzg2MiwianRpIjoiWUlMS09kQlBpQmhiZ0E1bCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.LwSzt6voofShAeTSwTsqA2KJbz-VMY2WsFApsJKi9qI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"\",\r\n    \"from_date\": \"2025-04-01\",\r\n    \"to_date\": \"2025-04-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance/no-of-wages",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance",
+								"no-of-wages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get no. of wages by date range against rate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NTg5OTk1LCJleHAiOjE5MDUzNTYzOTUsIm5iZiI6MTc0NzU4OTk5NSwianRpIjoiWHJLUGY0N09zczVRS2tkViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.dVg59M5rmDeuzjztC_aUb3Vbv1PMrluscX3PxvaB-IE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"4\",\r\n    \"from_date\": \"\",\r\n    \"to_date\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance/no-of-wages-rate",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance",
+								"no-of-wages-rate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current attendance by work site",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3NTg5OTk1LCJleHAiOjE5MDUzNTYzOTUsIm5iZiI6MTc0NzU4OTk5NSwianRpIjoiWHJLUGY0N09zczVRS2tkViIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.dVg59M5rmDeuzjztC_aUb3Vbv1PMrluscX3PxvaB-IE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"work_site\":\"\",\r\n    \"labour\": \"7\",\r\n    \"work_date\": \"2025-06-05\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance/current-attendance",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance",
+								"current-attendance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all attendance on current date",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ3MzE2NDQwLCJleHAiOjE5MDUwODI4NDAsIm5iZiI6MTc0NzMxNjQ0MCwianRpIjoiRmpIZGdJR2VWZUwwR2pwcCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.TweakH73t0-Clhg02jkb60B5cfDMwmDfmtIsABuzN5E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"work_date\": \"2025-06-05\",\r\n    \"start\":\"0\",\r\n    \"page_records\":\"10\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/labour-attendance/labour-list",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"labour-attendance",
+								"labour-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-in",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2MTA4OTU3LCJleHAiOjE3NDYxOTUzNTcsIm5iZiI6MTc0NjEwODk1NywianRpIjoiMENBZDR0NzJibk9nWUF2bSIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D8mIwgM2vYHRmCsJe4KUy3trQHk9kLtByllUJoPJows",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"labour\": \"4\",\r\n    \"labour_rate\":300,\r\n    \"check_in\": \"2025-04-27 11:00:00\",\r\n    \"work_site\": \"1\",\r\n    \"work_date\": \"2025-04-27\",\r\n    \"latitude\": \"23.25858\",\r\n    \"longitude\": \"93.25698\",\r\n    \"location\": \"Rajarhat\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-attendance/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-attendance",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check-out",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQ2NjgzOTk1LCJleHAiOjE5MDQ0NTAzOTUsIm5iZiI6MTc0NjY4Mzk5NSwianRpIjoiOGtnV2ZVZGhMcFlSY28zWSIsInN1YiI6IjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.HkhOWYxsS_vhtuuSbSknT_0TnhUC9RJOMIYsJptcx1U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"check_out\": \"2025-05-08 10:32:07\",\r\n    \"description\": \"Tested\",\r\n    \"latitude\": \"23.25858\",\r\n    \"longitude\": \"93.25698\",\r\n    \"location\": \"Rajarhat\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/labour-attendance?attendance_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"labour-attendance"
+							],
+							"query": [
+								{
+									"key": "attendance_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Note book",
+			"item": [
+				{
+					"name": "Get all note book",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNzAxMjU1LCJleHAiOjE3NDM3ODc2NTUsIm5iZiI6MTc0MzcwMTI1NSwianRpIjoiVXdtQ2taUlVRMFZzSGJaWCIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.ic1X3A8z-Hn-HUSwxE02K7PsPsc90zDXKKS_zDEl18w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/note-book",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"note-book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get note books based on conditions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNDM5NDExLCJleHAiOjE3NDM1MjU4MTEsIm5iZiI6MTc0MzQzOTQxMSwianRpIjoibktORjc5VXJWSk9IZ05OQyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.jHnK-iPx6E0j3itc7pJ4hI9SA7Bujv2MzkmekVORvXY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[]\r\n    },\r\n    \"start\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"note_book_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/note-book",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"note-book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create note book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMjUwMDY3LCJleHAiOjE3NDMzMzY0NjcsIm5iZiI6MTc0MzI1MDA2NywianRpIjoieVFTSFdVTnNpeHJERGpKViIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D5ww4UmwVp3oF3GTlKs0bsqMqjONFaX01jmlPO2i0Sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"note_title\": \"\",\r\n    \"work_site\": \"1\",\r\n    \"description\": \"Please sent there\",\r\n    \"work_date\": \"2025-04-15\",\r\n    \"created_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/note-book/add",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"note-book",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update note book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMjUwMDY3LCJleHAiOjE3NDMzMzY0NjcsIm5iZiI6MTc0MzI1MDA2NywianRpIjoieVFTSFdVTnNpeHJERGpKViIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D5ww4UmwVp3oF3GTlKs0bsqMqjONFaX01jmlPO2i0Sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"note_title\": \"Labour required\",\r\n    \"work_site\": \"1\",\r\n    \"description\": \"Please sent there.\",\r\n    \"work_date\": \"2025-04-15\",\r\n    \"is_active\": \"no\",\r\n    \"updated_by\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/note-book?note_book_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"note-book"
+							],
+							"query": [
+								{
+									"key": "note_book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check note book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzNDM5NDExLCJleHAiOjE3NDM1MjU4MTEsIm5iZiI6MTc0MzQzOTQxMSwianRpIjoibktORjc5VXJWSk9IZ05OQyIsInN1YiI6IjIiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.jHnK-iPx6E0j3itc7pJ4hI9SA7Bujv2MzkmekVORvXY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": \"yes\",\r\n    \"checked_by\": \"2\",\r\n    \"check_note\": \"Ok, will sent\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{snafindia_url}}/note-book/checked?note_book_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"note-book",
+								"checked"
+							],
+							"query": [
+								{
+									"key": "note_book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete note book",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3VzZXJzL2xvZ2luIiwiaWF0IjoxNzQzMjUwMDY3LCJleHAiOjE3NDMzMzY0NjcsIm5iZiI6MTc0MzI1MDA2NywianRpIjoieVFTSFdVTnNpeHJERGpKViIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.D5ww4UmwVp3oF3GTlKs0bsqMqjONFaX01jmlPO2i0Sk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{snafindia_url}}/note-book?note_book_id=1",
+							"host": [
+								"{{snafindia_url}}"
+							],
+							"path": [
+								"note-book"
+							],
+							"query": [
+								{
+									"key": "note_book_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Versions Server",
+			"item": [
+				{
+					"name": "Get all versions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get latest version",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"app_name\":\"Labour\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions/latest",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions",
+								"latest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get versions by conditions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[\r\n            [\"app_name\", \"LIKE\", \"Labour\"]\r\n        ]\r\n    },\r\n    \"start_row\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"release_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create version",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "app_name",
+									"value": "Labour",
+									"type": "text"
+								},
+								{
+									"key": "release_version",
+									"value": "1.0.3",
+									"type": "text"
+								},
+								{
+									"key": "release_message",
+									"value": "A new version of app is available. Please update",
+									"type": "text"
+								},
+								{
+									"key": "is_update_mandatory",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "released_on",
+									"value": "2025-07-22",
+									"type": "text"
+								},
+								{
+									"key": "app_file",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Labour.apk"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions/add",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update version",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "app_name",
+									"value": "Labour",
+									"type": "text"
+								},
+								{
+									"key": "release_version",
+									"value": "1.0.2",
+									"type": "text"
+								},
+								{
+									"key": "release_message",
+									"value": "A new version of app is available. Please update",
+									"type": "text"
+								},
+								{
+									"key": "is_update_mandatory",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "released_on",
+									"value": "2025-06-12",
+									"type": "text"
+								},
+								{
+									"key": "app_file",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Labour.apk"
+								},
+								{
+									"key": "is_latest",
+									"value": "yes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions/update?release_id=3",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions",
+								"update"
+							],
+							"query": [
+								{
+									"key": "release_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete version",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://marblezzcrafters.com/server/api/versions?release_id=1",
+							"protocol": "https",
+							"host": [
+								"marblezzcrafters",
+								"com"
+							],
+							"path": [
+								"server",
+								"api",
+								"versions"
+							],
+							"query": [
+								{
+									"key": "release_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Versions",
+			"item": [
+				{
+					"name": "Get all versions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{labour_url}}/versions",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get latest version",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"app_name\":\"Labour\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/latest",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"latest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get versions by conditions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filter\": {\r\n        \"condition\":[\r\n            [\"app_name\", \"LIKE\", \"Labour\"]\r\n        ]\r\n    },\r\n    \"start_row\":0,\r\n    \"page_records\": 5,\r\n    \"sort_field\": \"release_id\",\r\n    \"sort\": -1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{labour_url}}/versions",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create version",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "app_name",
+									"value": "Labour",
+									"type": "text"
+								},
+								{
+									"key": "release_version",
+									"value": "1.0.2",
+									"type": "text"
+								},
+								{
+									"key": "release_message",
+									"value": "A new version of app is available. Please update",
+									"type": "text"
+								},
+								{
+									"key": "is_update_mandatory",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "released_on",
+									"value": "2025-06-06",
+									"type": "text"
+								},
+								{
+									"key": "app_file",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Labour.apk"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{labour_url}}/versions/add",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"versions",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update version",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "app_name",
+									"value": "Labour",
+									"type": "text"
+								},
+								{
+									"key": "release_version",
+									"value": "1.0.2",
+									"type": "text"
+								},
+								{
+									"key": "release_message",
+									"value": "A new version of app is available. Please update",
+									"type": "text"
+								},
+								{
+									"key": "is_update_mandatory",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "released_on",
+									"value": "2025-06-12",
+									"type": "text"
+								},
+								{
+									"key": "app_file",
+									"type": "file",
+									"src": "/C:/Users/SOUMYANJAN DEY/Desktop/Labour.apk"
+								},
+								{
+									"key": "is_latest",
+									"value": "yes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{labour_url}}/versions/update?release_id=3",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"versions",
+								"update"
+							],
+							"query": [
+								{
+									"key": "release_id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete version",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{labour_url}}/versions?release_id=1",
+							"host": [
+								"{{labour_url}}"
+							],
+							"path": [
+								"versions"
+							],
+							"query": [
+								{
+									"key": "release_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
