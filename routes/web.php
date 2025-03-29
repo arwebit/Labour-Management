@@ -17,13 +17,20 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'users'], function () use ($router) {
         $router->post('/login', 'UserController@login');
     });
-
+    $router->group(['prefix' => 'versions'], function () use ($router) {
+        $router->get('/', 'VersionController@getAllVersion');
+        $router->post('/latest', 'VersionController@getLatestVersion');
+        $router->post('/', 'VersionController@getVersion');
+        $router->post('/add', 'VersionController@createVersion');
+        $router->post('/update', 'VersionController@updateVersion');
+        $router->delete('/', 'VersionController@deleteVersion');
+    });
     $router->group(['middleware' => ['auth']], function () use ($router) {
         $router->group(['prefix' => 'master'], function () use ($router) {
             $router->get('/user-roles', 'MasterController@getAllUserRoles');
             $router->get('/module-access', 'MasterController@getAllModuleAccess');
-            $router->post('/get-group-access', 'MasterController@getGroupAccess');
-            $router->put('/save-group-access', 'MasterController@saveGroupAccess');
+            $router->post('/group-access', 'MasterController@getGroupAccess');
+            $router->put('/group-access', 'MasterController@saveGroupAccess');
         });
         $router->group(['prefix' => 'users'], function () use ($router) {
             $router->get('/', 'UserController@getAllStaffs');
@@ -34,6 +41,23 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->put('/status_change', 'UserController@statusChange');
             $router->delete('/', 'UserController@deleteStaff');
             $router->put('/remove_pro_pic', 'UserController@removeProfilePicture');
+        });
+
+        $router->group(['prefix' => 'work-site'], function () use ($router) {
+            $router->get('/', 'WorkSiteController@getAllWorkSites');
+            $router->post('/', 'WorkSiteController@getWorkSites');
+            $router->post('/add', 'WorkSiteController@createWorkSite');
+            $router->put('/', 'WorkSiteController@updateWorkSite');
+            $router->delete('/', 'WorkSiteController@deleteWorkSite');
+        });
+
+        $router->group(['prefix' => 'note-book'], function () use ($router) {
+            $router->get('/', 'NoteBookController@getAllNoteBooks');
+            $router->post('/', 'NoteBookController@getNoteBooks');
+            $router->post('/add', 'NoteBookController@createNoteBook');
+            $router->put('/', 'NoteBookController@updateNoteBook');
+            $router->delete('/', 'NoteBookController@deleteNoteBook');
+            $router->put('/checked', 'NoteBookController@checkedNoteBook');
         });
     });
 });

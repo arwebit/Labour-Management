@@ -20,7 +20,7 @@ class UserController extends Controller
             'user_role' => function ($q) {
                 $q->select('role_id', 'role_name', 'tag');
             }, 'created_by', 'updated_by',
-        ])->select("user_id", "full_name", "username", "mobile", "email", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1)
+        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1)
             ->orderBy($sortField, $sort)
             ->get();
 
@@ -56,7 +56,7 @@ class UserController extends Controller
             'user_role' => function ($q) {
                 $q->select('role_id', 'role_name', 'tag');
             }, 'created_by', 'updated_by',
-        ])->select("user_id", "full_name", "username", "mobile", "email", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1);
+        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1);
 
         $query = Query::filters($query, $condition);
 
@@ -170,13 +170,13 @@ class UserController extends Controller
         $rules = [
             'username'    => 'required|max:20|unique:user_details,username,' . $userID . ',user_id',
             'email'       => 'email|unique:user_details,email|max:255',
-            'password'    => 'required|max:20',
             "full_name"   => 'required|max:255',
             "mobile"      => 'digits:10|unique:user_details,mobile,' . $userID . ',user_id',
             "aadhar_no"   => 'required|digits:12|unique:user_details,aadhar_no,' . $userID . ',user_id',
             "pan_no"      => 'max:20|unique:user_details,pan_no,' . $userID . ',user_id',
             'profile_pic' => 'mimes:png,jpeg,jpg|max:1024',
             "user_role"   => 'required',
+            "is_active"   => 'required',
             "updated_by"  => 'required',
         ];
         $messages = [
@@ -186,8 +186,6 @@ class UserController extends Controller
             'email.email'         => 'Invalid email',
             'email.unique'        => 'Email already exists',
             'email.max'           => 'Max: 255 characters',
-            'password.required'   => 'Password required',
-            'password.max'        => 'Max: 20 characters',
             'full_name.required'  => 'Full name required',
             'full_name.max'       => 'Max: 255 characters',
             'user_role.required'  => 'User role required',
@@ -200,6 +198,7 @@ class UserController extends Controller
             'pan_no.unique'       => 'PAN no. already exists',
             'profile_pic.mimes'   => 'Upload only APK files',
             'profile_pic.max'     => 'Max file size 1 MB',
+            'is_active.required'  => 'Status required',
             'updated_by.required' => 'Updated by required',
         ];
 
@@ -235,6 +234,7 @@ class UserController extends Controller
                 'aadhar_no'         => $req->input("aadhar_no"),
                 'pan_no'            => $req->input("pan_no"),
                 'user_role'         => $req->input("user_role"),
+                'is_active'         => $req->input("is_active"),
                 'profile_pic'       => $picFile,
                 'updated_by'        => $req->input("updated_by"),
                 'updated_date_time' => date("Y-m-d H:i:s"),

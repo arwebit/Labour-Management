@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Query;
 use App\Models\Versions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -83,7 +84,7 @@ class VersionController extends Controller
 
     public function getVersion(Request $req)
     {
-        $condition = $req->input('filter')['condition'];
+        $condition = $req->input('filter')['condition'] ?? [];
         $start     = $req->input('start_row');
         $records   = $req->input('page_records');
         $sortField = $req->input('sort_field') == "" ? "release_id" : $req->input('sort_field');
@@ -92,11 +93,7 @@ class VersionController extends Controller
         $query = DB::table('release_versions')
             ->select();
 
-        if (sizeof($condition) > 0) {
-            foreach ($condition as $cond) {
-                $query->where(...$cond);
-            }
-        }
+        $query     = Query::filters($query, $condition);
         $totalRows = $query->count();
 
         $db = $query->offset($start)->limit($records)->orderBy($sortField, $sort)->get();
