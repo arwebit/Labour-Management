@@ -59,5 +59,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->delete('/', 'NoteBookController@deleteNoteBook');
             $router->put('/checked', 'NoteBookController@checkedNoteBook');
         });
+
+        $router->group(['prefix' => 'labour-attendance'], function () use ($router) {
+            $router->get('/', 'AttendanceController@getAllAttendance');
+            $router->post('/', 'AttendanceController@getAttendance');
+            $router->post('/add', 'AttendanceController@checkIn');
+            $router->put('/', 'AttendanceController@checkOut');
+            $router->delete('/', 'AttendanceController@deleteAttendance');
+        });
     });
 });
