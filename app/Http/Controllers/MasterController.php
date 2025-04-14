@@ -67,10 +67,43 @@ class MasterController extends Controller
     public function getGroupAccess(Request $req)
     {
         $condition = $req->input('filter')['condition'] ?? [];
-        $sortField = "group_access.module_access_id";
+        $sortField = "role_id";
         $sort      = 'asc';
 
-        $query = DB::table("group_access")
+        $query = UserRole::with(["module_access" => function ($q1) {
+            $q1->join("master_module_access", "group_access.module_access_id", "=", "master_module_access.module_access_id")
+                ->select(
+                    "group_access.role_id",
+                    "group_access.module_access_id",
+                    "master_module_access.module_access_desc"
+                );
+        }])->select();
+
+        $query = Query::filters($query, $condition);
+
+        $totalRows = $query->count();
+
+        $db= $query->orderBy($sortField, $sort)->get();
+
+        if ($totalRows > 0) {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "total_rows" => $totalRows,
+                "rows"       => $db,
+            ];
+        } else {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "No records found",
+                "total_rows" => 0,
+                "rows"       => [],
+            ];
+        }
+
+        return response()->json($response, 200);
+
+        /*$query = DB::table("group_access")
             ->join("user_details", "group_access.updated_by", "=", "user_details.user_id")
             ->join("master_role", "group_access.role_id", "=", "master_role.role_id")
             ->join("master_module_access", "group_access.module_access_id", "=", "master_module_access.module_access_id")
@@ -115,7 +148,7 @@ class MasterController extends Controller
             "rows"       => $result,
         ];
 
-        return response()->json($response, 200);
+        return response()->json($response, 200);*/
     }
 
     public function saveGroupAccess(Request $req)

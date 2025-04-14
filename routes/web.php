@@ -67,5 +67,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->put('/', 'AttendanceController@checkOut');
             $router->delete('/', 'AttendanceController@deleteAttendance');
         });
+
+        $router->group(['prefix' => 'labour-rates'], function () use ($router) {
+            $router->get('/', 'LabourRatesController@getAllLabourRates');
+            $router->post('/', 'LabourRatesController@getLabourRates');
+            $router->put('/', 'LabourRatesController@saveLabourRates');
+            $router->delete('/', 'LabourRatesController@deleteLabourRates');
+        });
     });
 });

@@ -18,8 +18,19 @@ class UserController extends Controller
         $sort      = 'asc';
         $query     = User::with([
             'user_role' => function ($q) {
-                $q->select('role_id', 'role_name', 'tag');
-            }, 'created_by', 'updated_by',
+                $q->with(["module_access" => function ($q1) {
+                    $q1->join("master_module_access", "group_access.module_access_id", "=", "master_module_access.module_access_id")
+                        ->select(
+                            "group_access.role_id",
+                            "group_access.module_access_id",
+                            "master_module_access.module_access_desc"
+                        );
+                }])->select('role_id', 'role_name', 'tag');
+            }, 'created_by' => function ($q2) {
+                $q2->select('user_id', 'full_name');
+            }, 'updated_by' => function ($q3) {
+                $q3->select('user_id', 'full_name');
+            },
         ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1)
             ->orderBy($sortField, $sort)
             ->get();
@@ -54,8 +65,19 @@ class UserController extends Controller
         $sort      = $req->input('sort') == -1 ? 'desc' : 'asc';
         $query     = User::with([
             'user_role' => function ($q) {
-                $q->select('role_id', 'role_name', 'tag');
-            }, 'created_by', 'updated_by',
+                $q->with(["module_access" => function ($q1) {
+                    $q1->join("master_module_access", "group_access.module_access_id", "=", "master_module_access.module_access_id")
+                        ->select(
+                            "group_access.role_id",
+                            "group_access.module_access_id",
+                            "master_module_access.module_access_desc"
+                        );
+                }])->select('role_id', 'role_name', 'tag');
+            }, 'created_by' => function ($q2) {
+                $q2->select('user_id', 'full_name');
+            }, 'updated_by' => function ($q3) {
+                $q3->select('user_id', 'full_name');
+            },
         ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1);
 
         $query = Query::filters($query, $condition);
