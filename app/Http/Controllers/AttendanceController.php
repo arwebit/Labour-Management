@@ -175,4 +175,52 @@ class AttendanceController extends Controller
         }
     }
 
+    public function getNoOfWages(Request $req)
+    {
+        $labour   = $req->input("labour");
+        $fromDate = $req->input("from_date");
+        $toDate   = $req->input("to_date");
+
+        $query = DB::table('labour_attendance')
+            ->select('work_date', DB::raw('COUNT(*) as no_of_wages'))
+            ->where("labour", "=", $labour);
+
+        if ($fromDate && $toDate) {
+            $condition = [
+                ["work_date", "between", [$fromDate, $toDate]],
+            ];
+        } else {
+            $condition = [];
+        }
+
+        $condition = [["check_in", "not null"],
+            ["check_out", "not null"]];
+
+        $query = Query::filters($query, $condition)
+            ->groupBy('work_date');
+
+        $rows = $query->get();
+
+        $totalWages = $rows->sum('no_of_wages');
+        $totalRows  = $rows->count();
+
+        if ($totalRows > 0) {
+            $response = [
+                "statusCode"  => 200,
+                "message"     => "Records found",
+                "total_wages" => $totalWages,
+                "rows"        => $rows,
+            ];
+        } else {
+            $response = [
+                "statusCode"  => 200,
+                "message"     => "No records found",
+                "total_wages" => 0,
+                "rows"        => [],
+            ];
+        }
+
+        return response()->json($response, 200);
+    }
+
 }

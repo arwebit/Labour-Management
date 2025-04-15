@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Lumen\Auth\Authorizable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -31,6 +32,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function updated_by(): HasOne
     {
         return $this->hasOne(User::class, "user_id", "updated_by")->select(['user_id', 'full_name']);
+    }
+
+    public function labour_wages(): HasMany
+    {
+        return $this->hasMany(LabourWages::class, "labour", "user_id");
     }
 
     public function getJWTIdentifier()
