@@ -25,6 +25,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('/update', 'VersionController@updateVersion');
         $router->delete('/', 'VersionController@deleteVersion');
     });
+
     $router->group(['middleware' => ['auth']], function () use ($router) {
         $router->group(['prefix' => 'master'], function () use ($router) {
             $router->get('/user-roles', 'MasterController@getAllUserRoles');
@@ -84,6 +85,15 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->put('/', 'LabourWagesController@updateLabourWages');
             $router->put('/accept', 'LabourWagesController@acceptLabourWages');
             $router->delete('/', 'LabourWagesController@deleteLabourWages');
+        });
+
+        $router->group(['prefix' => 'labour-spcl-wages'], function () use ($router) {
+            $router->get('/', 'LabourSpclWagesController@getAllLabourSpclWages');
+            $router->post('/', 'LabourSpclWagesController@getLabourSpclWages');
+            $router->post('/total-payment', 'LabourSpclWagesController@getTotalPayment');
+            $router->post('/add', 'LabourSpclWagesController@createLabourSpclWages');
+            $router->put('/', 'LabourSpclWagesController@updateLabourSpclWages');
+            $router->delete('/', 'LabourSpclWagesController@deleteLabourSpclWages');
         });
     });
 });
