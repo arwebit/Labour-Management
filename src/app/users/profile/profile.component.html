@@ -1,0 +1,186 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+              <h6 class="mb-4">Update profile</h6>
+              <form [formGroup]="profileUpdateForm">
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Full name <b class="text-danger">* {{ nameErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="1"
+                    class="form-control"
+                    formControlName="full_name"
+                    placeholder="Full name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Aadhar No
+                    <b class="text-danger">* {{ aadharNoErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="2"
+                    class="form-control"
+                    formControlName="aadhar_no"
+                    placeholder="Aadhar No"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Username
+                    <b class="text-danger">* {{ userNameErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="3"
+                    class="form-control"
+                    formControlName="username"
+                    placeholder="Username"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Mobile <b class="text-danger"> {{ mobileErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="4"
+                    class="form-control"
+                    formControlName="mobile"
+                    placeholder="Mobile"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >PAN No <b class="text-danger"> {{ panNoErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="5"
+                    class="form-control"
+                    formControlName="pan_no"
+                    placeholder="PAN No"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Email <b class="text-danger"> {{ emailErr }}</b></label
+                  >
+                  <input
+                    type="text"
+                    tabindex="6"
+                    class="form-control"
+                    formControlName="email"
+                    placeholder="Email"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Profile Image <b class="text-danger"></b></label
+                  ><br />
+                  <img
+                    [src]="profileImg"
+                    style="margin-top: 10px"
+                    id="profileImg"
+                    width="100"
+                    height="100"
+                  />
+                  <input
+                    tabindex="7"
+                    class="form-control header_file"
+                    type="file"
+                    (change)="uploadProfilePicture($event)"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  tabindex="8"
+                  class="btn btn-primary"
+                  (click)="save()"
+                >
+                  Update profile
+                </button>
+              </form>
+            </div>
+          </div>
+          <!-- Change Password -->
+
+          <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+              <h6 class="mb-4">Change Password</h6>
+              <form [formGroup]="changePasswordForm">
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Old Password
+                    <b class="text-danger">* {{ oldPassErr }}</b>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Old Password"
+                    tabindex="5"
+                    class="form-control"
+                    formControlName="old_password"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >New Password
+                    <b class="text-danger"> * {{ newPassErr }}</b>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="New Password"
+                    tabindex="6"
+                    class="form-control"
+                    formControlName="new_password"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Confirm Password
+                    <b class="text-danger">* {{ confirmPassErr }}</b>
+                  </label>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    tabindex="7"
+                    class="form-control"
+                    formControlName="confirm_password"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <button
+                    type="submit"
+                    tabindex="8"
+                    class="btn btn-info"
+                    (click)="changePass()"
+                  >
+                    Change Password
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

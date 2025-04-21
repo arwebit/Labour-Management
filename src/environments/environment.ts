@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  version: '1.0.0',
+  stayLogin: false,
+  baseURL: 'http://localhost:8000',
+  imageURL: 'http://localhost:8000',
+  appLink: 'http://localhost:8000/',
 };
 
 /*
