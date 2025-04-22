@@ -1,0 +1,266 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+    class="custom-refresher"
+  >
+    <ion-refresher-content
+      pullingIcon="refresh-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <a (click)="openModal('create')" *ngIf="hasAccess(8, userRole)">
+          <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
+            <ion-fab-button size="big" color="success">
+              <i class="fa-solid fa-plus"></i>
+            </ion-fab-button>
+          </ion-fab>
+        </a>
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="sort">
+          <ion-fab-button size="small" color="tertiary">
+            <i class="fa-solid fa-arrow-up-wide-short"></i>
+          </ion-fab-button>
+          <ion-fab-list side="start">
+            <ul class="sorting">
+              <li (click)="sort('')">Remove sorting</li>
+              <li (click)="sort('1')">Sort by Work Site Date (Desc)</li>
+              <li (click)="sort('2')">Sort by Work Site Date (Asc)</li>
+            </ul>
+          </ion-fab-list>
+        </ion-fab>
+
+        <div class="row g-4">
+          <div class="col-sm-12 col-md-12 col-xl-4">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-flex align-items-center border-bottom py-3"
+                  *ngFor="let noteBooks of noteBooksLists"
+                  (click)="
+                    hasAccess(9, userRole)
+                      ? openModal('edit', noteBooks.note_book_id)
+                      : denyAccess(
+                          'Warning',
+                          'You have no permission to access this module'
+                        )
+                  "
+                >
+                  <div class="w-100 ms-3">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-0">{{ noteBooks.note_title }}</h6>
+                      <small>{{
+                        noteBooks.work_date | date : "dd/MM/yyyy"
+                      }}</small>
+                    </div>
+                    <small
+                      >Work Site :
+                      {{ noteBooks.work_site.work_site_name }}</small
+                    >
+                    <small class="float-end">
+                      Checked by:
+                      {{ noteBooks.checked_by?.full_name }} </small
+                    ><br />
+                    <span style="color: rgb(111, 7, 207)">
+                      {{ noteBooks.description }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-modal
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+    handleBehavior="cycle"
+    #createNoteBookModel
+  >
+    <ng-template>
+      <div class="block">
+        <form [formGroup]="addNoteBookForm">
+          <div class="mb-3">
+            <label class="form-label"
+              >Note Book Title
+              <b class="text-danger">* {{ noteBookTitleErr }}</b>
+            </label>
+            <input
+              type="text"
+              formControlName="note_title"
+              placeholder="Note Book Title"
+              class="form-control"
+              tabindex="1"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Work Site
+              <b class="text-danger">* {{ workSiteErr }}</b>
+            </label>
+            <select
+              formControlName="work_site"
+              tabindex="2"
+              class="form-control"
+            >
+              <option value="">Select Work Site</option>
+              <option
+                *ngFor="let workSite of workSites"
+                [value]="workSite.work_site_id"
+              >
+                {{ workSite.work_site_name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"
+              >Work date
+              <b class="text-danger">* {{ workDateErr }}</b>
+            </label>
+            <input
+              type="date"
+              tabindex="3"
+              class="form-control"
+              formControlName="work_date"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"
+              >Description
+              <b class="text-danger">* {{ noteDescriptionErr }}</b>
+            </label>
+            <textarea
+              placeholder="Description"
+              formControlName="description"
+              tabindex="4"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <button
+              type="submit"
+              tabindex="5"
+              class="btn btn-primary"
+              (click)="addNoteBooks()"
+            >
+              Create Note Book
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <!--  -->
+
+  <ion-modal
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+    handleBehavior="cycle"
+    #editNoteBookModel
+  >
+    <ng-template>
+      <div class="block">
+        <form [formGroup]="editNoteBookForm">
+          <div class="mb-3">
+            <label class="form-label"
+              >Note Book Title
+              <b class="text-danger">* {{ noteBookTitleErr }}</b>
+            </label>
+            <input
+              type="text"
+              formControlName="note_title"
+              placeholder="Note Book Title"
+              class="form-control"
+              tabindex="6"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Work Site
+              <b class="text-danger">* {{ workSiteErr }}</b>
+            </label>
+            <select
+              formControlName="work_site"
+              tabindex="7"
+              class="form-control"
+            >
+              <option value="">Select Work Site</option>
+              <option
+                *ngFor="let workSite of workSites"
+                [value]="workSite.work_site_id"
+              >
+                {{ workSite.work_site_name }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Work date
+              <b class="text-danger">* {{ workDateErr }}</b>
+            </label>
+            <input
+              type="date"
+              tabindex="8"
+              class="form-control"
+              formControlName="work_date"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"
+              >Description
+              <b class="text-danger">* {{ noteDescriptionErr }}</b>
+            </label>
+            <textarea
+              placeholder="Description"
+              formControlName="description"
+              tabindex="9"
+              class="form-control"
+            ></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Active
+              <b class="text-danger">* {{ statusErr }}</b>
+            </label>
+            <select
+              formControlName="is_active"
+              class="form-control"
+              tabindex="10"
+            >
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div style="padding-top: 5px">
+            <button
+              type="submit"
+              tabindex="11"
+              class="btn btn-primary"
+              (click)="updateNoteBooks()"
+            >
+              Update Note Book
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

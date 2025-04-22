@@ -22,8 +22,8 @@
           <ion-fab-list side="start">
             <ul class="sorting">
               <li (click)="sort('')">Remove sorting</li>
-              <li (click)="sort('1')">Sort by Full Name (Desc)</li>
-              <li (click)="sort('2')">Sort by Full Name (Asc)</li>
+              <li (click)="sort('1')">Sort by Work Site Date (Desc)</li>
+              <li (click)="sort('2')">Sort by Work Site Date (Asc)</li>
             </ul>
           </ion-fab-list>
         </ion-fab>
@@ -34,10 +34,12 @@
               <div class="card-body">
                 <div
                   class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let rates of labourRateLists"
+                  *ngFor="let noteBooks of noteBooksLists"
                   (click)="
-                    hasAccess(18, userRole)
-                      ? openModal(rates.user_id)
+                    hasAccess(14, userRole)
+                      ? noteBooks.checked === 'yes'
+                        ? checkedAlready()
+                        : openModal(noteBooks.note_book_id)
                       : denyAccess(
                           'Warning',
                           'You have no permission to access this module'
@@ -46,11 +48,19 @@
                 >
                   <div class="w-100 ms-3">
                     <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">{{ rates.full_name | titlecase }}</h6>
+                      <h6 class="mb-0">{{ noteBooks.note_title }}</h6>
+                      <small>{{
+                        noteBooks.work_date | date : "dd/MM/yyyy"
+                      }}</small>
                     </div>
-                    <small>
-                      Per wage rate: &#8377;{{ rates.labour_rate }}</small
+                    <small
+                      >Work Site :
+                      {{ noteBooks.work_site.work_site_name }}</small
                     >
+                    <br />
+                    <span style="color: rgb(111, 7, 207)">
+                      {{ noteBooks.description }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -60,39 +70,40 @@
       </div>
     </div>
   </div>
-
   <ion-modal
     [initialBreakpoint]="1"
     [breakpoints]="[0, 1]"
     handleBehavior="cycle"
-    #labourRateModel
+    #checkNoteBookModel
   >
     <ng-template>
       <div class="block">
-        <form [formGroup]="saveLabourRateForm">
-          <div class="mb-3"><b>Labour name :</b> {{ labourName }}</div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Labour rate
-              <b class="text-danger">* {{ labourRateErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="labour_rate"
-              placeholder="Labour rate"
-              tabindex="1"
-              class="form-control"
-            />
-          </div>
+        <form [formGroup]="checkNoteBookForm">
+          <table style="width: 100%">
+            <tr>
+              <td style="padding-top: 5px">
+                <label class="form-label"
+                  >Check Note
+                  <b class="text-danger">* {{ checkNoteErr }}</b>
+                </label>
+                <textarea
+                  placeholder="Check Note"
+                  formControlName="check_note"
+                  tabindex="1"
+                  class="form-control"
+                ></textarea>
+              </td>
+            </tr>
+          </table>
 
-          <div class="mb-3">
+          <div style="padding-top: 5px">
             <button
               type="submit"
-              tabindex="4"
+              tabindex="2"
               class="btn btn-primary"
-              (click)="saveLabourRates()"
+              (click)="checkNoteBook()"
             >
-              Save Labour Rates
+              Check
             </button>
           </div>
         </form>

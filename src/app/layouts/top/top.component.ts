@@ -38,16 +38,16 @@ export class TopComponent {
       this.headerText = 'MY PROFILE';
     } else if (path === '/users') {
       this.headerText = 'USERS';
-    } else if (path === '/users/add') {
-      this.headerText = 'ADD USER';
-    } else if (path.startsWith('/users/edit')) {
-      this.headerText = 'EDIT USER';
-    } else if (path.startsWith('/master/group-access')) {
+    } else if (path === '/master/group-access') {
       this.headerText = 'GROUP ACCESS';
-    } else if (path.startsWith('/master/work-site')) {
+    } else if (path === '/master/work-site') {
       this.headerText = 'WORK SITE';
-    } else if (path.startsWith('/master/labour-rates')) {
+    } else if (path === '/master/labour-rates') {
       this.headerText = 'LABOUR RATES';
+    } else if (path === '/master/note-book') {
+      this.headerText = 'NOTE BOOK';
+    } else if (path === '/master/note-book/noti') {
+      this.headerText = 'NOTE BOOK NOTI';
     }
   }
 

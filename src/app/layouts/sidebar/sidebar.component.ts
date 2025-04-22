@@ -54,7 +54,7 @@ export class SidebarComponent {
         icon: 'fa-solid fa-book',
       },
       {
-        id: 20,
+        id: 17,
         text: 'Labour Rates',
         link: '/master/labour-rates',
         icon: 'fa-solid fa-dollar-sign',
