@@ -42,7 +42,7 @@ export class TopComponent {
       this.headerText = 'ADD USER';
     } else if (path.startsWith('/users/edit')) {
       this.headerText = 'EDIT USER';
-    } else if (path.startsWith('/settings/users/group-access')) {
+    } else if (path.startsWith('/master/group-access')) {
       this.headerText = 'GROUP ACCESS';
     } else if (/^\/tickets\/\d+\/replies$/.test(path)) {
       this.headerText = 'TICKET DETAILS';

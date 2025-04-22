@@ -1,0 +1,73 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+              <h6 class="mb-4">Group Access</h6>
+              <form [formGroup]="groupAccessForm">
+                <select
+                  class="form-control"
+                  [(ngModel)]="roleID"
+                  formControlName="role_id"
+                  (change)="roleChange($event)"
+                >
+                  <option value="">Select Role</option>
+                  <option
+                    [value]="roles.role_id"
+                    *ngFor="let roles of roleList"
+                  >
+                    {{ roles.role_name }}
+                  </option>
+                </select>
+                <div *ngIf="groupAccessTable">
+                  <table>
+                    <tr *ngFor="let row of getRows(groupModules, 3)">
+                      <td
+                        *ngFor="let module of row"
+                        [ngClass]="{
+                          selected: moduleVal.includes(module.module_access_id)
+                        }"
+                        (click)="toggleModule(module)"
+                      >
+                        <input
+                          type="checkbox"
+                          (change)="getModuleValue($event)"
+                          [checked]="
+                            moduleVal.includes(module.module_access_id)
+                          "
+                          [value]="module.module_access_id"
+                          hidden
+                        />
+                        {{ module.module_access_desc }}
+                      </td>
+                    </tr>
+                  </table>
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="7"
+                      class="btn btn-primary"
+                      (click)="save()"
+                    >
+                      Update group access
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

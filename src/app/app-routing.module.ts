@@ -25,6 +25,12 @@ const routes: Routes = [
       import('./users/users.module').then((m) => m.UsersPageModule),
     canActivate: [loginGuard],
   },
+  {
+    path: 'master',
+    loadChildren: () =>
+      import('./master/master.module').then((m) => m.MasterPageModule),
+    canActivate: [loginGuard],
+  },
 ];
 
 @NgModule({

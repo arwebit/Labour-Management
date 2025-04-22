@@ -62,6 +62,7 @@ export class UsersPage {
     this.imageURL = environment.imageURL;
     this.defaultImageURL = '../../assets/images/avatar.png';
     this.getUserDetails();
+    this.getProfileData();
     this.getUser(this.condition);
     this.addUserFormInit();
     this.editUserFormInit();
@@ -272,7 +273,7 @@ export class UsersPage {
     this.getProfileData(userID);
   }
 
-  getProfileData(userID: number) {
+  getProfileData(userID: any = '') {
     const data = {
       filter: {
         condition: [['user_id', '=', userID]],
