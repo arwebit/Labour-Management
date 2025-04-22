@@ -48,6 +48,8 @@ export class TopComponent {
       this.headerText = 'NOTE BOOK';
     } else if (path === '/master/note-book/noti') {
       this.headerText = 'NOTE BOOK NOTI';
+    } else if (path === '/labour/labour-wages') {
+      this.headerText = 'LABOUR WAGES';
     }
   }
 

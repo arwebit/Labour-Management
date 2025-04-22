@@ -31,6 +31,12 @@ const routes: Routes = [
       import('./master/master.module').then((m) => m.MasterPageModule),
     canActivate: [loginGuard],
   },
+  {
+    path: 'labour',
+    loadChildren: () =>
+      import('./labour/labour.module').then((m) => m.LabourPageModule),
+    canActivate: [loginGuard],
+  },
 ];
 
 @NgModule({

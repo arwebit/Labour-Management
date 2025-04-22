@@ -1,0 +1,104 @@
+<small>Labour</small>
+<select (change)="getUserPerformanceDetails($event)" class="form-control">
+  <option value="">Select Labour</option>
+  <option [value]="users.user_id" *ngFor="let users of labourLists">
+    {{ users.full_name }}
+  </option>
+</select>
+
+<div *ngIf="wages">
+  <hr />
+  <p><b>Labour Name : </b>{{ labourName }}</p>
+
+  <p>Till today</p>
+  <p>
+    <b>Special Advance : </b> &#8377; {{ payment }}<br />
+    <b>Recovery Advance : </b> &#8377;{{ receipt }}<br />
+    <b>Balance : </b> &#8377;{{ labourTotalPayment }}<br /><br />
+    <span
+      [innerHTML]="duePending(labourTotalPayment)"
+      style="color: rgb(173, 66, 4); font-weight: bold"
+    ></span>
+  </p>
+  <hr />
+  <span class="float-start" style="font-weight: bold"> Advance Payment </span>
+  <span class="float-end" style="color: blue" (click)="openModal()">
+    Payment Lists
+  </span>
+
+  <div style="clear: both" style="margin-bottom: 45px"></div>
+  <form [formGroup]="addWageForm">
+    <input type="hidden" formControlName="labour" [(ngModel)]="labourID" />
+    <small
+      >Payment Date <b class="text-danger">* {{ paymentDateErr }}</b></small
+    >
+    <input
+      type="date"
+      formControlName="payment_date"
+      class="form-control"
+      [(ngModel)]="currentDate"
+    /><br />
+    <small
+      >Payment <b class="text-danger">* {{ paymentErr }}</b></small
+    >
+    <input
+      type="text"
+      formControlName="payment"
+      class="form-control"
+      placeholder="Enter Payment"
+    /><br />
+    <small
+      >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
+    >
+    <select formControlName="payment_type" class="form-control">
+      <option value="advance">Advance</option>
+      <option value="receive">Receive</option>
+    </select>
+    <br />
+    <small
+      >Description <b class="text-danger"> {{ descriptionErr }}</b></small
+    >
+    <textarea formControlName="description" class="form-control"></textarea
+    ><br />
+    <button class="btn btn-primary" (click)="save()">Save</button>
+  </form>
+</div>
+
+<ion-modal
+  [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]"
+  handleBehavior="cycle"
+  #specialPaymentListModel
+>
+  <ng-template>
+    <div class="block">
+      <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
+        Special Payment Lists
+      </div>
+      <table width="100%">
+        <tr>
+          <th>Date</th>
+          <th>Payment (in &#8377;)</th>
+          <th>Payment Type</th>
+          <th *ngIf="hasAccess(27, userRole)">Option</th>
+        </tr>
+        <tr *ngFor="let paymentList of paymentLists">
+          <td>
+            {{ paymentList.payment_date | date : "dd/MM/yyyy" }}
+          </td>
+          <td>{{ paymentList.payment }}</td>
+          <td>{{ paymentList.payment_type }}</td>
+          <td *ngIf="hasAccess(27, userRole)">
+            <a href="javascript:void(0)"> EDIT </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </ng-template>
+</ion-modal>
+<ion-toast
+  [isOpen]="isToastOpen"
+  [message]="saveMsg"
+  [duration]="3000"
+  (didDismiss)="setToastOpen(false)"
+></ion-toast>

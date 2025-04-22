@@ -59,24 +59,17 @@ export class SidebarComponent {
         link: '/master/labour-rates',
         icon: 'fa-solid fa-dollar-sign',
       },
-
-      {
-        id: 20,
-        text: 'Labour Wages',
-        link: '/labour/labour-wages',
-        icon: 'fa-solid fa-coins',
-      },
-      {
-        id: 25,
-        text: 'Labour Special wages',
-        link: '/labour/labour-special-wages',
-        icon: 'fa-solid fa-coins',
-      },
       {
         id: 29,
         text: 'Labour Attendance',
         link: '/labour/labour-attendance',
         icon: 'fa-solid fa-user',
+      },
+      {
+        id: 20,
+        text: 'Labour Wages',
+        link: '/labour/labour-wages',
+        icon: 'fa-solid fa-coins',
       },
     ];
 

@@ -1,0 +1,55 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+    class="custom-refresher"
+  >
+    <ion-refresher-content
+      pullingIcon="refresh-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-md-12 col-xl-4">
+            <div class="button-box">
+              <button
+                class="btn btn-primary"
+                (click)="toggleReportList('normal-wage')"
+                [disabled]="normalWageBtn"
+              >
+                Normal
+              </button>
+              <button
+                class="btn btn-warning"
+                (click)="toggleReportList('special-wage')"
+                [disabled]="specialWageBtn"
+                *ngIf="hasAccess(25, userRole)"
+              >
+                Special
+              </button>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="normalWageDiv">
+                  <b>Normal Wages</b><br /><br />
+                  <app-normal-wages></app-normal-wages>
+                </div>
+                <div *ngIf="specialWageDiv">
+                  <b>Special Wages</b><br /><br />
+                  <app-special-wages></app-special-wages>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
