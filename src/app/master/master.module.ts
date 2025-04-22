@@ -9,6 +9,7 @@ import { MasterPageRoutingModule } from './master-routing.module';
 import { MasterPage } from './master.page';
 import { LayoutsModule } from '../layouts/layouts.module';
 import { GroupAccessComponent } from './group-access/group-access.component';
+import { WorkSiteComponent } from './work-site/work-site.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { GroupAccessComponent } from './group-access/group-access.component';
     LayoutsModule,
     MasterPageRoutingModule,
   ],
-  declarations: [MasterPage, GroupAccessComponent],
+  declarations: [MasterPage, GroupAccessComponent, WorkSiteComponent],
 })
 export class MasterPageModule {}

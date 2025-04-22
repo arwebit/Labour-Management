@@ -44,8 +44,8 @@ export class TopComponent {
       this.headerText = 'EDIT USER';
     } else if (path.startsWith('/master/group-access')) {
       this.headerText = 'GROUP ACCESS';
-    } else if (/^\/tickets\/\d+\/replies$/.test(path)) {
-      this.headerText = 'TICKET DETAILS';
+    } else if (path.startsWith('/master/work-site')) {
+      this.headerText = 'WORK SITE';
     }
   }
 

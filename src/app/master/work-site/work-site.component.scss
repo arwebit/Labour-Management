@@ -7,10 +7,7 @@ ion-fab.add {
 }
 
 ion-fab.sort {
-  bottom: 21%;
-}
-ion-fab.filter {
-  bottom: 31%;
+  bottom: 23%;
 }
 
 .card {
@@ -21,8 +18,7 @@ ion-fab.filter {
   margin-top: -4%;
 }
 
-ul.sorting,
-ul.filter {
+ul.sorting {
   width: 200px;
   list-style-type: none;
   padding: 0;
@@ -30,20 +26,18 @@ ul.filter {
   background-color: #bdc0bd;
 }
 
-ul.sorting li,
-ul.filter li {
+ul.sorting li {
   padding: 10px 20px;
   cursor: pointer;
 }
 
-ul.sorting li:hover,
-ul.filter li:hover {
+ul.sorting li:hover {
   background-color: #f0f0f0;
 }
 
 .block {
   width: 100%;
-  height: 350px;
+  height: 250px;
   overflow-y: scroll;
   padding: 15px;
 }

@@ -6,7 +6,7 @@ import { API_LINKS } from '../../apis';
 @Injectable({
   providedIn: 'root',
 })
-export class MasterService {
+export class HelpersService {
   Authorization = `Bearer ${localStorage.getItem('token')}`;
 
   header = new HttpHeaders({

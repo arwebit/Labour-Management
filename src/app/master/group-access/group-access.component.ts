@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { MasterService } from 'src/app/shared/services/others/master.service';
+import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class GroupAccessComponent {
 
   constructor(
     private userSrv: UserService,
-    private masterSrv: MasterService,
+    private helperSrv: HelpersService,
     public alertController: AlertController
   ) {
     this.getRoles();
@@ -77,7 +77,7 @@ export class GroupAccessComponent {
   }
 
   getModules() {
-    this.masterSrv.getAllModuleAccess().subscribe(
+    this.helperSrv.getAllModuleAccess().subscribe(
       (res: any) => {
         this.groupModules = res.rows;
       },
@@ -88,7 +88,7 @@ export class GroupAccessComponent {
   }
 
   getRoles() {
-    this.masterSrv.getAllUserRoles().subscribe(
+    this.helperSrv.getAllUserRoles().subscribe(
       (result: any) => {
         this.roleList = result.rows.filter((role: any) => role.role_id !== -1);
       },
@@ -117,7 +117,7 @@ export class GroupAccessComponent {
         condition: [['role_id', '=', roleID]],
       },
     };
-    this.masterSrv.getAllGroupAccess(data).subscribe(
+    this.helperSrv.getAllGroupAccess(data).subscribe(
       (res: any) => {
         const [details] = res.rows;
         this.moduleVal = details.module_access
@@ -174,7 +174,7 @@ export class GroupAccessComponent {
   save() {
     this.groupAccessForm.value.module_access_id = this.moduleVal;
 
-    this.masterSrv.saveGroupAccess(this.groupAccessForm.value).subscribe(
+    this.helperSrv.saveGroupAccess(this.groupAccessForm.value).subscribe(
       (result: any) => {
         this.emptyErrors();
         this.saveMsg = result.message;

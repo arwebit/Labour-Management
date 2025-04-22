@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
 import { Component, ViewChild } from '@angular/core';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { UserService } from '../shared/services/users/user.service';
-import { MasterService } from '../shared/services/others/master.service';
 import { environment } from 'src/environments/environment';
 import { FormControl, FormGroup } from '@angular/forms';
+import { HelpersService } from '../shared/services/others/helpers.service';
 
 @Component({
   selector: 'app-users',
@@ -52,7 +52,7 @@ export class UsersPage {
 
   constructor(
     private userSrv: UserService,
-    private masterSrv: MasterService,
+    private helperSrv: HelpersService,
     public alertController: AlertController
   ) {
     this.getRoles();
@@ -140,7 +140,7 @@ export class UsersPage {
   }
 
   getRoles() {
-    this.masterSrv.getAllUserRoles().subscribe(
+    this.helperSrv.getAllUserRoles().subscribe(
       (result: any) => {
         this.filter = result.rows;
         this.roleList = result.rows;
