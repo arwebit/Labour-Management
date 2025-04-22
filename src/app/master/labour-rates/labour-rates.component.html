@@ -1,0 +1,108 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+    class="custom-refresher"
+  >
+    <ion-refresher-content
+      pullingIcon="refresh-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="sort">
+          <ion-fab-button size="small" color="tertiary">
+            <i class="fa-solid fa-arrow-up-wide-short"></i>
+          </ion-fab-button>
+          <ion-fab-list side="start">
+            <ul class="sorting">
+              <li (click)="sort('')">Remove sorting</li>
+              <li (click)="sort('1')">Sort by Full Name (Desc)</li>
+              <li (click)="sort('2')">Sort by Full Name (Asc)</li>
+            </ul>
+          </ion-fab-list>
+        </ion-fab>
+
+        <div class="row g-4">
+          <div class="col-sm-12 col-md-12 col-xl-4">
+            <div class="card">
+              <div class="card-body">
+                <div
+                  class="d-flex align-items-center border-bottom py-3"
+                  *ngFor="let rates of labourRateLists"
+                  (click)="
+                    hasAccess(17, userRole)
+                      ? openModal(rates.user_id)
+                      : denyAccess(
+                          'Warning',
+                          'You have no permission to access this module'
+                        )
+                  "
+                >
+                  <div class="w-100 ms-3">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-0">{{ rates.full_name | titlecase }}</h6>
+                    </div>
+                    <small>
+                      Per wage rate: &#8377;{{ rates.labour_rate }}</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-modal
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+    handleBehavior="cycle"
+    #labourRateModel
+  >
+    <ng-template>
+      <div class="block">
+        <form [formGroup]="saveLabourRateForm">
+          <div class="mb-3"><b>Labour name :</b> {{ labourName }}</div>
+          <div class="mb-3">
+            <label class="form-label"
+              >Labour rate
+              <b class="text-danger">* {{ labourRateErr }}</b>
+            </label>
+            <input
+              type="text"
+              formControlName="labour_rate"
+              placeholder="Labour rate"
+              tabindex="1"
+              class="form-control"
+            />
+          </div>
+
+          <div class="mb-3">
+            <button
+              type="submit"
+              tabindex="4"
+              class="btn btn-primary"
+              (click)="saveLabourRates()"
+            >
+              Save Labour Rates
+            </button>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

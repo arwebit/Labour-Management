@@ -13,9 +13,9 @@
         href="javascript:void(0)"
         class="nav-link dropdown-toggle"
         data-bs-toggle="dropdown"
+        *ngIf="hasAccess(19, userRole)"
       >
         <i class="fa-solid fa-bell me-lg-2"></i>
-        <span class="d-none d-lg-inline-flex">Notificatin</span>
       </a>
       <div
         class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0"

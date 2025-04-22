@@ -46,6 +46,8 @@ export class TopComponent {
       this.headerText = 'GROUP ACCESS';
     } else if (path.startsWith('/master/work-site')) {
       this.headerText = 'WORK SITE';
+    } else if (path.startsWith('/master/labour-rates')) {
+      this.headerText = 'LABOUR RATES';
     }
   }
 

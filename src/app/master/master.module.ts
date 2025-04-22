@@ -10,6 +10,7 @@ import { MasterPage } from './master.page';
 import { LayoutsModule } from '../layouts/layouts.module';
 import { GroupAccessComponent } from './group-access/group-access.component';
 import { WorkSiteComponent } from './work-site/work-site.component';
+import { LabourRatesComponent } from './labour-rates/labour-rates.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,11 @@ import { WorkSiteComponent } from './work-site/work-site.component';
     LayoutsModule,
     MasterPageRoutingModule,
   ],
-  declarations: [MasterPage, GroupAccessComponent, WorkSiteComponent],
+  declarations: [
+    MasterPage,
+    GroupAccessComponent,
+    WorkSiteComponent,
+    LabourRatesComponent,
+  ],
 })
 export class MasterPageModule {}
