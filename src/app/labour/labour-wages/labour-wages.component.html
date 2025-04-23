@@ -17,23 +17,51 @@
       <div class="container-fluid pt-4 px-4">
         <div class="row g-4">
           <div class="col-sm-12 col-md-12 col-xl-4">
-            <div class="button-box">
-              <button
-                class="btn btn-primary"
+            <ion-fab
+              slot="fixed"
+              vertical="bottom"
+              horizontal="end"
+              class="normal"
+            >
+              <ion-fab-button
+                color="success"
+                size="small"
                 (click)="toggleReportList('normal-wage')"
                 [disabled]="normalWageBtn"
               >
-                Normal
-              </button>
-              <button
-                class="btn btn-warning"
+                <i class="fa-solid fa-money-bill-wave"></i>
+              </ion-fab-button>
+            </ion-fab>
+            <ion-fab
+              slot="fixed"
+              vertical="bottom"
+              horizontal="end"
+              class="special"
+            >
+              <ion-fab-button
+                color="primary"
+                size="small"
                 (click)="toggleReportList('special-wage')"
                 [disabled]="specialWageBtn"
-                *ngIf="hasAccess(25, userRole)"
               >
-                Special
-              </button>
-            </div>
+                <i class="fa-solid fa-dollar-sign"></i>
+              </ion-fab-button>
+            </ion-fab>
+            <ion-fab
+              slot="fixed"
+              vertical="bottom"
+              horizontal="end"
+              class="attendance"
+            >
+              <ion-fab-button
+                color="warning"
+                size="small"
+                (click)="toggleReportList('attendance')"
+                [disabled]="attendanceBtn"
+              >
+                <i class="fa-solid fa-calendar"></i>
+              </ion-fab-button>
+            </ion-fab>
 
             <div class="card">
               <div class="card-body">
@@ -44,6 +72,10 @@
                 <div *ngIf="specialWageDiv">
                   <b>Special Wages</b><br /><br />
                   <app-special-wages></app-special-wages>
+                </div>
+                <div *ngIf="attendanceDiv">
+                  <b>Show Attendances</b><br /><br />
+                  <app-show-attendance></app-show-attendance>
                 </div>
               </div>
             </div>

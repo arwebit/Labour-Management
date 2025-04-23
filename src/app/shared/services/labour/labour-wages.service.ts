@@ -47,6 +47,7 @@ export class LabourWagesService {
     return this.http
       .put(API_LINKS.LABOUR_WAGES_URL, data, {
         headers: this.header,
+        params: params,
       })
       .pipe(take(1));
   }
@@ -56,6 +57,7 @@ export class LabourWagesService {
     return this.http
       .put(API_LINKS.LABOUR_WAGES_URL + '/accept', data, {
         headers: this.header,
+        params: params,
       })
       .pipe(take(1));
   }
@@ -104,6 +106,7 @@ export class LabourWagesService {
     return this.http
       .put(API_LINKS.LABOUR_SPCL_WAGES_URL, data, {
         headers: this.header,
+        params: params,
       })
       .pipe(take(1));
   }

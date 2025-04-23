@@ -1,0 +1,53 @@
+<small>Labour</small>
+<select (change)="getUserPerformanceDetails($event)" class="form-control">
+  <option value="">Select Labour</option>
+  <option [value]="users.user_id" *ngFor="let users of labourLists">
+    {{ users.full_name }}
+  </option>
+</select>
+
+<div *ngIf="attendances">
+  <hr />
+  <div class="row">
+    <div class="col-sm-4">
+      <div style="text-align: center; font-weight: bold">Check attendances</div>
+      <small>From Date</small>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="Select date"
+        [(ngModel)]="fromDate"
+      />
+    </div>
+    <div class="col-sm-4">
+      <small>To Date</small>
+      <input
+        type="date"
+        class="form-control"
+        placeholder="Select date"
+        [(ngModel)]="toDate"
+      />
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-primary" (click)="getUserAttendanceDetails()">
+        Apply
+      </button>
+    </div>
+    <table *ngIf="attTable" width="100%">
+      <tr>
+        <th style="padding: 15px">Date</th>
+        <th>No. of wages</th>
+      </tr>
+      <tr *ngFor="let attWagesList of attWagesLists">
+        <td>
+          {{ attWagesList.work_date | date : "dd/MM/yyyy" }}
+        </td>
+        <td>{{ attWagesList.no_of_wages }}</td>
+      </tr>
+      <tr>
+        <th>Total</th>
+        <th>{{ totalWages }}</th>
+      </tr>
+    </table>
+  </div>
+</div>

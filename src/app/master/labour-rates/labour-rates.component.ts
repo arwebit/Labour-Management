@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
+import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
 
 @Component({
@@ -36,24 +37,38 @@ export class LabourRatesComponent {
 
   constructor(
     private userSrv: UserService,
+    private helperSrv: HelpersService,
     private labourRateSrv: LabourRatesService,
     private alertController: AlertController
   ) {
-    this.labourRole = 2;
-    this.condition.push(['user_details.user_role', '=', this.labourRole]);
     this.closeModal();
     this.saveLabourRateFormInit();
   }
 
   ionViewWillEnter(): void {
+    this.getLabourRole();
     this.getUserDetails();
     this.emptyErrors();
     this.getUserDetails();
     this.emptyErrors();
-    this.getLabourRates();
     this.closeModal();
   }
 
+  getLabourRole() {
+    this.helperSrv.getAllUserRoles().subscribe(
+      (res: any) => {
+        const roles = res.rows;
+        this.labourRole = roles.find(
+          (role: any) => role.role_name === 'Labour'
+        )?.role_id;
+        this.condition.push(['user_details.user_role', '=', this.labourRole]);
+        this.getLabourRates(this.condition);
+      },
+      (err: HttpErrorResponse) => {
+        console.log('Something went wrong');
+      }
+    );
+  }
   async getUserDetails() {
     this.userModuleAccess = [];
     const data = await this.userSrv.getUserDetails(this.loggedInUserID);
@@ -110,7 +125,7 @@ export class LabourRatesComponent {
     await modalElement.dismiss();
   }
 
-  getLabourRates() {
+  getLabourRates(condition: any = []) {
     this.loader = true;
 
     if (this.loading) return;
@@ -118,7 +133,7 @@ export class LabourRatesComponent {
 
     const postData = {
       filter: {
-        condition: this.condition,
+        condition: condition,
       },
       start_row: this.offset,
       page_records: this.limit,

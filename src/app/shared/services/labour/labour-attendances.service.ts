@@ -33,6 +33,13 @@ export class LabourAttendancesService {
       })
       .pipe(take(1));
   }
+  getCurrentAttandance(data: any): Observable<any> {
+    return this.http
+      .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/current-attendance', data, {
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
 
   checkIn(data: any): Observable<any> {
     return this.http

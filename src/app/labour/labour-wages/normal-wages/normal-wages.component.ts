@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
 import { LabourWagesService } from 'src/app/shared/services/labour/labour-wages.service';
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
+import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
 
 @Component({
@@ -17,11 +18,12 @@ export class NormalWagesComponent {
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';
+  editWageForm!: FormGroup;
   currentDate: any = '';
   currentDateTime: any = '';
   labourName: string = '';
   labourID: string = '';
-  labourRole: any = 2;
+  labourRole: any = '';
   labourRate: number = 0;
   labourTotalPayment: number = 0;
   labourTotalWages: number = 0;
@@ -48,35 +50,63 @@ export class NormalWagesComponent {
   toDate: any = '';
 
   @ViewChild('normalPaymentListModel') normalPaymentListModel: any;
+  @ViewChild('editPaymentListModel') editPaymentListModel: any;
 
   constructor(
     public alertController: AlertController,
+    private helperSrv: HelpersService,
     private userSrv: UserService,
     private wageSrv: LabourWagesService,
     private attSrv: LabourAttendancesService,
     private rateSrv: LabourRatesService
   ) {
-    this.labourRole = 2;
-
     this.getCurrentDate();
     this.getUserDetails();
     this.emptyErrors();
-    this.getLabours();
+    this.getLabourRole();
     this.addWageFormInit();
+    this.editWageFormInit();
     this.closeModal();
   }
 
-  async openModal() {
-    const normalPaymentListElement = this.normalPaymentListModel?.el;
-    if (normalPaymentListElement) {
-      await normalPaymentListElement.present();
+  getLabourRole() {
+    this.helperSrv.getAllUserRoles().subscribe(
+      (res: any) => {
+        const roles = res.rows;
+        this.labourRole = roles.find(
+          (role: any) => role.role_name === 'Labour'
+        )?.role_id;
+        this.getLabours(this.labourRole);
+      },
+      (err: HttpErrorResponse) => {
+        console.log('Something went wrong');
+      }
+    );
+  }
+
+  async openModal(str: string, wagesID: any = '') {
+    if (str === 'payment_list') {
+      const normalPaymentListElement = this.normalPaymentListModel?.el;
+      if (normalPaymentListElement) {
+        await normalPaymentListElement.present();
+      }
+    } else {
+      const editPaymentListElement = this.editPaymentListModel?.el;
+      if (editPaymentListElement) {
+        await editPaymentListElement.present();
+        this.editWageFormInit(wagesID);
+      }
     }
   }
 
   async closeModal() {
     const normalPaymentListElement = this.normalPaymentListModel?.el;
+    const editPaymentListElement = this.editPaymentListModel?.el;
     if (normalPaymentListElement) {
       await normalPaymentListElement.dismiss();
+    }
+    if (editPaymentListElement) {
+      await editPaymentListElement.dismiss();
     }
   }
 
@@ -123,17 +153,17 @@ export class NormalWagesComponent {
     if (totalPayment > toPay) {
       text = `Labour has taken a advance of &#8377;${Math.abs(
         totalPayment - toPay
-      )}`;
+      )}/-`;
     } else {
-      text = `Labour has due of &#8377;${Math.abs(totalPayment - toPay)}`;
+      text = `Labour has due of &#8377;${Math.abs(totalPayment - toPay)}/-`;
     }
     return text;
   }
 
-  getLabours() {
+  getLabours(labourRole: any) {
     const postData = {
       filter: {
-        condition: [['user_role', '=', this.labourRole]],
+        condition: [['user_role', '=', labourRole]],
       },
       start_row: 0,
       page_records: 1000000,
@@ -187,44 +217,6 @@ export class NormalWagesComponent {
       this.labourRate = 0;
       this.labourTotalPayment = 0;
       this.labourTotalWages = 0;
-    }
-  }
-
-  async getUserAttendanceDetails() {
-    const fromDate = this.fromDate;
-    const toDate = this.toDate;
-    if (fromDate && toDate) {
-      const postData = {
-        labour: this.labourID,
-        from_date: fromDate,
-        to_date: toDate,
-      };
-
-      this.attSrv.getNoOfWages(postData).subscribe(
-        (result: any) => {
-          this.attTable = true;
-          this.totalWages = result.total_wages;
-          this.attWagesLists = result.rows;
-        },
-        (err: HttpErrorResponse) => {
-          this.attTable = false;
-          console.log('Something went wrong');
-        }
-      );
-    } else {
-      this.attTable = false;
-      const alert = await this.alertController.create({
-        header: 'Recorrect errors',
-        message: 'Provide all the dates',
-        backdropDismiss: false,
-        buttons: [
-          {
-            text: 'Ok',
-            role: 'cancel',
-          },
-        ],
-      });
-      await alert.present();
     }
   }
 
@@ -306,13 +298,50 @@ export class NormalWagesComponent {
     });
   }
 
+  editWageFormInit(wagesID: any = '') {
+    this.editWageForm = new FormGroup({
+      wage_id: new FormControl(wagesID),
+      labour: new FormControl(this.labourID),
+      payment_date: new FormControl(''),
+      paid_amount: new FormControl(''),
+      payment_type: new FormControl('weekly'),
+      updated_by: new FormControl(this.loggedInUserID),
+    });
+
+    const postData = {
+      filter: {
+        condition: [['wages_id', '=', wagesID]],
+      },
+      start: 0,
+      page_records: 1,
+      sort_field: 'wages_id',
+      sort: -1,
+    };
+    this.wageSrv.getLabourWages(postData).subscribe(
+      (res: any) => {
+        const [details] = res.rows;
+        this.editWageForm = new FormGroup({
+          wage_id: new FormControl(wagesID),
+          labour: new FormControl(this.labourID),
+          payment_date: new FormControl(details.payment_date),
+          paid_amount: new FormControl(details.paid_amount),
+          payment_type: new FormControl(details.payment_type),
+          updated_by: new FormControl(this.loggedInUserID),
+        });
+      },
+      (err: HttpErrorResponse) => {
+        console.log('Something went wrong');
+      }
+    );
+  }
+
   emptyErrors() {
     this.paymentDateErr = '';
     this.paidAmountErr = '';
     this.paymentTypeErr = '';
   }
 
-  save() {
+  savePayment() {
     this.wageSrv.createLabourWage(this.addWageForm.value).subscribe(
       (res: any) => {
         this.emptyErrors();
@@ -337,5 +366,36 @@ export class NormalWagesComponent {
         this.setToastOpen(true);
       }
     );
+  }
+
+  updatePayment() {
+    this.wageSrv
+      .updateLabourWage(
+        this.editWageForm.value,
+        this.editWageForm.value.wage_id
+      )
+      .subscribe(
+        (res: any) => {
+          this.emptyErrors();
+          this.saveMsg = '';
+          const data = {
+            target: {
+              value: this.editWageForm.value.labour,
+            },
+          } as unknown as Event;
+          this.getUserPerformanceDetails(data);
+          this.saveMsg = res.message;
+          this.setToastOpen(true);
+        },
+        (err: HttpErrorResponse) => {
+          this.emptyErrors();
+          this.saveMsg = '';
+          this.paymentDateErr = err.error.errors.payment_date;
+          this.paidAmountErr = err.error.errors.paid_amount;
+          this.paymentTypeErr = err.error.errors.payment_type;
+          this.saveMsg = err.error.message;
+          this.setToastOpen(true);
+        }
+      );
   }
 }

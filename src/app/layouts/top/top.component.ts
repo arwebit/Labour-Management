@@ -50,6 +50,8 @@ export class TopComponent {
       this.headerText = 'NOTE BOOK NOTI';
     } else if (path === '/labour/labour-wages') {
       this.headerText = 'LABOUR WAGES';
+    } else if (path === '/labour/labour-attendance') {
+      this.headerText = 'LABOUR ATTENDANCE';
     }
   }
 

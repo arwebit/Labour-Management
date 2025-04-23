@@ -46,7 +46,7 @@ export class LoginPage {
       },
       (err: HttpErrorResponse): void => {
         this.isLoading = false;
-        this.loginErr = 'Login failed';
+        this.loginErr = err.error.message;
       }
     );
   }

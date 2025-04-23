@@ -1,18 +1,20 @@
+ion-fab {
+  position: fixed;
+  right: 5%;
+}
+ion-fab.normal {
+  bottom: 10%;
+}
+ion-fab.special {
+  bottom: 20%;
+}
+ion-fab.attendance {
+  bottom: 30%;
+}
 .card {
   background-color: #fbfffb;
   border: 0;
   width: 100%;
   margin-left: 0%;
   margin-top: -4%;
-}
-
-.button-box {
-  position: fixed;
-  font-size: 12px;
-  bottom: 0%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  display: flex;
-  gap: 10px;
 }

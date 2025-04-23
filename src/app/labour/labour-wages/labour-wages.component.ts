@@ -21,9 +21,11 @@ export class LabourWagesComponent {
 
   normalWageBtn: boolean = true;
   specialWageBtn: boolean = false;
+  attendanceBtn: boolean = false;
 
   normalWageDiv: boolean = true;
   specialWageDiv: boolean = false;
+  attendanceDiv: boolean = false;
 
   @ViewChild('normalPaymentListModel') normalPaymentListModel: any;
   @ViewChild('specialPaymentListModel') specialPaymentListModel: any;
@@ -32,20 +34,6 @@ export class LabourWagesComponent {
     private userSrv: UserService,
     private alertController: AlertController
   ) {}
-
-  toggleReportList(type: string) {
-    if (type === 'normal-wage') {
-      this.normalWageBtn = true;
-      this.specialWageBtn = false;
-      this.normalWageDiv = true;
-      this.specialWageDiv = false;
-    } else {
-      this.normalWageBtn = false;
-      this.specialWageBtn = true;
-      this.normalWageDiv = false;
-      this.specialWageDiv = true;
-    }
-  }
 
   ionViewWillEnter(): void {
     this.getUserDetails();
@@ -91,5 +79,30 @@ export class LabourWagesComponent {
       this.ionViewWillEnter();
       event.target.complete();
     }, 3000);
+  }
+
+  toggleReportList(type: string) {
+    if (type === 'normal-wage') {
+      this.normalWageBtn = true;
+      this.normalWageDiv = true;
+      this.specialWageBtn = false;
+      this.specialWageDiv = false;
+      this.attendanceBtn = false;
+      this.attendanceDiv = false;
+    } else if (type === 'special-wage') {
+      this.normalWageBtn = false;
+      this.normalWageDiv = false;
+      this.specialWageBtn = true;
+      this.specialWageDiv = true;
+      this.attendanceBtn = false;
+      this.attendanceDiv = false;
+    } else {
+      this.normalWageBtn = false;
+      this.normalWageDiv = false;
+      this.specialWageBtn = false;
+      this.specialWageDiv = false;
+      this.attendanceBtn = true;
+      this.attendanceDiv = true;
+    }
   }
 }

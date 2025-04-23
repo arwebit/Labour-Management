@@ -26,7 +26,11 @@
   </p>
   <hr />
   <span class="float-start" style="font-weight: bold"> Payment </span>
-  <span class="float-end" style="color: blue" (click)="openModal()">
+  <span
+    class="float-end"
+    style="color: blue"
+    (click)="openModal('payment_list')"
+  >
     Payment Lists
   </span>
 
@@ -59,7 +63,7 @@
       <option value="advance">Advance</option>
     </select>
     <br />
-    <button class="btn btn-primary" (click)="save()">Save</button>
+    <button class="btn btn-primary" (click)="savePayment()">Save</button>
   </form>
 </div>
 
@@ -88,10 +92,61 @@
           <td>{{ paymentList.paid_amount }}</td>
           <td>{{ paymentList.payment_type | titlecase }}</td>
           <td *ngIf="hasAccess(22, userRole)">
-            <a href="javascript:void(0)"> EDIT </a>
+            <a
+              href="javascript:void(0)"
+              (click)="openModal('edit-payment', paymentList.wages_id)"
+            >
+              EDIT
+            </a>
           </td>
         </tr>
       </table>
+    </div>
+  </ng-template>
+</ion-modal>
+
+<ion-modal
+  [initialBreakpoint]="1"
+  [breakpoints]="[0, 1]"
+  handleBehavior="cycle"
+  #editPaymentListModel
+>
+  <ng-template>
+    <div class="block">
+      <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
+        Update Payment List
+      </div>
+      <form [formGroup]="editWageForm">
+        <input type="hidden" formControlName="labour" [(ngModel)]="labourID" />
+        <small
+          >Payment Date <b class="text-danger">* {{ paymentDateErr }}</b></small
+        >
+        <input
+          type="date"
+          formControlName="payment_date"
+          class="form-control"
+        /><br />
+        <small
+          >Payment <b class="text-danger">* {{ paidAmountErr }}</b></small
+        >
+        <input
+          type="text"
+          formControlName="paid_amount"
+          placeholder="Enter Payment"
+          class="form-control"
+        /><br />
+        <small
+          >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
+        >
+        <select formControlName="payment_type" class="form-control">
+          <option value="weekly">Weekly</option>
+          <option value="advance">Advance</option>
+        </select>
+        <br />
+        <button class="btn btn-info" (click)="updatePayment()">
+          Update Payment
+        </button>
+      </form>
     </div>
   </ng-template>
 </ion-modal>
