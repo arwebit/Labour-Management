@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Query;
+use App\Models\WorkSite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator as Validator;
@@ -221,6 +222,44 @@ class AttendanceController extends Controller
         }
 
         return response()->json($response, 200);
+    }
+
+    public function getWorkSiteWithAttendance(Request $req)
+    {
+
+        $rules = [
+            'labour'    => 'required',
+            'work_date' => 'required',
+        ];
+        $messages = [
+            'labour.required'    => 'Labour required',
+            'work_date.required' => 'Work Date required',
+        ];
+
+        $validator = Validator::make($req->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
+        } else {
+            $labour   = $req->input("labour");
+            $workDate = $req->input("work_date");
+            $query    = WorkSite::with(["attendance" => function ($q) use ($labour, $workDate) {
+                $q->where("labour", "=", $labour)->where("work_date", "=", $workDate)->select();
+            }])->select("work_site_id", "work_site_name", "work_site_location");
+
+            if ($req->input("work_site")) {
+                $condition = [["work_site_id", "=", $req->input("work_site")]];
+                $query     = Query::filters($query, $condition);
+            }
+
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "rows"       => $query->get(),
+            ];
+            return response()->json($response, 200);
+        }
+
     }
 
 }

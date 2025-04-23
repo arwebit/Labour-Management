@@ -156,7 +156,7 @@ class LabourWagesController extends Controller
         if ($validator->fails()) {
             return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
         } else {
-            $saveLabourWages = DB::table('labour_wages')->where('wages_id', '=', $wagesID)->update(
+            DB::table('labour_wages')->where('wages_id', '=', $wagesID)->update(
                 [
                     'labour'            => $req->input("labour"),
                     'payment_date'      => $req->input("payment_date"),
@@ -166,11 +166,7 @@ class LabourWagesController extends Controller
                     'updated_date_time' => date("Y-m-d H:i:s"),
                 ]);
 
-            if ($saveLabourWages) {
-                return response()->json(['statusCode' => 201, 'message' => 'Successfully saved labour wages'], 201);
-            } else {
-                return response()->json(['statusCode' => 500, 'message' => 'Internal server error'], 500);
-            }
+            return response()->json(['statusCode' => 201, 'message' => 'Successfully saved labour wages'], 201);
         }
     }
 

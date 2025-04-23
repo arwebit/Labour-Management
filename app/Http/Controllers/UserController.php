@@ -31,7 +31,7 @@ class UserController extends Controller
             }, 'updated_by' => function ($q3) {
                 $q3->select('user_id', 'full_name');
             },
-        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1)
+        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")
             ->orderBy($sortField, $sort)
             ->get();
 
@@ -78,7 +78,7 @@ class UserController extends Controller
             }, 'updated_by' => function ($q3) {
                 $q3->select('user_id', 'full_name');
             },
-        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")->where("user_id", ">", 1);
+        ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time");
 
         $query = Query::filters($query, $condition);
 
@@ -405,12 +405,20 @@ class UserController extends Controller
                 return response()->json(['status' => 406, 'message' => 'Login failed'], 406);
             }
 
-            $data = DB::table('user_details')
+            $query = DB::table('user_details')
                 ->select('user_id')
                 ->where("username", "=", $req->input("username"))
-                ->first();
+                ->where("is_active", "=", "yes");
 
-            return response()->json(['statusCode' => 200, 'message' => 'Successfully logged in', 'rows' => $data, "token" => $this->respondWithToken($token)->original], 200);
+            $count = $query->count();
+            if ($count > 0) {
+                $data = $query->first();
+                return response()->json(['statusCode' => 200, 'message' => 'Successfully logged in', 'rows' => $data, "token" => $this->respondWithToken($token)->original], 200);
+            } else {
+
+                return response()->json(['statusCode' => 400, 'message' => 'User is not active'], 400);
+            }
+
         }
     }
 

@@ -68,6 +68,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('/add', 'AttendanceController@checkIn');
             $router->put('/', 'AttendanceController@checkOut');
             $router->delete('/', 'AttendanceController@deleteAttendance');
+            $router->post('/current-attendance', 'AttendanceController@getWorkSiteWithAttendance');
         });
 
         $router->group(['prefix' => 'labour-rates'], function () use ($router) {

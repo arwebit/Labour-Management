@@ -161,7 +161,7 @@ class LabourSpclWagesController extends Controller
         if ($validator->fails()) {
             return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
         } else {
-            $saveLabourSpclWages = DB::table('labour_special_wages')->where('spcl_wage_id', '=', $spclWageID)->update(
+            DB::table('labour_special_wages')->where('spcl_wage_id', '=', $spclWageID)->update(
                 [
                     'labour'            => $req->input("labour"),
                     'payment_date'      => $req->input("payment_date"),
@@ -172,11 +172,7 @@ class LabourSpclWagesController extends Controller
                     'updated_date_time' => date("Y-m-d H:i:s"),
                 ]);
 
-            if ($saveLabourSpclWages) {
-                return response()->json(['statusCode' => 201, 'message' => 'Successfully saved labour special wage'], 201);
-            } else {
-                return response()->json(['statusCode' => 500, 'message' => 'Internal server error'], 500);
-            }
+            return response()->json(['statusCode' => 201, 'message' => 'Successfully saved labour special wage'], 201);
         }
     }
 
@@ -221,9 +217,9 @@ class LabourSpclWagesController extends Controller
         $payment = 0;
 
         foreach ($rows as $row) {
-            if ($row->payment_type === 'receipt') {
+            if ($row->payment_type === 'receive') {
                 $receipt = $row->payment;
-            } elseif ($row->payment_type === 'payment') {
+            } elseif ($row->payment_type === 'advance') {
                 $payment = $row->payment;
             }
         }

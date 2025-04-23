@@ -21,4 +21,9 @@ class WorkSite extends Model
     {
         return $this->hasOne(User::class, "user_id", "updated_by");
     }
+
+    public function attendance(): HasOne
+    {
+        return $this->hasOne(Attendance::class, "work_site", "work_site_id");
+    }
 }
