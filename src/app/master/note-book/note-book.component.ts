@@ -51,6 +51,19 @@ export class NoteBookComponent {
     this.getWorkSites();
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.createNoteBookModel.setCurrentBreakpoint(1);
+      this.editNoteBookModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   ionViewWillEnter(): void {
     this.getUserDetails();
     this.emptyErrors();

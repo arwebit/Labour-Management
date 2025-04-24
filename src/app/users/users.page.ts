@@ -59,6 +59,7 @@ export class UsersPage {
   }
 
   ionViewWillEnter(): void {
+    this.condition.push(['user_id', '>', 1]);
     this.imageURL = environment.imageURL;
     this.defaultImageURL = '../../assets/images/avatar.png';
     this.getUserDetails();
@@ -69,6 +70,18 @@ export class UsersPage {
     this.closeModal();
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.createUserModal.setCurrentBreakpoint(1);
+      this.editUserModal.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
   async getUserDetails() {
     this.userModuleAccess = [];
     const data = await this.userSrv.getUserDetails(this.loggedInUserID);

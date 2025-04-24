@@ -1,8 +1,23 @@
 <ion-content [fullscreen]="true">
   <div class="container-xxl position-relative bg-white d-flex p-0">
-    <app-sidebar></app-sidebar>
     <div class="content">
       <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="grid-container">
+              <a
+                [routerLink]="menu.link"
+                class="grid-item"
+                *ngFor="let menu of menus"
+              >
+                <span class="grid-text"> {{menu.text}} </span>
+                <img [src]="menu.image" [alt]="menu.text" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>

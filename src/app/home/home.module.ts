@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { LayoutsModule } from '../layouts/layouts.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { LayoutsModule } from '../layouts/layouts.module';
     IonicModule,
     HomePageRoutingModule,
     LayoutsModule,
+    RouterModule,
   ],
   declarations: [HomePage],
 })

@@ -93,7 +93,7 @@ export class AppComponent {
   backButton() {
     this.platform.backButton.subscribeWithPriority(10, () => {
       if (this._location.isCurrentPathEqualTo('/dashboard')) {
-        this.showExitConfirm();
+        //this.showExitConfirm();
       } else {
         this._location.back();
       }

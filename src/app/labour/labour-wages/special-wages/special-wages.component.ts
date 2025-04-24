@@ -64,6 +64,20 @@ export class SpecialWagesComponent {
     this.editWageFormInit();
     this.closeModal();
   }
+
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.editPaymentListModel.setCurrentBreakpoint(1);
+      this.specialPaymentListModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   getLabourRole() {
     this.helperSrv.getAllUserRoles().subscribe(
       (res: any) => {

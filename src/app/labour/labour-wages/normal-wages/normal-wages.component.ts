@@ -84,6 +84,19 @@ export class NormalWagesComponent {
     );
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.normalPaymentListModel.setCurrentBreakpoint(1);
+      this.editPaymentListModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   async openModal(str: string, wagesID: any = '') {
     if (str === 'payment_list') {
       const normalPaymentListElement = this.normalPaymentListModel?.el;

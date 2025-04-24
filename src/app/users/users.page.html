@@ -83,8 +83,10 @@
 
   <ion-modal
     [initialBreakpoint]="1"
-    [breakpoints]="[0, 1]"
+    [breakpoints]="[0.5, 1]"
     handleBehavior="cycle"
+    [canDismiss]="true"
+    (willDismiss)="checkModalDismiss($event)"
     #createUserModal
   >
     <ng-template>
@@ -222,8 +224,10 @@
   </ion-modal>
   <ion-modal
     [initialBreakpoint]="1"
-    [breakpoints]="[0, 1]"
+    [breakpoints]="[0.5, 1]"
     handleBehavior="cycle"
+    [canDismiss]="true"
+    (willDismiss)="checkModalDismiss($event)"
     #editUserModal
   >
     <ng-template>

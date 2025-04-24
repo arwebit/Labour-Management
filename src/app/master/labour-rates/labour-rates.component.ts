@@ -53,7 +53,17 @@ export class LabourRatesComponent {
     this.emptyErrors();
     this.closeModal();
   }
-
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.labourRateModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
   getLabourRole() {
     this.helperSrv.getAllUserRoles().subscribe(
       (res: any) => {

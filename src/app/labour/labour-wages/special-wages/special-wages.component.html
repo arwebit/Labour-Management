@@ -72,8 +72,10 @@
 
 <ion-modal
   [initialBreakpoint]="1"
-  [breakpoints]="[0, 1]"
+  [breakpoints]="[0.5, 1]"
   handleBehavior="cycle"
+  [canDismiss]="true"
+  (willDismiss)="checkModalDismiss($event)"
   #specialPaymentListModel
 >
   <ng-template>
@@ -110,8 +112,10 @@
 
 <ion-modal
   [initialBreakpoint]="1"
-  [breakpoints]="[0, 1]"
+  [breakpoints]="[0.5, 1]"
   handleBehavior="cycle"
+  [canDismiss]="true"
+  (willDismiss)="checkModalDismiss($event)"
   #editPaymentListModel
 >
   <ng-template>

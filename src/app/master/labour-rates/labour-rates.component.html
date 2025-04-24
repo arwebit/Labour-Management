@@ -11,7 +11,6 @@
     </ion-refresher-content>
   </ion-refresher>
   <div class="container-xxl position-relative bg-white d-flex p-0">
-    <app-sidebar></app-sidebar>
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
@@ -49,7 +48,10 @@
                       <h6 class="mb-0">{{ rates.full_name | titlecase }}</h6>
                     </div>
                     <small>
-                      Per wage rate: &#8377;{{ rates.labour_rate }}</small
+                      Per wage rate:
+                      {{
+                        rates.labour_rate ? "&#8377;" + rates.labour_rate : ""
+                      }}</small
                     >
                   </div>
                 </div>
@@ -63,8 +65,10 @@
 
   <ion-modal
     [initialBreakpoint]="1"
-    [breakpoints]="[0, 1]"
+    [breakpoints]="[0.5, 1]"
     handleBehavior="cycle"
+    [canDismiss]="true"
+    (willDismiss)="checkModalDismiss($event)"
     #labourRateModel
   >
     <ng-template>

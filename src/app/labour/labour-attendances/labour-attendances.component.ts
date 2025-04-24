@@ -69,6 +69,19 @@ export class LabourAttendancesComponent {
     this.checkOutFormInit();
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.checkInModel.setCurrentBreakpoint(1);
+      this.checkOutModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   ionViewWillEnter(): void {
     this.getLocation();
     this.getCurrentDate();
@@ -173,6 +186,30 @@ export class LabourAttendancesComponent {
     this.currentDateTime = formattedDateTime;
   }
 
+  /*async getLocation() {
+    try {
+      const position = await Geolocation.getCurrentPosition();
+      this.currentLatitude = position.coords.latitude;
+      this.currentLongitude = position.coords.longitude;
+
+      const apiKey = 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8';
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.currentLatitude},${this.currentLongitude}&key=${apiKey}`
+      );
+      const data = await response.json();
+
+      if (data.status === 'OK' && data.results.length > 0) {
+        this.currentLocation = data.results[0].formatted_address;
+      } else {
+        console.warn('No results found or geocoding failed.');
+        this.currentLocation = 'Unknown Location';
+      }
+    } catch (error) {
+      console.error('Error getting location or place name:', error);
+      this.currentLocation = 'Error fetching location';
+    }
+  }*/
+
   async getLocation() {
     try {
       const position = await Geolocation.getCurrentPosition();
@@ -222,6 +259,7 @@ export class LabourAttendancesComponent {
   }
 
   getWorkSites() {
+    this.workSitesLists = [];
     const postData = {
       labour: this.loggedInUserID,
       work_date: this.currentDate,

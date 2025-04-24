@@ -41,6 +41,18 @@ export class NoteBookNotificationComponent {
     this.checkNoteBookFormInit();
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.checkNoteBookModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   ionViewWillEnter(): void {
     this.getUserDetails();
     this.emptyErrors();

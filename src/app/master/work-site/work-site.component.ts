@@ -54,6 +54,19 @@ export class WorkSiteComponent {
     this.closeModal();
   }
 
+  checkModalDismiss(event: any) {
+    let retVal = false;
+    if (event.detail.role === 'backdrop') {
+      retVal = true;
+    } else if (event.detail.role === 'gesture') {
+      event.preventDefault();
+      this.createWorkSiteModel.setCurrentBreakpoint(1);
+      this.editWorkSiteModel.setCurrentBreakpoint(1);
+      retVal = false;
+    }
+    return retVal;
+  }
+
   async getUserDetails() {
     this.userModuleAccess = [];
     const data = await this.userSrv.getUserDetails(this.loggedInUserID);
