@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { NoteBookService } from 'src/app/shared/services/others/note-book.service';
@@ -30,27 +30,28 @@ export class NoteBookNotificationComponent {
   checkByErr: string = '';
   checkNoteErr: string = '';
 
-  @ViewChild('checkNoteBookModel') checkNoteBookModel: any;
+  showLists: boolean = true;
+  noteBookCheckForm: boolean = false;
 
   constructor(
     private userSrv: UserService,
     private noteBookSrv: NoteBookService,
     private alertController: AlertController
   ) {
-    this.closeModal();
     this.checkNoteBookFormInit();
   }
 
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.checkNoteBookModel.setCurrentBreakpoint(1);
-      retVal = false;
+  toggleFormDiv(str: string, noteBookID: any = '') {
+    this.emptyErrors();
+    if (str === 'save_form') {
+      this.showLists = false;
+      this.noteBookCheckForm = true;
+      this.checkNoteBookFormInit(noteBookID);
+    } else {
+      this.getNoteBooks();
+      this.showLists = true;
+      this.noteBookCheckForm = false;
     }
-    return retVal;
   }
 
   ionViewWillEnter(): void {
@@ -58,7 +59,6 @@ export class NoteBookNotificationComponent {
     this.emptyErrors();
     this.checkNoteBookFormInit();
     this.getNoteBooks();
-    this.closeModal();
   }
 
   async getUserDetails() {
@@ -101,23 +101,6 @@ export class NoteBookNotificationComponent {
       this.ionViewWillEnter();
       event.target.complete();
     }, 3000);
-  }
-
-  async openModal(noteBookID: any = '') {
-    this.emptyErrors();
-    const modalElement = this.checkNoteBookModel?.el;
-    if (modalElement) {
-      await modalElement.present();
-      this.checkNoteBookFormInit(noteBookID);
-    }
-  }
-
-  async closeModal() {
-    const modalElement = this.checkNoteBookModel?.el;
-
-    if (modalElement) {
-      await modalElement.dismiss();
-    }
   }
 
   async checkedAlready() {
@@ -220,7 +203,8 @@ export class NoteBookNotificationComponent {
           this.getNoteBooks();
           this.checkNoteBookFormInit();
           this.setToastOpen(true);
-          this.closeModal();
+          this.showLists = true;
+          this.noteBookCheckForm = false;
         },
         (err: HttpErrorResponse) => {
           this.emptyErrors();
@@ -230,6 +214,8 @@ export class NoteBookNotificationComponent {
           this.checkNoteErr = err.error.errors.check_note;
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.showLists = false;
+          this.noteBookCheckForm = true;
         }
       );
   }

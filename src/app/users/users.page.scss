@@ -2,15 +2,17 @@ ion-fab {
   position: fixed;
   right: 5%;
 }
-ion-fab.add {
+ion-fab.view {
   bottom: 10%;
 }
-
+ion-fab.add {
+  bottom: 20%;
+}
 ion-fab.sort {
-  bottom: 21%;
+  bottom: 30%;
 }
 ion-fab.filter {
-  bottom: 31%;
+  bottom: 40%;
 }
 
 .card {

@@ -2,9 +2,11 @@ ion-fab {
   position: fixed;
   right: 5%;
 }
-
-ion-fab.sort {
+ion-fab.view {
   bottom: 10%;
+}
+ion-fab.sort {
+  bottom: 20%;
 }
 
 .card {

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
@@ -33,7 +33,8 @@ export class LabourRatesComponent {
   labourErr: string = '';
   labourRateErr: string = '';
 
-  @ViewChild('labourRateModel') labourRateModel: any;
+  saveWageForm: boolean = false;
+  showLists: boolean = true;
 
   constructor(
     private userSrv: UserService,
@@ -41,7 +42,6 @@ export class LabourRatesComponent {
     private labourRateSrv: LabourRatesService,
     private alertController: AlertController
   ) {
-    this.closeModal();
     this.saveLabourRateFormInit();
   }
 
@@ -51,19 +51,8 @@ export class LabourRatesComponent {
     this.emptyErrors();
     this.getUserDetails();
     this.emptyErrors();
-    this.closeModal();
   }
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.labourRateModel.setCurrentBreakpoint(1);
-      retVal = false;
-    }
-    return retVal;
-  }
+
   getLabourRole() {
     this.helperSrv.getAllUserRoles().subscribe(
       (res: any) => {
@@ -121,18 +110,17 @@ export class LabourRatesComponent {
     }, 3000);
   }
 
-  async openModal(labourID: any = '') {
+  toggleFormDiv(str: string, workSiteID: any = '') {
     this.emptyErrors();
-    const modalElement = this.labourRateModel?.el;
-    if (modalElement) {
-      await modalElement.present();
-      this.saveLabourRateFormInit(labourID);
+    if (str === 'save_form') {
+      this.showLists = false;
+      this.saveLabourRateFormInit(workSiteID);
+      this.saveWageForm = true;
+    } else {
+      this.getLabourRates(this.condition);
+      this.showLists = true;
+      this.saveWageForm = false;
     }
-  }
-
-  async closeModal() {
-    const modalElement = this.labourRateModel?.el;
-    await modalElement.dismiss();
   }
 
   getLabourRates(condition: any = []) {
@@ -238,9 +226,10 @@ export class LabourRatesComponent {
         this.labourRateLists = [];
         this.offset = 0;
         this.limit = 10;
-        this.getLabourRates();
+        this.getLabourRates(this.condition);
         this.setToastOpen(true);
-        this.closeModal();
+        this.showLists = true;
+        this.saveWageForm = false;
       },
       (err: HttpErrorResponse) => {
         this.emptyErrors();
@@ -249,6 +238,8 @@ export class LabourRatesComponent {
         this.labourRateErr = err.error.errors.labour_rate;
         this.saveMsg = err.error.message;
         this.setToastOpen(true);
+        this.showLists = false;
+        this.saveWageForm = true;
       }
     );
   }

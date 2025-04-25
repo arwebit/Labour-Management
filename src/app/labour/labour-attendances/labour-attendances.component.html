@@ -15,6 +15,18 @@
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(29, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
         <div
           style="
             font-weight: bold;
@@ -29,49 +41,95 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <div
-                  class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let workSites of workSitesLists"
-                >
+                <div *ngIf="showLists">
                   <div
-                    class="w-100 ms-3"
-                    [class.disabled]="
-                      hasPresent && workSites.Attendance.Status !== 'Present'
-                    "
-                    (click)="
-                      !(
-                        hasPresent && workSites.Attendance.Status !== 'Present'
-                      ) &&
-                        (workSites.Attendance.Status === 'Present'
-                          ? openModal(
-                              'check-out',
-                              workSites.Attendance.AttendanceID,
-                              workSites.WorkSiteID
-                            )
-                          : workSites.Attendance.Status === 'Check-out'
-                          ? popup('Check-out', 'You have already checked out.')
-                          : openModal('check-in', '', workSites.WorkSiteID))
-                    "
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let workSites of workSitesLists"
                   >
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">
-                        {{ workSites.WorkSiteName | titlecase }}
-                      </h6>
-                      <small
-                        style="float: right"
-                        [ngStyle]="{
-                          color:
-                            workSites.Attendance.Status === 'Present'
-                              ? 'green'
-                              : workSites.Attendance.Status === 'Absent'
-                              ? 'red'
-                              : 'yellow'
-                        }"
-                        >{{ workSites.Attendance.Status }}
-                      </small>
+                    <div
+                      class="w-100 ms-3"
+                      [class.disabled]="
+                        hasPresent && workSites.Attendance.Status !== 'Present'
+                      "
+                      (click)="
+                        !(
+                          hasPresent &&
+                          workSites.Attendance.Status !== 'Present'
+                        ) &&
+                          (workSites.Attendance.Status === 'Present'
+                            ? toggleFormDiv(
+                                'check-out',
+                                workSites.Attendance.AttendanceID,
+                                workSites.WorkSiteID
+                              )
+                            : workSites.Attendance.Status === 'Check-out'
+                            ? popup(
+                                'Check-out',
+                                'You have already checked out.'
+                              )
+                            : toggleFormDiv(
+                                'check-in',
+                                '',
+                                workSites.WorkSiteID
+                              ))
+                      "
+                    >
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0" style="float: left">
+                          {{ workSites.WorkSiteName | titlecase }}
+                        </h6>
+                        <small
+                          style="float: right"
+                          [ngStyle]="{
+                            color:
+                              workSites.Attendance.Status === 'Present'
+                                ? '#15ac06'
+                                : workSites.Attendance.Status === 'Absent'
+                                ? '#bd2305'
+                                : '#ccac09'
+                          }"
+                          >{{ workSites.Attendance.Status }}
+                        </small>
+                      </div>
+                      <small>Location : {{ workSites.WorkSiteLocation }}</small>
                     </div>
-                    <small>Location : {{ workSites.WorkSiteLocation }}</small>
                   </div>
+                </div>
+                <!-- Check-In -->
+                <div *ngIf="checkInFormDiv">
+                  <b>You are about to check in from : {{ siteName }}</b
+                  ><br /><br />
+                  <b>Your check in time :</b>
+                  {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
+                  <b>Your Location :</b> {{ currentLocation }}<br /><br />
+                  <button class="btn btn-primary" (click)="checkIn()">
+                    Check In
+                  </button>
+                </div>
+                <!-- Check-Out -->
+                <div *ngIf="checkOutFormDiv">
+                  <form [formGroup]="checkOutForm">
+                    <b>You are about to check out from : {{ siteName }} </b
+                    ><br /><br />
+                    <b>Your check out time :</b>
+                    {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
+                    <b>Your Location :</b> {{ currentLocation }}<br /><br />
+                    <b>
+                      Description :
+                      <span class="text-danger">
+                        * {{ descriptionErr }}</span
+                      ></b
+                    >
+                    <textarea
+                      class="form-control"
+                      formControlName="description"
+                      placeholder="Enter description"
+                    ></textarea
+                    ><br />
+                    <button class="btn btn-danger" (click)="checkOut()">
+                      Check Out
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -81,56 +139,6 @@
     </div>
   </div>
 
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #checkInModel
-  >
-    <ng-template>
-      <div class="block">
-        <b>You are about to check in from : {{ siteName }}</b
-        ><br /><br />
-        <b>Your check in time :</b>
-        {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
-        <b>Your Location :</b> {{ currentLocation }}<br /><br />
-        <button class="btn btn-primary" (click)="checkIn()">Check In</button>
-      </div>
-    </ng-template>
-  </ion-modal>
-  <!--  -->
-
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #checkOutModel
-    ><ng-template>
-      <form [formGroup]="checkOutForm">
-        <div class="block">
-          <b>You are about to check out from : {{ siteName }} </b><br /><br />
-          <b>Your check out time :</b>
-          {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
-          <b>Your Location :</b> {{ currentLocation }}<br /><br />
-          <b>
-            Description :
-            <span class="text-danger"> * {{ descriptionErr }}</span></b
-          >
-          <textarea
-            class="form-control"
-            formControlName="description"
-            placeholder="Enter description"
-          ></textarea
-          ><br />
-          <button class="btn btn-danger" (click)="checkOut()">Check Out</button>
-        </div>
-      </form>
-    </ng-template>
-  </ion-modal>
   <ion-toast
     [isOpen]="isToastOpen"
     [message]="saveMsg"

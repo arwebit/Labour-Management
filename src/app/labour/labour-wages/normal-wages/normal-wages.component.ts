@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
@@ -49,8 +49,10 @@ export class NormalWagesComponent {
   fromDate: any = '';
   toDate: any = '';
 
-  @ViewChild('normalPaymentListModel') normalPaymentListModel: any;
-  @ViewChild('editPaymentListModel') editPaymentListModel: any;
+  info: string = '';
+  addPaymentFormDiv: boolean = true;
+  paymentListDiv: boolean = false;
+  editPaymentListDiv: boolean = false;
 
   constructor(
     public alertController: AlertController,
@@ -60,15 +62,34 @@ export class NormalWagesComponent {
     private attSrv: LabourAttendancesService,
     private rateSrv: LabourRatesService
   ) {
+    this.info = 'Payment List';
     this.getCurrentDate();
     this.getUserDetails();
     this.emptyErrors();
     this.getLabourRole();
     this.addWageFormInit();
     this.editWageFormInit();
-    this.closeModal();
   }
 
+  toggleDiv(str: string, wagesID = '') {
+    if (str === 'Payment List') {
+      this.paymentListDiv = true;
+      this.addPaymentFormDiv = false;
+      this.editPaymentListDiv = false;
+      this.info = 'Add Payment';
+    } else if (str === 'Add Payment') {
+      this.paymentListDiv = false;
+      this.addPaymentFormDiv = true;
+      this.editPaymentListDiv = false;
+      this.info = 'Payment List';
+    } else {
+      this.paymentListDiv = false;
+      this.addPaymentFormDiv = false;
+      this.editPaymentListDiv = true;
+      this.info = 'Add Payment';
+      this.editWageFormInit(wagesID);
+    }
+  }
   getLabourRole() {
     this.helperSrv.getAllUserRoles().subscribe(
       (res: any) => {
@@ -82,45 +103,6 @@ export class NormalWagesComponent {
         console.log('Something went wrong');
       }
     );
-  }
-
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.normalPaymentListModel.setCurrentBreakpoint(1);
-      this.editPaymentListModel.setCurrentBreakpoint(1);
-      retVal = false;
-    }
-    return retVal;
-  }
-
-  async openModal(str: string, wagesID: any = '') {
-    if (str === 'payment_list') {
-      const normalPaymentListElement = this.normalPaymentListModel?.el;
-      if (normalPaymentListElement) {
-        await normalPaymentListElement.present();
-      }
-    } else {
-      const editPaymentListElement = this.editPaymentListModel?.el;
-      if (editPaymentListElement) {
-        await editPaymentListElement.present();
-        this.editWageFormInit(wagesID);
-      }
-    }
-  }
-
-  async closeModal() {
-    const normalPaymentListElement = this.normalPaymentListModel?.el;
-    const editPaymentListElement = this.editPaymentListModel?.el;
-    if (normalPaymentListElement) {
-      await normalPaymentListElement.dismiss();
-    }
-    if (editPaymentListElement) {
-      await editPaymentListElement.dismiss();
-    }
   }
 
   getCurrentDate() {
@@ -200,7 +182,7 @@ export class NormalWagesComponent {
         condition: [['labour', '=', userID]],
       },
       start_row: 0,
-      page_records: 1000000,
+      page_records: 10,
       sort_field: 'payment_date',
       sort: -1,
     };
@@ -368,6 +350,9 @@ export class NormalWagesComponent {
         this.addWageFormInit();
         this.saveMsg = res.message;
         this.setToastOpen(true);
+        this.paymentListDiv = true;
+        this.addPaymentFormDiv = false;
+        this.editPaymentListDiv = false;
       },
       (err: HttpErrorResponse) => {
         this.emptyErrors();
@@ -377,6 +362,9 @@ export class NormalWagesComponent {
         this.paymentTypeErr = err.error.errors.payment_type;
         this.saveMsg = err.error.message;
         this.setToastOpen(true);
+        this.paymentListDiv = false;
+        this.addPaymentFormDiv = true;
+        this.editPaymentListDiv = false;
       }
     );
   }
@@ -399,6 +387,9 @@ export class NormalWagesComponent {
           this.getUserPerformanceDetails(data);
           this.saveMsg = res.message;
           this.setToastOpen(true);
+          this.paymentListDiv = true;
+          this.addPaymentFormDiv = false;
+          this.editPaymentListDiv = false;
         },
         (err: HttpErrorResponse) => {
           this.emptyErrors();
@@ -408,6 +399,9 @@ export class NormalWagesComponent {
           this.paymentTypeErr = err.error.errors.payment_type;
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.paymentListDiv = false;
+          this.addPaymentFormDiv = false;
+          this.editPaymentListDiv = true;
         }
       );
   }

@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
@@ -32,15 +32,15 @@ export class WorkSiteComponent {
   workSiteLocationErr: string = '';
   statusErr: string = '';
 
-  @ViewChild('createWorkSiteModel') createWorkSiteModel: any;
-  @ViewChild('editWorkSiteModel') editWorkSiteModel: any;
+  showLists: boolean = true;
+  entryForm: boolean = false;
+  editForm: boolean = false;
 
   constructor(
     private userSrv: UserService,
     private workSiteSrv: WorkSiteService,
     private alertController: AlertController
   ) {
-    this.closeModal();
     this.addWorkSiteFormInit();
     this.editWorkSiteFormInit();
   }
@@ -51,20 +51,6 @@ export class WorkSiteComponent {
     this.addWorkSiteFormInit();
     this.editWorkSiteFormInit();
     this.getWorkSites();
-    this.closeModal();
-  }
-
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.createWorkSiteModel.setCurrentBreakpoint(1);
-      this.editWorkSiteModel.setCurrentBreakpoint(1);
-      retVal = false;
-    }
-    return retVal;
   }
 
   async getUserDetails() {
@@ -108,31 +94,22 @@ export class WorkSiteComponent {
     }, 3000);
   }
 
-  async openModal(str: string, workSiteID: any = '') {
+  toggleFormDiv(str: string, workSiteID: any = '') {
     this.emptyErrors();
     if (str === 'create') {
-      const modalElement = this.createWorkSiteModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-      }
+      this.showLists = false;
+      this.entryForm = true;
+      this.editForm = false;
+    } else if (str === 'edit') {
+      this.showLists = false;
+      this.entryForm = false;
+      this.editForm = true;
+      this.getEditWorkSiteForm(workSiteID);
     } else {
-      const modalElement = this.editWorkSiteModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-        this.editWorkSiteFormInit(workSiteID);
-      }
-    }
-  }
-
-  async closeModal() {
-    const modalElement1 = this.createWorkSiteModel?.el;
-    const modalElement2 = this.editWorkSiteModel?.el;
-
-    if (modalElement1) {
-      await modalElement1.dismiss();
-    }
-    if (modalElement2) {
-      await modalElement2.dismiss();
+      this.getWorkSites();
+      this.showLists = true;
+      this.entryForm = false;
+      this.editForm = false;
     }
   }
 
@@ -254,7 +231,9 @@ export class WorkSiteComponent {
         this.getWorkSites();
         this.addWorkSiteFormInit();
         this.setToastOpen(true);
-        this.closeModal();
+        this.showLists = true;
+        this.entryForm = false;
+        this.editForm = false;
       },
       (err: HttpErrorResponse) => {
         this.emptyErrors();
@@ -263,6 +242,9 @@ export class WorkSiteComponent {
         this.workSiteLocationErr = err.error.errors.work_site_location;
         this.saveMsg = err.error.message;
         this.setToastOpen(true);
+        this.showLists = false;
+        this.entryForm = true;
+        this.editForm = false;
       }
     );
   }
@@ -282,7 +264,9 @@ export class WorkSiteComponent {
           this.limit = 10;
           this.getWorkSites();
           this.setToastOpen(true);
-          this.closeModal();
+          this.entryForm = false;
+          this.showLists = true;
+          this.editForm = false;
         },
         (err: HttpErrorResponse) => {
           this.emptyErrors();
@@ -292,6 +276,9 @@ export class WorkSiteComponent {
           this.statusErr = err.error.errors.is_active;
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.entryForm = false;
+          this.editForm == true;
+          this.showLists = false;
         }
       );
   }

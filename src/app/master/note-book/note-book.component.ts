@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
@@ -36,8 +36,9 @@ export class NoteBookComponent {
   noteDescriptionErr: string = '';
   statusErr: string = '';
 
-  @ViewChild('createNoteBookModel') createNoteBookModel: any;
-  @ViewChild('editNoteBookModel') editNoteBookModel: any;
+  showLists: boolean = true;
+  entryForm: boolean = false;
+  editForm: boolean = false;
 
   constructor(
     private userSrv: UserService,
@@ -45,23 +46,28 @@ export class NoteBookComponent {
     private workSiteSrv: WorkSiteService,
     private alertController: AlertController
   ) {
-    this.closeModal();
     this.addNoteBookFormInit();
     this.editNoteBookFormInit();
     this.getWorkSites();
   }
 
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.createNoteBookModel.setCurrentBreakpoint(1);
-      this.editNoteBookModel.setCurrentBreakpoint(1);
-      retVal = false;
+  toggleFormDiv(str: string, noteBookID: any = '') {
+    this.emptyErrors();
+    if (str === 'create') {
+      this.showLists = false;
+      this.entryForm = true;
+      this.editForm = false;
+    } else if (str === 'edit') {
+      this.showLists = false;
+      this.entryForm = false;
+      this.editForm = true;
+      this.editNoteBookFormInit(noteBookID);
+    } else {
+      this.getNoteBooks();
+      this.showLists = true;
+      this.entryForm = false;
+      this.editForm = false;
     }
-    return retVal;
   }
 
   ionViewWillEnter(): void {
@@ -70,7 +76,6 @@ export class NoteBookComponent {
     this.addNoteBookFormInit();
     this.editNoteBookFormInit();
     this.getNoteBooks();
-    this.closeModal();
   }
 
   async getUserDetails() {
@@ -114,21 +119,6 @@ export class NoteBookComponent {
     }, 3000);
   }
 
-  async openModal(str: string, noteBookID: any = '') {
-    this.emptyErrors();
-    if (str === 'create') {
-      const modalElement = this.createNoteBookModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-      }
-    } else {
-      const modalElement = this.editNoteBookModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-        this.editNoteBookFormInit(noteBookID);
-      }
-    }
-  }
   getWorkSites() {
     const postData = {
       filter: {
@@ -148,17 +138,6 @@ export class NoteBookComponent {
         console.log(err.error.message);
       }
     );
-  }
-  async closeModal() {
-    const modalElement1 = this.createNoteBookModel?.el;
-    const modalElement2 = this.editNoteBookModel?.el;
-
-    if (modalElement1) {
-      await modalElement1.dismiss();
-    }
-    if (modalElement2) {
-      await modalElement2.dismiss();
-    }
   }
 
   getNoteBooks() {
@@ -287,7 +266,9 @@ export class NoteBookComponent {
         this.getNoteBooks();
         this.addNoteBookFormInit();
         this.setToastOpen(true);
-        this.closeModal();
+        this.showLists = true;
+        this.entryForm = false;
+        this.editForm = false;
       },
       (err: HttpErrorResponse) => {
         this.emptyErrors();
@@ -298,6 +279,9 @@ export class NoteBookComponent {
         this.noteDescriptionErr = err.error.errors.description;
         this.saveMsg = err.error.message;
         this.setToastOpen(true);
+        this.showLists = false;
+        this.entryForm = true;
+        this.editForm = false;
       }
     );
   }
@@ -317,7 +301,9 @@ export class NoteBookComponent {
           this.limit = 10;
           this.getNoteBooks();
           this.setToastOpen(true);
-          this.closeModal();
+          this.entryForm = false;
+          this.showLists = true;
+          this.editForm = false;
         },
         (err: HttpErrorResponse) => {
           this.emptyErrors();
@@ -329,6 +315,9 @@ export class NoteBookComponent {
           this.statusErr = err.error.errors.is_active;
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.entryForm = false;
+          this.editForm == true;
+          this.showLists = false;
         }
       );
   }

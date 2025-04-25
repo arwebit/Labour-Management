@@ -15,9 +15,21 @@
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
-        <a (click)="openModal('create')" *ngIf="hasAccess(2, userRole)">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(29, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
+        <a (click)="toggleFormDiv('create')" *ngIf="hasAccess(2, userRole)">
           <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-            <ion-fab-button size="big" color="success">
+            <ion-fab-button size="small" color="success">
               <i class="fa-solid fa-plus"></i>
             </ion-fab-button>
           </ion-fab>
@@ -54,25 +66,314 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <div
-                  class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let userList of userLists"
-                  (click)="hasAccess(3, userRole)?openModal('edit', userList.user_id):denyAccess('Warning','You have no permission to access this module')"
-                >
-                  <img
-                    class="rounded-circle flex-shrink-0"
-                    [src]="userList.profile_pic?imageURL+'/'+userList.profile_pic:defaultImageURL"
-                    alt=""
-                    style="width: 40px; height: 40px"
-                  />
-                  <div class="w-100 ms-3">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">{{ userList.full_name | titlecase }}</h6>
-                      <small>Active: {{ userList.is_active }}</small>
+                <div *ngIf="showLists">
+                  <div
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let userList of userLists"
+                    (click)="hasAccess(3, userRole)?toggleFormDiv('edit', userList.user_id):denyAccess('Warning','You have no permission to access this module')"
+                  >
+                    <img
+                      class="rounded-circle flex-shrink-0"
+                      [src]="userList.profile_pic?imageURL+'/'+userList.profile_pic:defaultImageURL"
+                      alt=""
+                      style="width: 40px; height: 40px"
+                    />
+                    <div class="w-100 ms-3">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">
+                          {{ userList.full_name | titlecase }}
+                        </h6>
+                        <small>Active: {{ userList.is_active }}</small>
+                      </div>
+                      <small>Aadhar No. : {{ userList.aadhar_no }}</small>
                     </div>
-                    <small>Aadhar No. : {{ userList.aadhar_no }}</small>
                   </div>
                 </div>
+
+                <form [formGroup]="addUserForm" *ngIf="addUserDiv">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    ADD USER
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Full name
+                      <b class="text-danger">* {{ nameErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="1"
+                      class="form-control"
+                      formControlName="full_name"
+                      placeholder="Full name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Role <b class="text-danger">* {{ roleErr }}</b></label
+                    >
+                    <select
+                      class="form-control"
+                      formControlName="user_role"
+                      tabindex="2"
+                    >
+                      <option value="">Select Role</option>
+                      <option
+                        [value]="role.role_id"
+                        *ngFor="let role of roleList"
+                      >
+                        {{ role.role_name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Username
+                      <b class="text-danger">* {{ userNameErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="3"
+                      class="form-control"
+                      formControlName="username"
+                      placeholder="Username"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Password
+                      <b class="text-danger">* {{ passwordErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="4"
+                      class="form-control"
+                      formControlName="password"
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Aadhar No
+                      <b class="text-danger">* {{ aadharNoErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="5"
+                      class="form-control"
+                      formControlName="aadhar_no"
+                      placeholder="Aadhar No"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Mobile <b class="text-danger"> {{ mobileErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="6"
+                      class="form-control"
+                      formControlName="mobile"
+                      placeholder="Mobile"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Email <b class="text-danger"> {{ emailErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="7"
+                      class="form-control"
+                      formControlName="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >PAN No <b class="text-danger"> {{ panNoErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="8"
+                      class="form-control"
+                      formControlName="pan_no"
+                      placeholder="PAN No"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Profile Image
+                      <b class="text-danger">{{profilePicErr}} </b></label
+                    ><br />
+                    <img
+                      src="../../assets/images/avatar.png"
+                      style="margin-top: 10px; margin-bottom: 10px"
+                      id="createProfileImage"
+                      width="50"
+                      height="50"
+                    />
+                    <input
+                      tabindex="9"
+                      class="form-control header_file"
+                      type="file"
+                      (change)="createUploadProfilePic($event)"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    tabindex="10"
+                    class="btn btn-primary"
+                    (click)="saveUser()"
+                  >
+                    Create user
+                  </button>
+                </form>
+                <form [formGroup]="editUserForm" *ngIf="editUserDiv">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    EDIT USER
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Full name
+                      <b class="text-danger">* {{ nameErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="11"
+                      class="form-control"
+                      formControlName="full_name"
+                      placeholder="Full name"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Role <b class="text-danger">* {{ nameErr }}</b></label
+                    >
+                    <select class="form-control" formControlName="user_role">
+                      <option value="">Select Role</option>
+                      <option
+                        [value]="role.role_id"
+                        *ngFor="let role of roleList"
+                      >
+                        {{ role.role_name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Aadhar No
+                      <b class="text-danger">* {{ aadharNoErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="5"
+                      class="form-control"
+                      formControlName="aadhar_no"
+                      placeholder="Aadhar No"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Username
+                      <b class="text-danger">* {{ userNameErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="12"
+                      class="form-control"
+                      formControlName="username"
+                      placeholder="Username"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Active
+                      <b class="text-danger">* {{ statusErr }}</b>
+                    </label>
+                    <select formControlName="is_active" class="form-control">
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Email <b class="text-danger"> {{ emailErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="3"
+                      class="form-control"
+                      formControlName="email"
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >PAN No <b class="text-danger"> {{ panNoErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="6"
+                      class="form-control"
+                      formControlName="pan_no"
+                      placeholder="PAN No"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Mobile <b class="text-danger"> {{ mobileErr }}</b></label
+                    >
+                    <input
+                      type="text"
+                      tabindex="2"
+                      class="form-control"
+                      formControlName="mobile"
+                      placeholder="Mobile"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Profile Image
+                      <b class="text-danger">{{profilePicErr}} </b></label
+                    ><br />
+                    <img
+                      [src]="editProfileImage"
+                      style="margin-top: 10px; margin-bottom: 10px"
+                      id="editProfileImage"
+                      width="50"
+                      height="50"
+                    />
+                    <input
+                      tabindex="9"
+                      class="form-control header_file"
+                      type="file"
+                      (change)="editUploadProfilePic($event)"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    tabindex="7"
+                    class="btn btn-warning"
+                    (click)="updateUser()"
+                  >
+                    Update profile
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -81,283 +382,6 @@
     </div>
   </div>
 
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #createUserModal
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="addUserForm">
-          <div class="mb-3">
-            <label class="form-label"
-              >Full name <b class="text-danger">* {{ nameErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="1"
-              class="form-control"
-              formControlName="full_name"
-              placeholder="Full name"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Role <b class="text-danger">* {{ roleErr }}</b></label
-            >
-            <select
-              class="form-control"
-              formControlName="user_role"
-              tabindex="2"
-            >
-              <option value="">Select Role</option>
-              <option [value]="role.role_id" *ngFor="let role of roleList">
-                {{ role.role_name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Username <b class="text-danger">* {{ userNameErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="3"
-              class="form-control"
-              formControlName="username"
-              placeholder="Username"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Password <b class="text-danger">* {{ passwordErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="4"
-              class="form-control"
-              formControlName="password"
-              placeholder="Password"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Aadhar No <b class="text-danger">* {{ aadharNoErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="5"
-              class="form-control"
-              formControlName="aadhar_no"
-              placeholder="Aadhar No"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Mobile <b class="text-danger"> {{ mobileErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="6"
-              class="form-control"
-              formControlName="mobile"
-              placeholder="Mobile"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Email <b class="text-danger"> {{ emailErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="7"
-              class="form-control"
-              formControlName="email"
-              placeholder="Email"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >PAN No <b class="text-danger"> {{ panNoErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="8"
-              class="form-control"
-              formControlName="pan_no"
-              placeholder="PAN No"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Profile Image
-              <b class="text-danger">{{profilePicErr}} </b></label
-            ><br />
-            <img
-              src="../../assets/images/avatar.png"
-              style="margin-top: 10px; margin-bottom: 10px"
-              id="createProfileImage"
-              width="50"
-              height="50"
-            />
-            <input
-              tabindex="9"
-              class="form-control header_file"
-              type="file"
-              (change)="createUploadProfilePic($event)"
-            />
-          </div>
-          <button
-            type="submit"
-            tabindex="10"
-            class="btn btn-primary"
-            (click)="saveUser()"
-          >
-            Create user
-          </button>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #editUserModal
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="editUserForm">
-          <div class="mb-3">
-            <label class="form-label"
-              >Full name <b class="text-danger">* {{ nameErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="11"
-              class="form-control"
-              formControlName="full_name"
-              placeholder="Full name"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Role <b class="text-danger">* {{ nameErr }}</b></label
-            >
-            <select class="form-control" formControlName="user_role">
-              <option value="">Select Role</option>
-              <option [value]="role.role_id" *ngFor="let role of roleList">
-                {{ role.role_name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Aadhar No <b class="text-danger">* {{ aadharNoErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="5"
-              class="form-control"
-              formControlName="aadhar_no"
-              placeholder="Aadhar No"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Username <b class="text-danger">* {{ userNameErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="12"
-              class="form-control"
-              formControlName="username"
-              placeholder="Username"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Active
-              <b class="text-danger">* {{ statusErr }}</b>
-            </label>
-            <select formControlName="is_active" class="form-control">
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Email <b class="text-danger"> {{ emailErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="3"
-              class="form-control"
-              formControlName="email"
-              placeholder="Email"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >PAN No <b class="text-danger"> {{ panNoErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="6"
-              class="form-control"
-              formControlName="pan_no"
-              placeholder="PAN No"
-            />
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label"
-              >Mobile <b class="text-danger"> {{ mobileErr }}</b></label
-            >
-            <input
-              type="text"
-              tabindex="2"
-              class="form-control"
-              formControlName="mobile"
-              placeholder="Mobile"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Profile Image
-              <b class="text-danger">{{profilePicErr}} </b></label
-            ><br />
-            <img
-              [src]="editProfileImage"
-              style="margin-top: 10px; margin-bottom: 10px"
-              id="editProfileImage"
-              width="50"
-              height="50"
-            />
-            <input
-              tabindex="9"
-              class="form-control header_file"
-              type="file"
-              (change)="editUploadProfilePic($event)"
-            />
-          </div>
-          <button
-            type="submit"
-            tabindex="7"
-            class="btn btn-warning"
-            (click)="updateUser()"
-          >
-            Update profile
-          </button>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
   <ion-toast
     [isOpen]="isToastOpen"
     [message]="saveMsg"

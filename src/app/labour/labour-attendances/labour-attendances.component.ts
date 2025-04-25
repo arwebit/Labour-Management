@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
@@ -55,8 +55,9 @@ export class LabourAttendancesComponent {
   currentLatitude: any = '';
   currentLongitude: any = '';
 
-  @ViewChild('checkInModel') checkInModel: any;
-  @ViewChild('checkOutModel') checkOutModel: any;
+  showLists: boolean = true;
+  checkInFormDiv: boolean = false;
+  checkOutFormDiv: boolean = false;
 
   constructor(
     private userSrv: UserService,
@@ -64,22 +65,8 @@ export class LabourAttendancesComponent {
     private attendanceSrv: LabourAttendancesService,
     public alertController: AlertController
   ) {
-    this.closeModal();
     this.checkInFormInit();
     this.checkOutFormInit();
-  }
-
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.checkInModel.setCurrentBreakpoint(1);
-      this.checkOutModel.setCurrentBreakpoint(1);
-      retVal = false;
-    }
-    return retVal;
   }
 
   ionViewWillEnter(): void {
@@ -88,7 +75,6 @@ export class LabourAttendancesComponent {
     this.getUserDetails();
     this.checkInFormInit();
     this.checkOutFormInit();
-    this.closeModal();
     this.getWorkSites();
   }
 
@@ -134,37 +120,28 @@ export class LabourAttendancesComponent {
     }, 3000);
   }
 
-  async openModal(str: string, attendanceID: any = '', workSiteID: any = '') {
+  toggleFormDiv(str: string, attendanceID: any = '', workSiteID: any = '') {
     if (str === 'check-in') {
-      const modalElement = this.checkInModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-        this.getLocation();
-        this.getCurrentDate();
-        this.getParticularWorkSites(workSiteID);
-        this.checkInFormInit(workSiteID);
-      }
+      this.showLists = false;
+      this.checkInFormDiv = true;
+      this.checkOutFormDiv = false;
+      this.getLocation();
+      this.getCurrentDate();
+      this.getParticularWorkSites(workSiteID);
+      this.checkInFormInit(workSiteID);
+    } else if (str === 'check-out') {
+      this.getLocation();
+      this.getCurrentDate();
+      this.getParticularWorkSites(workSiteID);
+      this.checkOutFormInit(attendanceID);
+      this.showLists = false;
+      this.checkInFormDiv = false;
+      this.checkOutFormDiv = true;
     } else {
-      const modalElement = this.checkOutModel?.el;
-      if (modalElement) {
-        await modalElement.present();
-        this.getLocation();
-        this.getCurrentDate();
-        this.getParticularWorkSites(workSiteID);
-        this.checkOutFormInit(attendanceID);
-      }
-    }
-  }
-
-  async closeModal() {
-    const modalElement1 = this.checkInModel?.el;
-    const modalElement2 = this.checkOutModel?.el;
-
-    if (modalElement1) {
-      await modalElement1.dismiss();
-    }
-    if (modalElement2) {
-      await modalElement2.dismiss();
+      this.getWorkSites();
+      this.showLists = true;
+      this.checkInFormDiv = false;
+      this.checkOutFormDiv = false;
     }
   }
 
@@ -347,12 +324,17 @@ export class LabourAttendancesComponent {
           this.getWorkSites();
           this.checkInFormInit();
           this.setToastOpen(true);
-          this.closeModal();
+          this.showLists = true;
+          this.checkInFormDiv = false;
+          this.checkOutFormDiv = false;
         },
         (err: HttpErrorResponse) => {
           this.saveMsg = '';
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.showLists = false;
+          this.checkInFormDiv = true;
+          this.checkOutFormDiv = false;
         }
       );
     }
@@ -377,7 +359,9 @@ export class LabourAttendancesComponent {
             this.getWorkSites();
             this.checkInFormInit();
             this.setToastOpen(true);
-            this.closeModal();
+            this.showLists = true;
+            this.checkInFormDiv = false;
+            this.checkOutFormDiv = false;
           },
           (err: HttpErrorResponse) => {
             this.descriptionErr = '';
@@ -385,6 +369,9 @@ export class LabourAttendancesComponent {
             this.saveMsg = '';
             this.saveMsg = err.error.message;
             this.setToastOpen(true);
+            this.showLists = false;
+            this.checkInFormDiv = false;
+            this.checkOutFormDiv = true;
           }
         );
     }

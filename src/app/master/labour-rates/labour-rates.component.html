@@ -14,6 +14,18 @@
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(17, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="sort">
           <ion-fab-button size="small" color="tertiary">
             <i class="fa-solid fa-arrow-up-wide-short"></i>
@@ -31,30 +43,70 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <div
-                  class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let rates of labourRateLists"
-                  (click)="
-                    hasAccess(18, userRole)
-                      ? openModal(rates.user_id)
-                      : denyAccess(
-                          'Warning',
-                          'You have no permission to access this module'
-                        )
-                  "
-                >
-                  <div class="w-100 ms-3">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">{{ rates.full_name | titlecase }}</h6>
+                <div *ngIf="showLists">
+                  <div
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let rates of labourRateLists"
+                    (click)="
+                      hasAccess(18, userRole)
+                        ? toggleFormDiv('save_form', rates.user_id)
+                        : denyAccess(
+                            'Warning',
+                            'You have no permission to access this module'
+                          )
+                    "
+                  >
+                    <div class="w-100 ms-3">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">{{ rates.full_name | titlecase }}</h6>
+                      </div>
+                      <small>
+                        Per wage rate:
+                        {{
+                          rates.labour_rate ? "&#8377;" + rates.labour_rate : ""
+                        }}</small
+                      >
                     </div>
-                    <small>
-                      Per wage rate:
-                      {{
-                        rates.labour_rate ? "&#8377;" + rates.labour_rate : ""
-                      }}</small
-                    >
                   </div>
                 </div>
+                <!-- Save Wages Form -->
+                <form [formGroup]="saveLabourRateForm" *ngIf="saveWageForm">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    SAVE LABOUR RATES
+                  </div>
+                  <div class="mb-3"><b>Labour name :</b> {{ labourName }}</div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Labour rate
+                      <b class="text-danger">* {{ labourRateErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="labour_rate"
+                      placeholder="Labour rate"
+                      tabindex="1"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="4"
+                      class="btn btn-primary"
+                      (click)="saveLabourRates()"
+                    >
+                      Save Labour Rates
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -63,46 +115,6 @@
     </div>
   </div>
 
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #labourRateModel
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="saveLabourRateForm">
-          <div class="mb-3"><b>Labour name :</b> {{ labourName }}</div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Labour rate
-              <b class="text-danger">* {{ labourRateErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="labour_rate"
-              placeholder="Labour rate"
-              tabindex="1"
-              class="form-control"
-            />
-          </div>
-
-          <div class="mb-3">
-            <button
-              type="submit"
-              tabindex="4"
-              class="btn btn-primary"
-              (click)="saveLabourRates()"
-            >
-              Save Labour Rates
-            </button>
-          </div>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
   <ion-toast
     [isOpen]="isToastOpen"
     [message]="saveMsg"

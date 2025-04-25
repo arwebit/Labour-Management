@@ -14,6 +14,18 @@
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(16, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="sort">
           <ion-fab-button size="small" color="tertiary">
             <i class="fa-solid fa-arrow-up-wide-short"></i>
@@ -31,37 +43,69 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <div
-                  class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let noteBooks of noteBooksLists"
-                  (click)="
-                    hasAccess(14, userRole)
-                      ? noteBooks.checked === 'yes'
-                        ? checkedAlready()
-                        : openModal(noteBooks.note_book_id)
-                      : denyAccess(
-                          'Warning',
-                          'You have no permission to access this module'
-                        )
-                  "
-                >
-                  <div class="w-100 ms-3">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">{{ noteBooks.note_title }}</h6>
-                      <small>{{
-                        noteBooks.work_date | date : "dd/MM/yyyy"
-                      }}</small>
+                <div *ngIf="showLists">
+                  <div
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let noteBooks of noteBooksLists"
+                    (click)="
+                      hasAccess(14, userRole)
+                        ? noteBooks.checked === 'yes'
+                          ? checkedAlready()
+                          : toggleFormDiv('save_form', noteBooks.note_book_id)
+                        : denyAccess(
+                            'Warning',
+                            'You have no permission to access this module'
+                          )
+                    "
+                  >
+                    <div class="w-100 ms-3">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">{{ noteBooks.note_title }}</h6>
+                        <small>{{
+                          noteBooks.work_date | date : "dd/MM/yyyy"
+                        }}</small>
+                      </div>
+                      <small
+                        >Work Site :
+                        {{ noteBooks.work_site.work_site_name }}</small
+                      >
+                      <br />
+                      <span style="color: rgb(111, 7, 207)">
+                        {{ noteBooks.description }}
+                      </span>
                     </div>
-                    <small
-                      >Work Site :
-                      {{ noteBooks.work_site.work_site_name }}</small
-                    >
-                    <br />
-                    <span style="color: rgb(111, 7, 207)">
-                      {{ noteBooks.description }}
-                    </span>
                   </div>
                 </div>
+
+                <form [formGroup]="checkNoteBookForm" *ngIf="noteBookCheckForm">
+                  <table style="width: 100%">
+                    <tr>
+                      <td style="padding-top: 5px">
+                        <label class="form-label"
+                          >Check Note
+                          <b class="text-danger">* {{ checkNoteErr }}</b>
+                        </label>
+                        <textarea
+                          placeholder="Check Note"
+                          formControlName="check_note"
+                          tabindex="1"
+                          class="form-control"
+                        ></textarea>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div style="padding-top: 5px">
+                    <button
+                      type="submit"
+                      tabindex="2"
+                      class="btn btn-primary"
+                      (click)="checkNoteBook()"
+                    >
+                      Check
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -69,48 +113,7 @@
       </div>
     </div>
   </div>
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #checkNoteBookModel
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="checkNoteBookForm">
-          <table style="width: 100%">
-            <tr>
-              <td style="padding-top: 5px">
-                <label class="form-label"
-                  >Check Note
-                  <b class="text-danger">* {{ checkNoteErr }}</b>
-                </label>
-                <textarea
-                  placeholder="Check Note"
-                  formControlName="check_note"
-                  tabindex="1"
-                  class="form-control"
-                ></textarea>
-              </td>
-            </tr>
-          </table>
 
-          <div style="padding-top: 5px">
-            <button
-              type="submit"
-              tabindex="2"
-              class="btn btn-primary"
-              (click)="checkNoteBook()"
-            >
-              Check
-            </button>
-          </div>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
   <ion-toast
     [isOpen]="isToastOpen"
     [message]="saveMsg"

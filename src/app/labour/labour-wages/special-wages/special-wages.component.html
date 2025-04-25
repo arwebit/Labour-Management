@@ -22,16 +22,16 @@
   </p>
   <hr />
   <span class="float-start" style="font-weight: bold"> Advance Payment </span>
-  <span
-    class="float-end"
-    style="color: blue"
-    (click)="openModal('payment_list')"
-  >
-    Payment Lists
+  <span class="float-end" style="color: blue" (click)="toggleDiv(info)">
+    {{ info }}
   </span>
 
   <div style="clear: both" style="margin-bottom: 45px"></div>
-  <form [formGroup]="addWageForm">
+  <hr />
+  <form [formGroup]="addWageForm" *ngIf="addPaymentFormDiv">
+    <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
+      Add Payment Lists
+    </div>
     <input type="hidden" formControlName="labour" [(ngModel)]="labourID" />
     <small
       >Payment Date <b class="text-danger">* {{ paymentDateErr }}</b></small
@@ -68,101 +68,77 @@
       Save Payment
     </button>
   </form>
+
+  <form [formGroup]="editWageForm" *ngIf="editPaymentListDiv">
+    <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
+      Edit Payment Lists
+    </div>
+    <input type="hidden" formControlName="labour" [(ngModel)]="labourID" />
+    <small
+      >Payment Date <b class="text-danger">* {{ paymentDateErr }}</b></small
+    >
+    <input
+      type="date"
+      formControlName="payment_date"
+      class="form-control"
+      [(ngModel)]="currentDate"
+    /><br />
+    <small
+      >Payment <b class="text-danger">* {{ paymentErr }}</b></small
+    >
+    <input
+      type="text"
+      formControlName="payment"
+      class="form-control"
+      placeholder="Enter Payment"
+    /><br />
+    <small
+      >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
+    >
+    <select formControlName="payment_type" class="form-control">
+      <option value="advance">Advance</option>
+      <option value="receive">Receive</option>
+    </select>
+    <br />
+    <small
+      >Description <b class="text-danger"> {{ descriptionErr }}</b></small
+    >
+    <textarea formControlName="description" class="form-control"></textarea
+    ><br />
+    <button class="btn btn-primary" (click)="updatePayment()">
+      Update Payment
+    </button>
+  </form>
+  <div *ngIf="paymentListDiv">
+    <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
+      Advance Payment Lists
+    </div>
+    <table width="100%">
+      <tr>
+        <th style="padding: 15px">Date</th>
+        <th>Payment (in &#8377;)</th>
+        <th>Payment Type</th>
+        <th *ngIf="hasAccess(27, userRole)">Option</th>
+      </tr>
+      <tr *ngFor="let paymentList of paymentLists">
+        <td>
+          {{ paymentList.payment_date | date : "dd/MM/yyyy" }}
+        </td>
+        <td>{{ paymentList.payment }}</td>
+        <td>{{ paymentList.payment_type | titlecase }}</td>
+        <td *ngIf="hasAccess(27, userRole)">
+          <a
+            href="javascript:void(0)"
+            (click)="toggleDiv('edit', paymentList.spcl_wage_id)"
+          >
+            EDIT
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
-<ion-modal
-  [initialBreakpoint]="1"
-  [breakpoints]="[0.5, 1]"
-  handleBehavior="cycle"
-  [canDismiss]="true"
-  (willDismiss)="checkModalDismiss($event)"
-  #specialPaymentListModel
->
-  <ng-template>
-    <div class="block">
-      <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
-        Special Payment Lists
-      </div>
-      <table width="100%">
-        <tr>
-          <th style="padding: 15px">Date</th>
-          <th>Payment (in &#8377;)</th>
-          <th>Payment Type</th>
-          <th *ngIf="hasAccess(27, userRole)">Option</th>
-        </tr>
-        <tr *ngFor="let paymentList of paymentLists">
-          <td>
-            {{ paymentList.payment_date | date : "dd/MM/yyyy" }}
-          </td>
-          <td>{{ paymentList.payment }}</td>
-          <td>{{ paymentList.payment_type | titlecase }}</td>
-          <td *ngIf="hasAccess(27, userRole)">
-            <a
-              href="javascript:void(0)"
-              (click)="openModal('edit-payment', paymentList.spcl_wage_id)"
-            >
-              EDIT
-            </a>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </ng-template>
-</ion-modal>
-
-<ion-modal
-  [initialBreakpoint]="1"
-  [breakpoints]="[0.5, 1]"
-  handleBehavior="cycle"
-  [canDismiss]="true"
-  (willDismiss)="checkModalDismiss($event)"
-  #editPaymentListModel
->
-  <ng-template>
-    <div class="block">
-      <div style="text-align: center; font-weight: bold; margin-bottom: 10px">
-        Update Payment List
-      </div>
-      <form [formGroup]="editWageForm">
-        <input type="hidden" formControlName="labour" [(ngModel)]="labourID" />
-        <small
-          >Payment Date <b class="text-danger">* {{ paymentDateErr }}</b></small
-        >
-        <input
-          type="date"
-          formControlName="payment_date"
-          class="form-control"
-          [(ngModel)]="currentDate"
-        /><br />
-        <small
-          >Payment <b class="text-danger">* {{ paymentErr }}</b></small
-        >
-        <input
-          type="text"
-          formControlName="payment"
-          class="form-control"
-          placeholder="Enter Payment"
-        /><br />
-        <small
-          >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
-        >
-        <select formControlName="payment_type" class="form-control">
-          <option value="advance">Advance</option>
-          <option value="receive">Receive</option>
-        </select>
-        <br />
-        <small
-          >Description <b class="text-danger"> {{ descriptionErr }}</b></small
-        >
-        <textarea formControlName="description" class="form-control"></textarea
-        ><br />
-        <button class="btn btn-primary" (click)="updatePayment()">
-          Update Payment
-        </button>
-      </form>
-    </div>
-  </ng-template>
-</ion-modal>
 <ion-toast
   [isOpen]="isToastOpen"
   [message]="saveMsg"

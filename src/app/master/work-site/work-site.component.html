@@ -14,13 +14,26 @@
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
-        <a (click)="openModal('create')" *ngIf="hasAccess(8, userRole)">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(7, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
+        <a (click)="toggleFormDiv('create')" *ngIf="hasAccess(8, userRole)">
           <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
-            <ion-fab-button size="big" color="success">
+            <ion-fab-button size="small" color="success">
               <i class="fa-solid fa-plus"></i>
             </ion-fab-button>
           </ion-fab>
         </a>
+
         <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="sort">
           <ion-fab-button size="small" color="tertiary">
             <i class="fa-solid fa-arrow-up-wide-short"></i>
@@ -38,28 +51,146 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
-                <div
-                  class="d-flex align-items-center border-bottom py-3"
-                  *ngFor="let workSitesList of workSitesLists"
-                  (click)="
-                    hasAccess(9, userRole)
-                      ? openModal('edit', workSitesList.work_site_id)
-                      : denyAccess(
-                          'Warning',
-                          'You have no permission to access this module'
-                        )
-                  "
-                >
-                  <div class="w-100 ms-3">
-                    <div class="d-flex w-100 justify-content-between">
-                      <h6 class="mb-0">{{ workSitesList.work_site_name }}</h6>
-                      <small>Active: {{ workSitesList.is_active }}</small>
+                <div *ngIf="showLists">
+                  <div
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let workSitesList of workSitesLists"
+                    (click)="
+                      hasAccess(9, userRole)
+                        ? toggleFormDiv('edit', workSitesList.work_site_id)
+                        : denyAccess(
+                            'Warning',
+                            'You have no permission to access this module'
+                          )
+                    "
+                  >
+                    <div class="w-100 ms-3">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">{{ workSitesList.work_site_name }}</h6>
+                        <small>Active: {{ workSitesList.is_active }}</small>
+                      </div>
+                      <small
+                        >Location :
+                        {{ workSitesList.work_site_location }}</small
+                      >
                     </div>
-                    <small
-                      >Location : {{ workSitesList.work_site_location }}</small
-                    >
                   </div>
                 </div>
+                <!-- Add Work Site -->
+
+                <form [formGroup]="addWorkSiteForm" *ngIf="entryForm">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    ADD WORK SITE
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Work Site Name
+                      <b class="text-danger">* {{ workSiteNameErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="work_site_name"
+                      placeholder="Work Site Name"
+                      class="form-control"
+                      tabindex="1"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Work Location
+                      <b class="text-danger">* {{ workSiteLocationErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="work_site_location"
+                      placeholder="Work Site Location"
+                      tabindex="2"
+                      class="form-control"
+                    />
+                  </div>
+
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="3"
+                      class="btn btn-primary"
+                      (click)="addWorkSites()"
+                    >
+                      Create Work Site
+                    </button>
+                  </div>
+                </form>
+                <!-- Edit Work Site -->
+
+                <form [formGroup]="editWorkSiteForm" *ngIf="editForm">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    EDIT WORK SITE
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Work Site Name
+                      <b class="text-danger">* {{ workSiteNameErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="work_site_name"
+                      placeholder="Work Site Name"
+                      class="form-control"
+                      tabindex="4"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Work Site Location
+                      <b class="text-danger">* {{ workSiteLocationErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="work_site_location"
+                      placeholder="Work Site Location"
+                      tabindex="5"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Active
+                      <b class="text-danger">* {{ statusErr }}</b>
+                    </label>
+                    <select
+                      formControlName="is_active"
+                      class="form-control"
+                      tabindex="6"
+                    >
+                      <option value="yes">Yes</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="7"
+                      class="btn btn-primary"
+                      (click)="updateWorkSites()"
+                    >
+                      Update Work Site
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
@@ -68,125 +199,6 @@
     </div>
   </div>
 
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #createWorkSiteModel
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="addWorkSiteForm">
-          <div class="mb-3">
-            <label class="form-label"
-              >Work Site Name
-              <b class="text-danger">* {{ workSiteNameErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="work_site_name"
-              placeholder="Work Site Name"
-              class="form-control"
-              tabindex="1"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Work Location
-              <b class="text-danger">* {{ workSiteLocationErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="work_site_location"
-              placeholder="Work Site Location"
-              tabindex="2"
-              class="form-control"
-            />
-          </div>
-
-          <div class="mb-3">
-            <button
-              type="submit"
-              tabindex="3"
-              class="btn btn-primary"
-              (click)="addWorkSites()"
-            >
-              Create Work Site
-            </button>
-          </div>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
-  <!--  -->
-
-  <ion-modal
-    [initialBreakpoint]="1"
-    [breakpoints]="[0.5, 1]"
-    handleBehavior="cycle"
-    [canDismiss]="true"
-    (willDismiss)="checkModalDismiss($event)"
-    #editWorkSiteModel
-  >
-    <ng-template>
-      <div class="block">
-        <form [formGroup]="editWorkSiteForm">
-          <div class="mb-3">
-            <label class="form-label"
-              >Work Site Name
-              <b class="text-danger">* {{ workSiteNameErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="work_site_name"
-              placeholder="Work Site Name"
-              class="form-control"
-              tabindex="4"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Work Site Location
-              <b class="text-danger">* {{ workSiteLocationErr }}</b>
-            </label>
-            <input
-              type="text"
-              formControlName="work_site_location"
-              placeholder="Work Site Location"
-              tabindex="5"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label class="form-label"
-              >Active
-              <b class="text-danger">* {{ statusErr }}</b>
-            </label>
-            <select
-              formControlName="is_active"
-              class="form-control"
-              tabindex="6"
-            >
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <button
-              type="submit"
-              tabindex="7"
-              class="btn btn-primary"
-              (click)="updateWorkSites()"
-            >
-              Update Work Site
-            </button>
-          </div>
-        </form>
-      </div>
-    </ng-template>
-  </ion-modal>
   <ion-toast
     [isOpen]="isToastOpen"
     [message]="saveMsg"

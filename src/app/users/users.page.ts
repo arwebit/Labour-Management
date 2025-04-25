@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { UserService } from '../shared/services/users/user.service';
 import { environment } from 'src/environments/environment';
@@ -47,8 +47,9 @@ export class UsersPage {
   editProfileImage: string = '';
   isToastOpen: boolean = false;
 
-  @ViewChild('createUserModal') createUserModal: any;
-  @ViewChild('editUserModal') editUserModal: any;
+  showLists: boolean = true;
+  addUserDiv: boolean = false;
+  editUserDiv: boolean = false;
 
   constructor(
     private userSrv: UserService,
@@ -67,21 +68,8 @@ export class UsersPage {
     this.getUser(this.condition);
     this.addUserFormInit();
     this.editUserFormInit();
-    this.closeModal();
   }
 
-  checkModalDismiss(event: any) {
-    let retVal = false;
-    if (event.detail.role === 'backdrop') {
-      retVal = true;
-    } else if (event.detail.role === 'gesture') {
-      event.preventDefault();
-      this.createUserModal.setCurrentBreakpoint(1);
-      this.editUserModal.setCurrentBreakpoint(1);
-      retVal = false;
-    }
-    return retVal;
-  }
   async getUserDetails() {
     this.userModuleAccess = [];
     const data = await this.userSrv.getUserDetails(this.loggedInUserID);
@@ -92,31 +80,22 @@ export class UsersPage {
     );
   }
 
-  async openModal(str: string, userID: any = '') {
+  toggleFormDiv(str: string, userID: any = '') {
     this.emptyErrors();
     if (str === 'create') {
-      const modalElement = this.createUserModal?.el;
-      if (modalElement) {
-        await modalElement.present();
-      }
+      this.showLists = false;
+      this.addUserDiv = true;
+      this.editUserDiv = false;
+    } else if (str === 'edit') {
+      this.editUserFormInit(userID);
+      this.showLists = false;
+      this.addUserDiv = false;
+      this.editUserDiv = true;
     } else {
-      const modalElement = this.editUserModal?.el;
-      if (modalElement) {
-        await modalElement.present();
-        this.editUserFormInit(userID);
-      }
-    }
-  }
-
-  async closeModal() {
-    const modalElement1 = this.createUserModal?.el;
-    const modalElement2 = this.editUserModal?.el;
-
-    if (modalElement1) {
-      await modalElement1.dismiss();
-    }
-    if (modalElement2) {
-      await modalElement2.dismiss();
+      this.getUser(this.condition);
+      this.showLists = true;
+      this.addUserDiv = false;
+      this.editUserDiv = false;
     }
   }
 
@@ -361,8 +340,10 @@ export class UsersPage {
         this.setToastOpen(true);
         this.addUserForm.reset();
         this.createProfileImage = '';
-        this.getUser();
-        this.closeModal();
+        this.getUser(this.condition);
+        this.showLists = true;
+        this.addUserDiv = false;
+        this.editUserDiv = false;
       },
       (err: HttpErrorResponse) => {
         this.saveMsg = '';
@@ -378,6 +359,9 @@ export class UsersPage {
         this.profilePicErr = err.error.errors.profile_pic;
         this.saveMsg = err.error.message;
         this.setToastOpen(true);
+        this.showLists = false;
+        this.addUserDiv = true;
+        this.editUserDiv = false;
       }
     );
   }
@@ -407,8 +391,10 @@ export class UsersPage {
           this.editProfileImage = '';
           this.saveMsg = result.message;
           this.setToastOpen(true);
-          this.getUser();
-          this.closeModal();
+          this.getUser(this.condition);
+          this.showLists = true;
+          this.addUserDiv = false;
+          this.editUserDiv = false;
         },
         (err: HttpErrorResponse) => {
           this.saveMsg = '';
@@ -423,6 +409,9 @@ export class UsersPage {
           this.profilePicErr = err.error.errors.profile_pic;
           this.saveMsg = err.error.message;
           this.setToastOpen(true);
+          this.showLists = false;
+          this.addUserDiv = false;
+          this.editUserDiv = true;
         }
       );
   }
