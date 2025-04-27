@@ -6,6 +6,8 @@ import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-
 import { UserService } from 'src/app/shared/services/users/user.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
+import { environment } from 'src/environments/environment';
+import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
 
 interface WorkSite {
   WorkSiteID: string;
@@ -13,6 +15,7 @@ interface WorkSite {
   WorkSiteLocation: string;
   Attendance: {
     AttendanceID: string;
+    LabourRate: string;
     CheckIn: string;
     CheckOut: string;
     WorkDate: string;
@@ -28,6 +31,7 @@ interface WorkSite {
   styleUrls: ['./labour-attendances.component.scss'],
 })
 export class LabourAttendancesComponent {
+  env: any = environment;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';
@@ -48,6 +52,7 @@ export class LabourAttendancesComponent {
   saveMsg: string = '';
   isToastOpen: boolean = false;
   hasPresent: boolean = false;
+  labourRate: any = '';
   siteName: string = '';
   liveLocationErr: string = '';
   attendanceList: any = [];
@@ -61,6 +66,7 @@ export class LabourAttendancesComponent {
 
   constructor(
     private userSrv: UserService,
+    private ratesSrv: LabourRatesService,
     private workSiteSrv: WorkSiteService,
     private attendanceSrv: LabourAttendancesService,
     public alertController: AlertController
@@ -70,9 +76,10 @@ export class LabourAttendancesComponent {
   }
 
   ionViewWillEnter(): void {
+    this.getUserDetails();
+    this.getLabourRates();
     this.getLocation();
     this.getCurrentDate();
-    this.getUserDetails();
     this.checkInFormInit();
     this.checkOutFormInit();
     this.getWorkSites();
@@ -96,6 +103,23 @@ export class LabourAttendancesComponent {
       bool = this.userModuleAccess.includes(id);
     }
     return bool;
+  }
+
+  getLabourRates() {
+    const postData = {
+      filter: {
+        condition: [['labour', '=', this.loggedInUserID]],
+      },
+      start_row: 0,
+      page_records: 1,
+      sort_field: 'rate_id',
+      sort: -1,
+    };
+
+    this.ratesSrv.getLabourRates(postData).subscribe((result: any) => {
+      const [details] = result.rows;
+      this.labourRate = details.labour_rate;
+    });
   }
 
   async denyAccess(header: string, message: string) {
@@ -263,6 +287,7 @@ export class LabourAttendancesComponent {
             WorkSiteLocation: sites.work_site_location,
             Attendance: {
               AttendanceID: sites.attendance?.attendance_id,
+              LabourRate: sites.attendance?.labour_rate,
               CheckIn: sites.attendance?.check_in,
               CheckOut: sites.attendance?.check_out,
               WorkDate: sites.attendance?.work_date,
@@ -290,6 +315,7 @@ export class LabourAttendancesComponent {
   checkInFormInit(workSiteID: any = '') {
     this.checkInForm = new FormGroup({
       labour: new FormControl(this.loggedInUserID),
+      labour_rate: new FormControl(this.labourRate),
       check_in: new FormControl(this.currentDateTime),
       work_site: new FormControl(workSiteID),
       work_date: new FormControl(this.currentDate),

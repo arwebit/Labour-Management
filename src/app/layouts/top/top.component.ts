@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
   standalone: false,
 })
 export class TopComponent {
+  accessID: number = 0;
   userModuleAccess: number[] = [];
   userID: any = localStorage.getItem('user_id');
   profileImg: string = '';
@@ -24,6 +25,7 @@ export class TopComponent {
     private userSrv: UserService,
     private location: Location
   ) {
+    this.accessID = environment.module_access.note_book_notification;
     this.ionViewWillEnter();
   }
 
@@ -52,6 +54,16 @@ export class TopComponent {
       this.headerText = 'LABOUR WAGES';
     } else if (path === '/labour/labour-attendance') {
       this.headerText = 'LABOUR ATTENDANCE';
+    } else if (path === '/reports') {
+      this.headerText = 'REPORTS';
+    } else if (path.startsWith('/reports/labour-report')) {
+      this.headerText = 'LABOUR REPORTS';
+    } else if (path.startsWith('/reports/attendance-report')) {
+      this.headerText = 'ATTENDANCE REPORTS';
+    } else if (path.startsWith('/reports/labour-normal-wages-report')) {
+      this.headerText = 'WAGE REPORTS';
+    } else if (path.startsWith('/reports/labour-special-wages-report')) {
+      this.headerText = 'ADVANCE REPORTS';
     }
   }
 

@@ -37,6 +37,12 @@ const routes: Routes = [
       import('./labour/labour.module').then((m) => m.LabourPageModule),
     canActivate: [loginGuard],
   },
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('./reports/reports.module').then((m) => m.ReportsPageModule),
+    canActivate: [loginGuard],
+  },
 ];
 
 @NgModule({

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { UserService } from 'src/app/shared/services/users/user.service';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../shared/services/users/user.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-reports',
   standalone: false,
+  templateUrl: './reports.page.html',
+  styleUrls: ['./reports.page.scss'],
 })
-export class SidebarComponent {
+export class ReportsPage {
   userModuleAccess: number[] = [];
   userID: any = localStorage.getItem('user_id');
   profileImg: string = '';
@@ -30,46 +30,28 @@ export class SidebarComponent {
   getMenus(userRole: number) {
     const allMenus = [
       {
-        id: 1,
-        text: 'Users',
-        link: '/users',
-        icon: 'fa-solid fa-user',
+        id: environment.module_access.labour_detailed_report,
+        image: '../../assets/images/menu_pics/reports.png',
+        text: 'Labour',
+        link: '/reports/labour-report',
       },
       {
-        id: 5,
-        text: 'Group Access',
-        link: '/master/group-access',
-        icon: 'fa-solid fa-universal-access',
+        id: environment.module_access.labour_attendance_report,
+        text: 'Attendance',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports/attendance-report',
       },
       {
-        id: 7,
-        text: 'Work Site',
-        link: '/master/work-site',
-        icon: 'fa-solid fa-person-digging',
+        id: environment.module_access.labour_normal_wages_report,
+        text: 'Normal Wages',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports/labour-normal-wages-report',
       },
       {
-        id: 11,
-        text: 'Note Book',
-        link: '/master/note-book',
-        icon: 'fa-solid fa-book',
-      },
-      {
-        id: 17,
-        text: 'Labour Rates',
-        link: '/master/labour-rates',
-        icon: 'fa-solid fa-dollar-sign',
-      },
-      {
-        id: 29,
-        text: 'Labour Attendance',
-        link: '/labour/labour-attendance',
-        icon: 'fa-solid fa-user',
-      },
-      {
-        id: 20,
-        text: 'Labour Wages',
-        link: '/labour/labour-wages',
-        icon: 'fa-solid fa-coins',
+        id: environment.module_access.labour_special_wages_report,
+        text: 'Special Advance',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports/labour-special-wages-report',
       },
     ];
 

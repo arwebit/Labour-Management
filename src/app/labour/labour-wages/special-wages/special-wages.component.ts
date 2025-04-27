@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { LabourWagesService } from 'src/app/shared/services/labour/labour-wages.service';
 import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-special-wages',
@@ -13,6 +14,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./special-wages.component.scss'],
 })
 export class SpecialWagesComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

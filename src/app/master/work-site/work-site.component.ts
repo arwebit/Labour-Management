@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-work-site',
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./work-site.component.scss'],
 })
 export class WorkSiteComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

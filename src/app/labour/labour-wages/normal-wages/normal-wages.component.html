@@ -9,18 +9,36 @@
 <div *ngIf="wages">
   <hr />
   <p><b>Labour Name : </b>{{ labourName }}</p>
-  <p><b>Labour rate per wages : </b> &#8377;{{ labourRate }}/-</p>
-
   <p>Till today</p>
+  <table class="table table-bordered" width="100%">
+    <thead>
+      <tr>
+        <th>No. of attendance</th>
+        <th>Rate (in ₹)</th>
+        <th>Total (in ₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rates of labourRate">
+        <td>{{ rates.no_of_wages }}</td>
+        <td>{{ rates.labour_rate }}/-</td>
+        <th>{{ rates.no_of_wages * rates.labour_rate }}/-</th>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="2">Total</th>
+        <th>{{ labourTotal }}/-</th>
+      </tr>
+    </tfoot>
+  </table>
+
   <p>
-    <b>Labour total attendance : </b> {{ labourTotalWages }}<br />
-    <b>Labour total wages : </b> &#8377;{{ labourRate * labourTotalWages
-    }}<br />
+    <b>Labour total attendance : </b> {{ labourTotalDays }}<br />
+    <b>Labour total wages : </b> &#8377;{{ labourTotalWages }}<br />
     <b>Labour total advance : </b> &#8377;{{ labourTotalPayment }}/-<br /><br />
     <span
-      [innerHTML]="
-        duePending(labourTotalPayment, labourRate * labourTotalWages)
-      "
+      [innerHTML]="duePending(labourTotalPayment, labourTotalWages)"
       style="color: rgb(173, 66, 4); font-weight: bold"
     ></span>
   </p>
@@ -55,14 +73,7 @@
       placeholder="Enter Payment"
       class="form-control"
     /><br />
-    <small
-      >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
-    >
-    <select formControlName="payment_type" class="form-control">
-      <option value="weekly">Weekly</option>
-      <option value="advance">Advance</option>
-    </select>
-    <br />
+
     <button class="btn btn-primary" (click)="savePayment()">Save</button>
   </form>
   <form [formGroup]="editWageForm" *ngIf="editPaymentListDiv">
@@ -87,14 +98,7 @@
       placeholder="Enter Payment"
       class="form-control"
     /><br />
-    <small
-      >Payment Type <b class="text-danger">* {{ paymentTypeErr }}</b></small
-    >
-    <select formControlName="payment_type" class="form-control">
-      <option value="weekly">Weekly</option>
-      <option value="advance">Advance</option>
-    </select>
-    <br />
+
     <button class="btn btn-info" (click)="updatePayment()">
       Update Payment
     </button>
@@ -108,7 +112,7 @@
         <th style="padding: 15px">Date</th>
         <th>Paid (in &#8377;)</th>
         <th>Type</th>
-        <th *ngIf="hasAccess(22, userRole)">Option</th>
+        <th *ngIf="hasAccess(env.edit_labour_wages, userRole)">Option</th>
       </tr>
       <tr *ngFor="let paymentList of paymentLists">
         <td>
@@ -116,7 +120,7 @@
         </td>
         <td>{{ paymentList.paid_amount }}</td>
         <td>{{ paymentList.payment_type | titlecase }}</td>
-        <td *ngIf="hasAccess(22, userRole)">
+        <td *ngIf="hasAccess(env.edit_labour_wages, userRole)">
           <a
             href="javascript:void(0)"
             (click)="toggleDiv('edit', paymentList.wages_id)"

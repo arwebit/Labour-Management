@@ -13,6 +13,7 @@ import { HelpersService } from '../shared/services/others/helpers.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage {
+  env: any = environment.module_access;
   addUserForm!: FormGroup;
   editUserForm!: FormGroup;
   userModuleAccess: number[] = [];
@@ -149,9 +150,9 @@ export class UsersPage {
     this.condition = [];
     this.offset = 0;
     if (value) {
-      this.condition.push(['user_role', '=', value]);
+      this.condition.push(['user_role', '=', value], ['user_id', '>', 1]);
     } else {
-      this.condition = [];
+      this.condition.push(['user_id', '>', 1]);
     }
 
     this.getUser(this.condition);
@@ -338,7 +339,7 @@ export class UsersPage {
         this.userLists = [];
         this.saveMsg = result.message;
         this.setToastOpen(true);
-        this.addUserForm.reset();
+        this.addUserFormInit();
         this.createProfileImage = '';
         this.getUser(this.condition);
         this.showLists = true;

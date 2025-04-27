@@ -1,12 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
 import { Component, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
-import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
-import { LabourWagesService } from 'src/app/shared/services/labour/labour-wages.service';
-import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
-import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
+import { AlertController } from '@ionic/angular';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-labour-wages',
@@ -15,6 +10,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./labour-wages.component.scss'],
 })
 export class LabourWagesComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

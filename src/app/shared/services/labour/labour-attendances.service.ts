@@ -33,6 +33,15 @@ export class LabourAttendancesService {
       })
       .pipe(take(1));
   }
+
+  getNoOfWagesWithRates(data: any): Observable<any> {
+    return this.http
+      .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/no-of-wages-rate', data, {
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
+
   getCurrentAttandance(data: any): Observable<any> {
     return this.http
       .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/current-attendance', data, {

@@ -20,7 +20,7 @@
           horizontal="end"
           class="view"
           (click)="toggleFormDiv('view')"
-          *ngIf="hasAccess(16, userRole)"
+          *ngIf="hasAccess(env.note_book_notification, userRole)"
         >
           <ion-fab-button size="small" color="primary">
             <i class="fa-solid fa-eye"></i>
@@ -48,7 +48,7 @@
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let noteBooks of noteBooksLists"
                     (click)="
-                      hasAccess(14, userRole)
+                      hasAccess(env.check_note_book, userRole)
                         ? noteBooks.checked === 'yes'
                           ? checkedAlready()
                           : toggleFormDiv('save_form', noteBooks.note_book_id)

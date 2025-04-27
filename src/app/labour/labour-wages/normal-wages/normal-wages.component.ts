@@ -7,6 +7,7 @@ import { LabourWagesService } from 'src/app/shared/services/labour/labour-wages.
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
 import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-normal-wages',
@@ -15,18 +16,20 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./normal-wages.component.scss'],
 })
 export class NormalWagesComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';
   editWageForm!: FormGroup;
   currentDate: any = '';
   currentDateTime: any = '';
+  labourRate: any = [];
   labourName: string = '';
   labourID: string = '';
   labourRole: any = '';
-  labourRate: number = 0;
   labourTotalPayment: number = 0;
   labourTotalWages: number = 0;
+  labourTotalDays: number = 0;
   addWageForm!: FormGroup;
   labourLists: any = [];
   offset: number = 0;
@@ -41,7 +44,7 @@ export class NormalWagesComponent {
   attTable: boolean = false;
   attWagesLists: any = [];
   paymentLists: any = [];
-  totalWages: number = 0;
+
   paymentDateErr: string = '';
   paidAmountErr: string = '';
   paymentTypeErr: string = '';
@@ -202,8 +205,7 @@ export class NormalWagesComponent {
     if (this.labourID) {
       this.wages = true;
       this.attendances = true;
-      this.getLabourRates(this.labourID);
-      this.getLabourAttendances(this.labourID);
+      this.getNoOfWagesWithRates(this.labourID);
       this.getLabourTotalPayment(this.labourID);
       this.getLabourPayment(this.labourID);
     } else {
@@ -213,6 +215,33 @@ export class NormalWagesComponent {
       this.labourTotalPayment = 0;
       this.labourTotalWages = 0;
     }
+  }
+
+  get labourTotal(): number {
+    return this.labourRate.reduce(
+      (sum: any, rate: any) => sum + rate.no_of_wages * rate.labour_rate,
+      0
+    );
+  }
+
+  getNoOfWagesWithRates(userID: any, fromDate: any = '', toDate: any = '') {
+    const postData = {
+      labour: userID,
+      from_date: fromDate,
+      to_date: toDate,
+    };
+
+    this.attSrv.getNoOfWagesWithRates(postData).subscribe(
+      (result: any) => {
+        this.labourName = result.labour.full_name;
+        this.labourTotalDays = result.total_days;
+        this.labourTotalWages = result.total_wages;
+        this.labourRate = result.rows;
+      },
+      (err: HttpErrorResponse) => {
+        console.log('Something went wrong');
+      }
+    );
   }
 
   getLabourTotalPayment(
@@ -229,49 +258,6 @@ export class NormalWagesComponent {
     this.wageSrv.getLabourNormalTotalPayment(postData).subscribe(
       (result: any) => {
         this.labourTotalPayment = result.total_payment;
-      },
-      (err: HttpErrorResponse) => {
-        console.log('Something went wrong');
-      }
-    );
-  }
-  getLabourAttendances(
-    loggedInUserID: any,
-    fromDate: any = '',
-    toDate: any = ''
-  ) {
-    const postData = {
-      labour: loggedInUserID,
-      from_date: fromDate,
-      to_date: toDate,
-    };
-
-    this.attSrv.getNoOfWages(postData).subscribe(
-      (result: any) => {
-        this.labourTotalWages = result.total_wages;
-      },
-      (err: HttpErrorResponse) => {
-        console.log('Something went wrong');
-      }
-    );
-  }
-
-  getLabourRates(loggedInUserID: any) {
-    const postData = {
-      filter: {
-        condition: [['user_details.user_id', '=', loggedInUserID]],
-      },
-      start_row: 0,
-      page_records: 1,
-      sort_field: 'full_name',
-      sort: -1,
-    };
-
-    this.rateSrv.getLabourRates(postData).subscribe(
-      (result: any) => {
-        const [details] = result.rows;
-        this.labourRate = details.labour_rate;
-        this.labourName = details.full_name;
       },
       (err: HttpErrorResponse) => {
         console.log('Something went wrong');

@@ -118,7 +118,9 @@
         <th style="padding: 15px">Date</th>
         <th>Payment (in &#8377;)</th>
         <th>Payment Type</th>
-        <th *ngIf="hasAccess(27, userRole)">Option</th>
+        <th *ngIf="hasAccess(env.edit_labour_special_wages, userRole)">
+          Option
+        </th>
       </tr>
       <tr *ngFor="let paymentList of paymentLists">
         <td>
@@ -126,7 +128,7 @@
         </td>
         <td>{{ paymentList.payment }}</td>
         <td>{{ paymentList.payment_type | titlecase }}</td>
-        <td *ngIf="hasAccess(27, userRole)">
+        <td *ngIf="hasAccess(env.edit_labour_special_wages, userRole)">
           <a
             href="javascript:void(0)"
             (click)="toggleDiv('edit', paymentList.spcl_wage_id)"

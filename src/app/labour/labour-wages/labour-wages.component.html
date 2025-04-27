@@ -27,6 +27,7 @@
                 size="small"
                 (click)="toggleReportList('normal-wage')"
                 [disabled]="normalWageBtn"
+                *ngIf="hasAccess(env.view_labour_wages, userRole)"
               >
                 <i class="fa-solid fa-money-bill-wave"></i>
               </ion-fab-button>
@@ -42,6 +43,7 @@
                 size="small"
                 (click)="toggleReportList('special-wage')"
                 [disabled]="specialWageBtn"
+                *ngIf="hasAccess(env.view_labour_special_wages, userRole)"
               >
                 <i class="fa-solid fa-dollar-sign"></i>
               </ion-fab-button>
@@ -57,6 +59,7 @@
                 size="small"
                 (click)="toggleReportList('attendance')"
                 [disabled]="attendanceBtn"
+                *ngIf="hasAccess(env.show_attendances, userRole)"
               >
                 <i class="fa-solid fa-calendar"></i>
               </ion-fab-button>

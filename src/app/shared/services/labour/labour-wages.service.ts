@@ -52,16 +52,6 @@ export class LabourWagesService {
       .pipe(take(1));
   }
 
-  acceptLabourWage(data: any, wageID: any): Observable<any> {
-    const params = new HttpParams().set('wages_id', wageID);
-    return this.http
-      .put(API_LINKS.LABOUR_WAGES_URL + '/accept', data, {
-        headers: this.header,
-        params: params,
-      })
-      .pipe(take(1));
-  }
-
   deleteLabourWage(wageID: any): Observable<any> {
     const params = new HttpParams().set('wages_id', wageID);
     return this.http

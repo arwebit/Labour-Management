@@ -11,7 +11,6 @@
     </ion-refresher-content>
   </ion-refresher>
   <div class="container-xxl position-relative bg-white d-flex p-0">
-    <app-sidebar></app-sidebar>
     <div class="content">
       <app-top></app-top>
       <div class="container-fluid pt-4 px-4">
@@ -21,13 +20,16 @@
           horizontal="end"
           class="view"
           (click)="toggleFormDiv('view')"
-          *ngIf="hasAccess(29, userRole)"
+          *ngIf="hasAccess(env.view_users, userRole)"
         >
           <ion-fab-button size="small" color="primary">
             <i class="fa-solid fa-eye"></i>
           </ion-fab-button>
         </ion-fab>
-        <a (click)="toggleFormDiv('create')" *ngIf="hasAccess(2, userRole)">
+        <a
+          (click)="toggleFormDiv('create')"
+          *ngIf="hasAccess(env.add_user, userRole)"
+        >
           <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
             <ion-fab-button size="small" color="success">
               <i class="fa-solid fa-plus"></i>
@@ -70,7 +72,7 @@
                   <div
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let userList of userLists"
-                    (click)="hasAccess(3, userRole)?toggleFormDiv('edit', userList.user_id):denyAccess('Warning','You have no permission to access this module')"
+                    (click)="hasAccess(env.edit_user, userRole)?toggleFormDiv('edit', userList.user_id):denyAccess('Warning','You have no permission to access this module')"
                   >
                     <img
                       class="rounded-circle flex-shrink-0"

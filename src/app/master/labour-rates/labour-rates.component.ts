@@ -5,6 +5,7 @@ import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
 import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-labour-rates',
@@ -13,6 +14,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./labour-rates.component.scss'],
 })
 export class LabourRatesComponent {
+  env: any = environment;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

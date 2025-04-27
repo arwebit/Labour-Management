@@ -20,7 +20,7 @@
           horizontal="end"
           class="view"
           (click)="toggleFormDiv('view')"
-          *ngIf="hasAccess(17, userRole)"
+          *ngIf="hasAccess(env.view_labour_rates, userRole)"
         >
           <ion-fab-button size="small" color="primary">
             <i class="fa-solid fa-eye"></i>
@@ -48,7 +48,7 @@
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let rates of labourRateLists"
                     (click)="
-                      hasAccess(18, userRole)
+                      hasAccess(env.save_labour_rates, userRole)
                         ? toggleFormDiv('save_form', rates.user_id)
                         : denyAccess(
                             'Warning',

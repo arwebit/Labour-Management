@@ -57,4 +57,20 @@ export class API_LINKS {
     environment.baseURL + '/api/labour-spcl-wages';
 
   /******************************* LABOUR APIS *******************************/
+
+  /******************************* REPORT APIS *******************************/
+
+  public static LABOUR_DETAILS_REPORT_URL: string =
+    environment.baseURL + '/api/reports/labour-details';
+
+  public static LABOUR_ATTENDANCE_REPORT_URL: string =
+    environment.baseURL + '/api/reports/labour-attendance';
+
+  public static LABOUR_NORMAL_WAGES_REPORT_URL: string =
+    environment.baseURL + '/api/reports/labour-normal-wages';
+
+  public static LABOUR_SPECIAL_WAGES_REPORT_URL: string =
+    environment.baseURL + '/api/reports/labour-special-wages';
+
+  /******************************* REPORT APIS *******************************/
 }

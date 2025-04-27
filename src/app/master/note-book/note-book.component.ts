@@ -5,6 +5,7 @@ import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
 import { NoteBookService } from 'src/app/shared/services/others/note-book.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-note-book',
@@ -13,6 +14,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./note-book.component.scss'],
 })
 export class NoteBookComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

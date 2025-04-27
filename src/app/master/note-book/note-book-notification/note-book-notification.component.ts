@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { NoteBookService } from 'src/app/shared/services/others/note-book.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-note-book-notification',
@@ -12,6 +13,7 @@ import { UserService } from 'src/app/shared/services/users/user.service';
   styleUrls: ['./note-book-notification.component.scss'],
 })
 export class NoteBookNotificationComponent {
+  env: any = environment.module_access;
   loggedInUserID: any = localStorage.getItem('user_id');
   userModuleAccess: number[] = [];
   userRole: any = '';

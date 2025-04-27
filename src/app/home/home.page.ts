@@ -30,47 +30,53 @@ export class HomePage {
   getMenus(userRole: number) {
     const allMenus = [
       {
-        id: 1,
+        id: environment.module_access.view_users,
         image: '../../assets/images/menu_pics/users.png',
         text: 'Users',
         link: '/users',
       },
       {
-        id: 5,
+        id: environment.module_access.view_group_access,
         text: 'Group Access',
         image: '../../assets/images/menu_pics/group_access.png',
         link: '/master/group-access',
       },
       {
-        id: 7,
+        id: environment.module_access.view_work_site,
         text: 'Work Site',
         image: '../../assets/images/menu_pics/work_site.png',
         link: '/master/work-site',
       },
       {
-        id: 11,
+        id: environment.module_access.view_note_book,
         text: 'Note Book',
         image: '../../assets/images/menu_pics/note_book.png',
         link: '/master/note-book',
       },
       {
-        id: 17,
+        id: environment.module_access.view_labour_rates,
         text: 'Labour Rates',
         image: '../../assets/images/menu_pics/labour_rates.png',
         link: '/master/labour-rates',
       },
 
       {
-        id: 20,
+        id: environment.module_access.view_labour_wages,
         text: 'Labour Wages',
         image: '../../assets/images/menu_pics/labour_wages.png',
         link: '/labour/labour-wages',
       },
       {
-        id: 29,
-        text: 'Labour Attendance',
+        id: environment.module_access.labour_attendances,
+        text: 'Attendance',
         image: '../../assets/images/menu_pics/labour_attendance.png',
         link: '/labour/labour-attendance',
+      },
+      {
+        id: environment.module_access.reports,
+        text: 'Reports',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports',
       },
     ];
 

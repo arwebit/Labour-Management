@@ -20,13 +20,16 @@
           horizontal="end"
           class="view"
           (click)="toggleFormDiv('view')"
-          *ngIf="hasAccess(11, userRole)"
+          *ngIf="hasAccess(env.view_note_book, userRole)"
         >
           <ion-fab-button size="small" color="primary">
             <i class="fa-solid fa-eye"></i>
           </ion-fab-button>
         </ion-fab>
-        <a (click)="toggleFormDiv('create')" *ngIf="hasAccess(8, userRole)">
+        <a
+          (click)="toggleFormDiv('create')"
+          *ngIf="hasAccess(env.add_note_book, userRole)"
+        >
           <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
             <ion-fab-button size="small" color="success">
               <i class="fa-solid fa-plus"></i>
@@ -55,7 +58,7 @@
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let noteBooks of noteBooksLists"
                     (click)="
-                      hasAccess(9, userRole)
+                      hasAccess(env.edit_note_book, userRole)
                         ? toggleFormDiv('edit', noteBooks.note_book_id)
                         : denyAccess(
                             'Warning',

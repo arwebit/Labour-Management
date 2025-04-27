@@ -1,0 +1,88 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="card">
+              <div class="card-body">
+                <table style="padding: 5px">
+                  <tr>
+                    <td style="width: 48%">
+                      <small>From Date</small>
+                      <input
+                        type="date"
+                        [(ngModel)]="fromDate"
+                        class="form-control"
+                      />
+                    </td>
+                    <td style="width: 48%">
+                      <small>To Date</small>
+                      <input
+                        type="date"
+                        [(ngModel)]="toDate"
+                        class="form-control"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button
+                        class="btn btn-primary"
+                        (click)="getAttendanceList()"
+                      >
+                        Apply
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+                <hr />
+                <div
+                  class="table-responsive"
+                  *ngIf="resultDiv"
+                  style="font-size: 14px"
+                >
+                  <ion-fab
+                    slot="fixed"
+                    vertical="bottom"
+                    horizontal="end"
+                    class="print"
+                    (click)="downloadPDF()"
+                  >
+                    <ion-fab-button size="small" color="primary">
+                      <i class="fa-solid fa-print"></i>
+                    </ion-fab-button>
+                  </ion-fab>
+                  <div id="pdfContent">
+                    <div style="font-weight: bold">
+                      Attendances between
+                      {{ fromDate | date : "dd/MM/yyyy" }} to
+                      {{ toDate | date : "dd/MM/yyyy" }}
+                    </div>
+                    <table class="table print-table">
+                      <thead>
+                        <tr>
+                          <th>Labour Name</th>
+                          <th>Number of Wages</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let attendances of attendanceList">
+                          <td>
+                            {{ attendances.labour_name }}
+                          </td>
+                          <td>{{ attendances.no_of_attendances }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

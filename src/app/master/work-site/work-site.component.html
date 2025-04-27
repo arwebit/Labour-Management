@@ -20,13 +20,16 @@
           horizontal="end"
           class="view"
           (click)="toggleFormDiv('view')"
-          *ngIf="hasAccess(7, userRole)"
+          *ngIf="hasAccess(env.view_work_site, userRole)"
         >
           <ion-fab-button size="small" color="primary">
             <i class="fa-solid fa-eye"></i>
           </ion-fab-button>
         </ion-fab>
-        <a (click)="toggleFormDiv('create')" *ngIf="hasAccess(8, userRole)">
+        <a
+          (click)="toggleFormDiv('create')"
+          *ngIf="hasAccess(env.add_work_site, userRole)"
+        >
           <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="add">
             <ion-fab-button size="small" color="success">
               <i class="fa-solid fa-plus"></i>
@@ -56,7 +59,7 @@
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let workSitesList of workSitesLists"
                     (click)="
-                      hasAccess(9, userRole)
+                      hasAccess(env.edit_work_site, userRole)
                         ? toggleFormDiv('edit', workSitesList.work_site_id)
                         : denyAccess(
                             'Warning',
