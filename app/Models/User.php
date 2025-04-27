@@ -34,9 +34,24 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(User::class, "user_id", "updated_by")->select(['user_id', 'full_name']);
     }
 
-    public function labour_wages(): HasMany
+    public function labour_rate(): HasOne
     {
-        return $this->hasMany(LabourWages::class, "labour", "user_id");
+        return $this->hasOne(LabourRates::class, "labour", "user_id")->select(['labour', 'labour_rate']);
+    }
+
+    public function labour_attendance(): HasMany
+    {
+        return $this->hasMany(Attendance::class, "labour", "user_id")->select(["labour", "check_in", "check_out", "work_site", "description", "work_date"]);
+    }
+
+    public function labour_normal_payment(): HasMany
+    {
+        return $this->hasMany(LabourWages::class, "labour", "user_id")->select(["labour", "payment_date", "paid_amount"]);
+    }
+
+    public function labour_special_payment(): HasMany
+    {
+        return $this->hasMany(LabourSpclWages::class, "labour", "user_id")->select(["labour", "payment_date", "payment", "payment_type"]);
     }
 
     public function getJWTIdentifier()

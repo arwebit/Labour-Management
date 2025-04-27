@@ -96,5 +96,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->put('/', 'LabourSpclWagesController@updateLabourSpclWages');
             $router->delete('/', 'LabourSpclWagesController@deleteLabourSpclWages');
         });
+
+        $router->group(['prefix' => 'reports'], function () use ($router) {
+            $router->get('/labour-details', 'ReportsController@getLabourDetails');
+            $router->post('/labour-attendance', 'ReportsController@getLabourAttendance');
+            $router->post('/labour-normal-wages', 'ReportsController@getLabourNormalWages');
+            $router->post('/labour-special-wages', 'ReportsController@getLabourSpecialWages');
+        });
     });
 });
