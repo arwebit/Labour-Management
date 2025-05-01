@@ -106,7 +106,6 @@ class ReportsController extends Controller
             'to_date'      => 'required',
             'start'        => 'required',
             'page_records' => 'required',
-
         ];
         $messages = [
             'from_date.required'    => 'From Date required',
@@ -124,36 +123,80 @@ class ReportsController extends Controller
             $toDate    = $req->input("to_date");
             $start     = $req->input("start");
             $records   = $req->input("page_records");
-            $sortField = $req->input('sort_field') == "" ? "b.full_name" : $req->input('sort_field');
-            $sort      = $req->input('sort') == -1 ? 'desc' : 'asc';
+            $sortField = "full_name";
+            $sort      = 'asc';
 
-            $query = DB::table('labour_wages as a')
-                ->join('user_details as b', 'a.labour', '=', 'b.user_id')
-                ->select('b.full_name as labour_name', DB::raw('SUM(a.paid_amount) as total_payment'))
-                ->whereBetween('a.payment_date', [$fromDate, $toDate])
-                ->groupBy('b.full_name');
+            $query = DB::table('user_details')->select('user_id', 'full_name')
+                ->where('user_id', '>', 1)->where('user_role', '=', 2)->orderBy($sortField, $sort)
+                ->offset($start)
+                ->limit($records);
 
-            $totalRows         = $query->count();
-            $noOfRequiredPages = ceil($totalRows / $records);
-            $db                = $query->offset($start)->limit($records)->orderBy($sortField, $sort)->get();
+            $usersData    = $query->get();
+            $responseRows = [];
 
-            if ($totalRows > 0) {
-                $response = [
-                    "statusCode"           => 200,
-                    "message"              => "Records found",
-                    "total_rows"           => $totalRows,
-                    "page_rows"            => count($db),
-                    "no_of_required_pages" => $noOfRequiredPages,
-                    "rows"                 => $db,
-                ];
-            } else {
-                $response = [
-                    "statusCode" => 200,
-                    "message"    => "No records found",
-                    "total_rows" => 0,
-                    "rows"       => [],
+            foreach ($usersData as $user) {
+                $userID = $user->user_id;
+
+                $obData = DB::table('labour_attendance')
+                    ->select(DB::raw('SUM(labour_rate * no_of_wages) as payable_amount'))
+                    ->fromSub(function ($query) use ($fromDate, $toDate) {
+                        $query->select('labour', 'labour_rate', DB::raw('COUNT(*) as no_of_wages'))
+                            ->from('labour_attendance')
+                            ->where('work_date', "<", $fromDate)
+                            ->groupBy('labour', 'labour_rate');
+                    }, 't')
+                    ->where('labour', '=', $userID)
+                    ->groupBy('labour')
+                    ->first();
+
+                $payableAmountData = DB::table('labour_attendance')
+                    ->select(DB::raw('SUM(labour_rate * no_of_wages) as payable_amount'))
+                    ->fromSub(function ($query) use ($fromDate, $toDate) {
+                        $query->select('labour', 'labour_rate', DB::raw('COUNT(*) as no_of_wages'))
+                            ->from('labour_attendance')
+                            ->whereBetween('work_date', [$fromDate, $toDate])
+                            ->groupBy('labour', 'labour_rate');
+                    }, 't')
+                    ->where('labour', '=', $userID)
+                    ->groupBy('labour')
+                    ->first();
+
+                $pwagesAmount = DB::table('labour_wages')
+                    ->select(DB::raw('SUM(paid_amount) as payable_amount'))
+                    ->where('labour', '=', $userID)
+                    ->where('payment_date', '<', $fromDate)
+                    ->groupBy('labour')
+                    ->first();
+
+                $wagesAmount = DB::table('labour_wages')
+                    ->select(DB::raw('SUM(paid_amount) as payable_amount'))
+                    ->where('labour', '=', $userID)
+                    ->whereBetween('payment_date', [$fromDate, $toDate])
+                    ->groupBy('labour')
+                    ->first();
+
+                $ob             = $obData ? (float) $obData->payable_amount : 0;
+                $prevAmount     = $pwagesAmount ? (float) $pwagesAmount->payable_amount : 0;
+                $openingBalance = $ob - $prevAmount;
+                $payableAmount  = $payableAmountData ? (float) $payableAmountData->payable_amount : 0;
+                $paidAmount     = $wagesAmount ? (float) $wagesAmount->payable_amount : 0;
+                $closingBalance = $openingBalance + $payableAmount - $paidAmount;
+
+                $responseRows[] = [
+                    'labour_id'       => $userID,
+                    'labour_name'     => $user->full_name,
+                    "opening_balance" => $openingBalance,
+                    'payable_amount'  => $payableAmount,
+                    "paid_amount"     => $paidAmount,
+                    "closing_balance" => $closingBalance,
                 ];
             }
+
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "rows"       => $responseRows,
+            ];
 
             return response()->json($response, 200);
         }
@@ -184,51 +227,73 @@ class ReportsController extends Controller
             $toDate    = $req->input("to_date");
             $start     = $req->input("start");
             $records   = $req->input("page_records");
-            $sortField = $req->input('sort_field') == "" ? "b.full_name" : $req->input('sort_field');
-            $sort      = $req->input('sort') == -1 ? 'desc' : 'asc';
+            $sortField = "full_name";
+            $sort      = 'asc';
 
-            $query = DB::table('labour_special_wages as a')
-                ->join('user_details as b', 'a.labour', '=', 'b.user_id')
-                ->select('b.full_name as labour_name', 'a.payment_type', DB::raw('SUM(a.payment) as total_payment'))
-                ->whereBetween('a.payment_date', [$fromDate, $toDate])
-                ->groupBy('b.full_name', 'a.payment_type');
+            $query = DB::table('user_details')->select('user_id', 'full_name')
+                ->where('user_id', '>', 1)->where('user_role', '=', 2)->orderBy($sortField, $sort)
+                ->offset($start)
+                ->limit($records);
 
-            $totalRows         = $query->count();
-            $noOfRequiredPages = ceil($totalRows / $records);
-            $db                = $query->offset($start)->limit($records)->orderBy($sortField, $sort)->get();
+            $usersData = $query->get();
 
-            $groupedData = [];
-            foreach ($db as $row) {
-                $labourName = $row->labour_name;
+            foreach ($usersData as $user) {
+                $userID         = $user->user_id;
+                $openingBalance = 0;
+                $advanceAmount  = 0;
+                $receiveAmount  = 0;
+                $closingBalance = 0;
 
-                if (! isset($groupedData[$labourName])) {
-                    $groupedData[$labourName] = [
-                        'labour_name' => $labourName,
-                    ];
+                $obData = DB::table('labour_special_wages')
+                    ->select('payment_type', DB::raw('SUM(payment) as total_payment'))
+                    ->where('labour', "=", $userID)
+                    ->where('payment_date', '<', $fromDate)
+                    ->groupBy('payment_type')
+                    ->get();
+
+                $currData = DB::table('labour_special_wages')
+                    ->select('payment_type', DB::raw('SUM(payment) as total_payment'))
+                    ->where('labour', "=", $userID)
+                    ->whereBetween('payment_date', [$fromDate, $toDate])
+                    ->groupBy('payment_type')
+                    ->get();
+
+                $padvance = 0;
+                $precieve = 0;
+
+                foreach ($obData as $obRow) {
+                    if ($obRow->payment_type == 'advance') {
+                        $padvance = $obRow->total_payment;
+                    } else if ($obRow->payment_type == 'receive') {
+                        $precieve = $obRow->total_payment;
+                    }
                 }
 
-                $groupedData[$labourName][$row->payment_type] = $row->total_payment;
-            }
+                foreach ($currData as $currRow) {
+                    if ($currRow->payment_type == 'advance') {
+                        $advanceAmount = $currRow->total_payment;
+                    } else if ($currRow->payment_type == 'receive') {
+                        $receiveAmount = $currRow->total_payment;
+                    }
+                }
 
-            $groupedData = array_values($groupedData);
-            if ($totalRows > 0) {
-                $response = [
-                    "statusCode"           => 200,
-                    "message"              => "Records found",
-                    "total_rows"           => $totalRows,
-                    "page_rows"            => count($db),
-                    "no_of_required_pages" => $noOfRequiredPages,
-                    "rows"                 => $groupedData,
-                ];
-            } else {
-                $response = [
-                    "statusCode" => 200,
-                    "message"    => "No records found",
-                    "total_rows" => 0,
-                    "rows"       => [],
+                $openingBalance = $padvance - $precieve;
+                $closingBalance = $openingBalance + $advanceAmount - $receiveAmount;
+
+                $responseRows[] = [
+                    'labour_id'       => $userID,
+                    'labour_name'     => $user->full_name,
+                    "opening_balance" => $openingBalance,
+                    'advance'         => $advanceAmount,
+                    "receive"         => $receiveAmount,
+                    "closing_balance" => $closingBalance,
                 ];
             }
-
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "rows"       => $responseRows,
+            ];
             return response()->json($response, 200);
         }
 

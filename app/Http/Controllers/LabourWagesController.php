@@ -16,12 +16,10 @@ class LabourWagesController extends Controller
         $sort      = 'asc';
         $query     = LabourWages::with(["labour" => function ($q1) {
             $q1->select("user_id", "full_name");
-        }, "accepted_by" => function ($q2) {
+        }, "created_by" => function ($q2) {
             $q2->select("user_id", "full_name");
-        }, "created_by" => function ($q3) {
+        }, "updated_by" => function ($q3) {
             $q3->select("user_id", "full_name");
-        }, "updated_by" => function ($q4) {
-            $q4->select("user_id", "full_name");
         }]);
 
         $totalRows = $query->count();
@@ -54,12 +52,10 @@ class LabourWagesController extends Controller
         $sort      = $req->input('sort') == -1 ? 'desc' : 'asc';
         $query     = LabourWages::with(["labour" => function ($q1) {
             $q1->select("user_id", "full_name");
-        }, "accepted_by" => function ($q2) {
+        }, "created_by" => function ($q2) {
             $q2->select("user_id", "full_name");
-        }, "created_by" => function ($q3) {
+        }, "updated_by" => function ($q3) {
             $q3->select("user_id", "full_name");
-        }, "updated_by" => function ($q4) {
-            $q4->select("user_id", "full_name");
         }]);
 
         $query = Query::filters($query, $condition);
@@ -118,7 +114,6 @@ class LabourWagesController extends Controller
                     'payment_date'      => $req->input("payment_date"),
                     'paid_amount'       => $req->input("paid_amount"),
                     'payment_type'      => $req->input("payment_type"),
-                    'accepted'          => 'no',
                     'created_by'        => $req->input("created_by"),
                     'created_date_time' => date("Y-m-d H:i:s"),
                 ]);
@@ -167,37 +162,6 @@ class LabourWagesController extends Controller
                 ]);
 
             return response()->json(['statusCode' => 201, 'message' => 'Successfully saved labour wages'], 201);
-        }
-    }
-
-    public function acceptLabourWages(Request $req)
-    {
-        $wagesID = $req->wages_id;
-
-        $rules = [
-            'accepted_by' => 'required',
-        ];
-        $messages = [
-            'accepted_by.required' => 'Acceptance required',
-        ];
-
-        $validator = Validator::make($req->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
-        } else {
-            $saveLabourWages = DB::table('labour_wages')->where('wages_id', '=', $wagesID)->update(
-                [
-                    'accepted'           => 'yes',
-                    'accepted_by'        => $req->input("accepted_by"),
-                    'accepted_date_time' => date("Y-m-d H:i:s"),
-                ]);
-
-            if ($saveLabourWages) {
-                return response()->json(['statusCode' => 201, 'message' => 'Successfully accepted labour wage'], 201);
-            } else {
-                return response()->json(['statusCode' => 500, 'message' => 'Internal server error'], 500);
-            }
         }
     }
 
