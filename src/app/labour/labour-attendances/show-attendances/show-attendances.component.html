@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+              <h6 class="mb-4">
+                Give attendance as on {{ currentDate | date : "dd/MM/yyyy" }}
+              </h6>
+              <form [formGroup]="hasPresent ? checkOutForm : checkInForm">
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Labour
+                    <b class="text-danger"> * {{ labourErr }}</b>
+                  </label>
+                  <select
+                    class="form-control"
+                    formControlName="labour"
+                    (change)="getLabourDetails($event)"
+                  >
+                    <option value="">Select Labour</option>
+                    <option
+                      [value]="labours.user_id"
+                      *ngFor="let labours of labourLists"
+                    >
+                      {{ labours.full_name }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-3" *ngIf="hasPresent">
+                  <label class="form-label"
+                    >Checked Out From : {{ siteName }}
+                  </label>
+                </div>
+                <input
+                  type="hidden"
+                  *ngIf="hasPresent"
+                  class="form-control"
+                  formControlName="attendance_id"
+                />
+                <div class="mb-3" *ngIf="!hasPresent">
+                  <label class="form-label"
+                    >Labour Rate
+                    <b class="text-danger"> * {{ labourRateErr }}</b>
+                  </label>
+                  <input
+                    readonly
+                    [(ngModel)]="labourRate"
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter labour Rate"
+                    formControlName="labour_rate"
+                  />
+                </div>
+                <div class="mb-3" *ngIf="!hasPresent">
+                  <label class="form-label"
+                    >Work Site
+                    <b class="text-danger"> * {{ workSiteErr }}</b>
+                  </label>
+                  <select class="form-control" formControlName="work_site">
+                    <option value="">Select work site</option>
+                    <option
+                      [value]="workSite.WorkSiteID"
+                      *ngFor="let workSite of workSiteLists"
+                      [disabled]="workSite.Disabled"
+                    >
+                      {{ workSite.WorkSiteName }} -
+                      {{ workSite.AttendanceStatus }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label"
+                    >Location
+                    <b class="text-danger"> * {{ locationErr }}</b>
+                  </label>
+                  <textarea
+                    class="form-control"
+                    placeholder="Enter Location"
+                    formControlName="location"
+                  ></textarea>
+                </div>
+                <div class="mb-3" *ngIf="hasPresent">
+                  <label class="form-label"
+                    >Description
+                    <b class="text-danger"> * {{ descriptionErr }}</b>
+                  </label>
+                  <textarea
+                    class="form-control"
+                    placeholder="Enter Description"
+                    formControlName="description"
+                  ></textarea>
+                </div>
+                <div class="mb-3">
+                  <button
+                    type="submit"
+                    *ngIf="!hasPresent"
+                    tabindex="8"
+                    class="btn btn-info"
+                    (click)="checkIn()"
+                  >
+                    Check In
+                  </button>
+                  <button
+                    type="submit"
+                    *ngIf="hasPresent"
+                    tabindex="8"
+                    class="btn btn-danger"
+                    (click)="checkOut()"
+                  >
+                    Check Out
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

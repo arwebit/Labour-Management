@@ -4,7 +4,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
 import { LabourWagesService } from 'src/app/shared/services/labour/labour-wages.service';
-import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
 import { HelpersService } from 'src/app/shared/services/others/helpers.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
 import { environment } from 'src/environments/environment';
@@ -62,8 +61,7 @@ export class NormalWagesComponent {
     private helperSrv: HelpersService,
     private userSrv: UserService,
     private wageSrv: LabourWagesService,
-    private attSrv: LabourAttendancesService,
-    private rateSrv: LabourRatesService
+    private attSrv: LabourAttendancesService
   ) {
     this.info = 'Payment List';
     this.getCurrentDate();

@@ -44,6 +44,8 @@ export class TopComponent {
       this.headerText = 'GROUP ACCESS';
     } else if (path === '/master/work-site') {
       this.headerText = 'WORK SITE';
+    } else if (path === '/machines') {
+      this.headerText = 'MACHINES';
     } else if (path === '/master/labour-rates') {
       this.headerText = 'LABOUR RATES';
     } else if (path === '/master/note-book') {
@@ -53,6 +55,8 @@ export class TopComponent {
     } else if (path === '/labour/labour-wages') {
       this.headerText = 'LABOUR WAGES';
     } else if (path === '/labour/labour-attendance') {
+      this.headerText = 'LABOUR ATTENDANCE';
+    } else if (path === '/labour/labour-attendance/show-attendances') {
       this.headerText = 'LABOUR ATTENDANCE';
     } else if (path === '/reports') {
       this.headerText = 'REPORTS';

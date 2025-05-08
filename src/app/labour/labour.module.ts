@@ -13,6 +13,7 @@ import { NormalWagesComponent } from './labour-wages/normal-wages/normal-wages.c
 import { SpecialWagesComponent } from './labour-wages/special-wages/special-wages.component';
 import { LabourAttendancesComponent } from './labour-attendances/labour-attendances.component';
 import { ShowAttendanceComponent } from './labour-wages/show-attendance/show-attendance.component';
+import { ShowAttendancesComponent } from './labour-attendances/show-attendances/show-attendances.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ShowAttendanceComponent } from './labour-wages/show-attendance/show-att
     SpecialWagesComponent,
     LabourAttendancesComponent,
     ShowAttendanceComponent,
+    ShowAttendancesComponent,
   ],
 })
 export class LabourPageModule {}

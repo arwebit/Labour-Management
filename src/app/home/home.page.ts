@@ -73,6 +73,18 @@ export class HomePage {
         link: '/labour/labour-attendance',
       },
       {
+        id: environment.module_access.show_attendances,
+        text: 'Show Attendance',
+        image: '../../assets/images/menu_pics/labour_attendance.png',
+        link: '/labour/labour-attendance/show-attendances',
+      },
+      {
+        id: environment.module_access.view_machines,
+        text: 'Machines',
+        image: '../../assets/images/menu_pics/machines.png',
+        link: '/machines',
+      },
+      {
         id: environment.module_access.reports,
         text: 'Reports',
         image: '../../assets/images/menu_pics/reports.png',

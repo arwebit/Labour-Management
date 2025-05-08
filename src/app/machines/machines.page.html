@@ -1,0 +1,392 @@
+<ion-content [fullscreen]="true">
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="doRefresh($event)"
+    class="custom-refresher"
+  >
+    <ion-refresher-content
+      pullingIcon="refresh-outline"
+      refreshingSpinner="crescent"
+    >
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <ion-fab
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          class="view"
+          (click)="toggleFormDiv('view')"
+          *ngIf="hasAccess(env.view_machines, userRole)"
+        >
+          <ion-fab-button size="small" color="primary">
+            <i class="fa-solid fa-eye"></i>
+          </ion-fab-button>
+        </ion-fab>
+        <a
+          (click)="toggleFormDiv('transfer')"
+          *ngIf="hasAccess(env.transfer_machine, userRole)"
+        >
+          <ion-fab
+            slot="fixed"
+            vertical="bottom"
+            horizontal="end"
+            class="transfer"
+          >
+            <ion-fab-button size="small" color="success">
+              <i class="fa-solid fa-right-left"></i>
+            </ion-fab-button>
+          </ion-fab>
+        </a>
+
+        <div class="row g-4">
+          <div class="col-sm-12 col-md-12 col-xl-4">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="showLists">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    NUMBER OF MACHINES AT WORK SITES
+                  </div>
+                  <div
+                    class="d-flex align-items-center border-bottom py-3"
+                    *ngFor="let machinesList of machinesLists"
+                    (click)="
+                      hasAccess(env.update_machine, userRole)
+                        ? toggleFormDiv('save', machinesList.work_site_id)
+                        : denyAccess(
+                            'Warning',
+                            'You have no permission to access this module'
+                          )
+                    "
+                  >
+                    <div class="w-100 ms-3">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h6 class="mb-0">{{ machinesList.work_site_name }}</h6>
+                      </div>
+                      <br />
+                      <span class="machine_details"
+                        ><b>Cutting machine : </b>
+                        <span class="machine_number">
+                          {{ machinesList.machines?.no_of_cutting_machine ?? 0}}
+                        </span></span
+                      >
+                      ||
+                      <span class="machine_details"
+                        ><b>Grinder machine : </b
+                        ><span class="machine_number"
+                          >{{ machinesList.machines?.no_of_grinder_machine?? 0
+                          }}
+                        </span></span
+                      >||
+                      <span class="machine_details"
+                        ><b>Polish machine : </b
+                        ><span class="machine_number"
+                          >{{ machinesList.machines?.no_of_polish_machine?? 0
+                          }}</span
+                        ></span
+                      >
+                      ||
+                      <span class="machine_details"
+                        ><b>Hand machine : </b
+                        ><span class="machine_number"
+                          >{{ machinesList.machines?.no_of_hand_machine?? 0 }}
+                        </span></span
+                      >||
+                      <span class="machine_details"
+                        ><b>Aluminium channel : </b
+                        ><span class="machine_number">
+                          {{ machinesList.machines?.no_of_aluminium_channel?? 0
+                          }}
+                        </span></span
+                      >||
+                      <span class="machine_details"
+                        ><b>Matam : </b
+                        ><span class="machine_number">
+                          {{ machinesList.machines?.no_of_matam?? 0 }}</span
+                        ></span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- Save machines -->
+                <form [formGroup]="saveMachineForm" *ngIf="saveMachineFormDiv">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    SAVE NUMBER OF MACHINES
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Work Site Name
+                      <b class="text-danger">* {{ sourceWorkSiteErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      readonly
+                      formControlName="work_site_name"
+                      placeholder="Work Site Name"
+                      class="form-control"
+                      tabindex="1"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Cutting Machine
+                      <b class="text-danger">* {{ cuttingMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_cutting_machine"
+                      placeholder="No of cutting machine"
+                      tabindex="2"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Grinder Machine
+                      <b class="text-danger">* {{ grinderMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_grinder_machine"
+                      placeholder="No of grinder machine"
+                      tabindex="3"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Polish Machine
+                      <b class="text-danger">* {{ polishMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_polish_machine"
+                      placeholder="No of polish machine"
+                      tabindex="4"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Hand Machine
+                      <b class="text-danger">* {{ handMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_hand_machine"
+                      placeholder="No of hand machine"
+                      tabindex="5"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Aluminium channel
+                      <b class="text-danger">* {{ aluminiumChannelErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_aluminium_channel"
+                      placeholder="No of Aluminium channel"
+                      tabindex="6"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Matam
+                      <b class="text-danger">* {{ matamErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_matam"
+                      placeholder="No of Matam"
+                      tabindex="7"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="8"
+                      class="btn btn-primary"
+                      (click)="saveMachine()"
+                    >
+                      Save machines
+                    </button>
+                  </div>
+                </form>
+                <!-- Transfer machines -->
+
+                <form [formGroup]="transferForm" *ngIf="transferFormFormDiv">
+                  <div
+                    style="
+                      margin-bottom: 10px;
+                      font-weight: bold;
+                      text-decoration: underline;
+                      text-align: center;
+                    "
+                  >
+                    TRANSFER MACHINES
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Source Work Site
+                      <b class="text-danger">* {{ sourceWorkSiteErr }}</b>
+                    </label>
+
+                    <select
+                      tabindex="1"
+                      class="form-control"
+                      formControlName="source_work_site"
+                    >
+                      <option value="">Select source work site</option>
+                      <option
+                        [value]="sourceSites.work_site_id"
+                        *ngFor="let sourceSites of sourceWorkSiteList"
+                      >
+                        {{sourceSites.work_site_name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Destination Work Site
+                      <b class="text-danger">* {{ destinationWorkSiteErr }}</b>
+                    </label>
+
+                    <select
+                      tabindex="2"
+                      class="form-control"
+                      formControlName="destination_work_site"
+                    >
+                      <option value="">Select destination work site</option>
+                      <option
+                        [value]="destinationSites.work_site_id"
+                        *ngFor="let destinationSites of destinationWorkSiteList"
+                      >
+                        {{destinationSites.work_site_name}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Cutting Machine
+                      <b class="text-danger">* {{ cuttingMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_cutting_machine"
+                      placeholder="No of cutting machine"
+                      tabindex="3"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Grinder Machine
+                      <b class="text-danger">* {{ grinderMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_grinder_machine"
+                      placeholder="No of grinder machine"
+                      tabindex="4"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Polish Machine
+                      <b class="text-danger">* {{ polishMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_polish_machine"
+                      placeholder="No of polish machine"
+                      tabindex="5"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Hand Machine
+                      <b class="text-danger">* {{ handMachineErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_hand_machine"
+                      placeholder="No of hand machine"
+                      tabindex="6"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Aluminium channel
+                      <b class="text-danger">* {{ aluminiumChannelErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_aluminium_channel"
+                      placeholder="No of Aluminium channel"
+                      tabindex="7"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label"
+                      >Matam
+                      <b class="text-danger">* {{ matamErr }}</b>
+                    </label>
+                    <input
+                      type="text"
+                      formControlName="no_of_matam"
+                      placeholder="No of Matam"
+                      tabindex="8"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <button
+                      type="submit"
+                      tabindex="9"
+                      class="btn btn-primary"
+                      (click)="transferMachine()"
+                    >
+                      Transfer machine
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="saveMsg"
+    [duration]="3000"
+    (didDismiss)="setToastOpen(false)"
+  ></ion-toast>
+</ion-content>

@@ -85,9 +85,18 @@
                         <h6 class="mb-0">
                           {{ userList.full_name | titlecase }}
                         </h6>
-                        <small>Active: {{ userList.is_active }}</small>
+                        <small>{{ userList.user_role.role_name }}</small>
                       </div>
-                      <small>Aadhar No. : {{ userList.aadhar_no }}</small>
+                      <div>
+                        <span class="float-start">
+                          <small
+                            >Aadhar No. : {{ userList.aadhar_no }}</small
+                          ></span
+                        >
+                        <span class="float-end"
+                          ><small>Active: {{ userList.is_active }}</small></span
+                        >
+                      </div>
                     </div>
                   </div>
                 </div>

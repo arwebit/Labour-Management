@@ -58,6 +58,15 @@ export class API_LINKS {
 
   /******************************* LABOUR APIS *******************************/
 
+  /******************************* MACHINE APIS *******************************/
+
+  public static MACHINE_URL: string = environment.baseURL + '/api/machines';
+
+  public static MACHINE_TRANSFER_URL: string =
+    environment.baseURL + '/api/machines/transfer';
+
+  /******************************* MACHINE APIS *******************************/
+
   /******************************* REPORT APIS *******************************/
 
   public static LABOUR_DETAILS_REPORT_URL: string =
@@ -71,6 +80,12 @@ export class API_LINKS {
 
   public static LABOUR_SPECIAL_WAGES_REPORT_URL: string =
     environment.baseURL + '/api/reports/labour-special-wages';
+
+  public static MACHINE_REPORT_URL: string =
+    environment.baseURL + '/api/reports/no-of-machines';
+
+  public static MACHINE_TRANSFERED_REPORT_URL: string =
+    environment.baseURL + '/api/reports/no-of-machines-transfered';
 
   /******************************* REPORT APIS *******************************/
 }

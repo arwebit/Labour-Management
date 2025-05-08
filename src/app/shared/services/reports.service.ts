@@ -48,4 +48,20 @@ export class ReportsService {
       })
       .pipe(take(1));
   }
+
+  getNoOfMachines(): Observable<any> {
+    return this.http
+      .get(API_LINKS.MACHINE_REPORT_URL, {
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
+
+  getNoOfMachinesTransfered(data: any): Observable<any> {
+    return this.http
+      .post(API_LINKS.MACHINE_TRANSFERED_REPORT_URL, data, {
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
 }
