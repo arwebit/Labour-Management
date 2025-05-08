@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Machines;
+use App\Models\MachinesTransfer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -126,8 +128,10 @@ class ReportsController extends Controller
             $sortField = "full_name";
             $sort      = 'asc';
 
+            $labourID = $this->getLabourID();
+
             $query = DB::table('user_details')->select('user_id', 'full_name')
-                ->where('user_id', '>', 1)->where('user_role', '=', 2)->orderBy($sortField, $sort)
+                ->where('user_id', '>', 1)->where('user_role', '=', $labourID)->orderBy($sortField, $sort)
                 ->offset($start)
                 ->limit($records);
 
@@ -230,8 +234,10 @@ class ReportsController extends Controller
             $sortField = "full_name";
             $sort      = 'asc';
 
+            $labourID = $this->getLabourID();
+
             $query = DB::table('user_details')->select('user_id', 'full_name')
-                ->where('user_id', '>', 1)->where('user_role', '=', 2)->orderBy($sortField, $sort)
+                ->where('user_id', '>', 1)->where('user_role', '=', $labourID)->orderBy($sortField, $sort)
                 ->offset($start)
                 ->limit($records);
 
@@ -296,7 +302,91 @@ class ReportsController extends Controller
             ];
             return response()->json($response, 200);
         }
+    }
+
+    public function getNOOfMachines()
+    {
+
+        $sortField = 'machine_id';
+        $sort      = 'asc';
+
+        $query = Machines::with(["work_site", "created_by"]);
+
+        $totalRows = $query->count();
+        $db        = $query->orderBy($sortField, $sort)->get();
+
+        if ($totalRows > 0) {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "total_rows" => $totalRows,
+                "rows"       => $db,
+            ];
+        } else {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "No records found",
+                "total_rows" => 0,
+                "rows"       => [],
+            ];
+        }
+
+        return response()->json($response, 200);
 
     }
 
+    public function getNOOfMachinesTransfered(Request $req)
+    {
+        $rules = [
+            'from_date' => 'required',
+            'to_date'   => 'required',
+
+        ];
+        $messages = [
+            'from_date.required' => 'From Date required',
+            'to_date.required'   => 'To Date required',
+        ];
+
+        $validator = Validator::make($req->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
+        } else {
+            $fromDate  = $req->input("from_date");
+            $toDate    = $req->input("to_date");
+            $sortField = 'transfered_date_time';
+            $sort      = 'asc';
+
+            $query = MachinesTransfer::with(["source_work_site", "destination_work_site", "transfered_by"])->where("transfered_date_time", ">=", $fromDate . " 00:00:00")->where("transfered_date_time", "<=", $toDate . " 23:59:59")->select();
+
+            $totalRows = $query->count();
+            $db        = $query->orderBy($sortField, $sort)->get();
+
+            if ($totalRows > 0) {
+                $response = [
+                    "statusCode" => 200,
+                    "message"    => "Records found",
+                    "total_rows" => $totalRows,
+                    "rows"       => $db,
+                ];
+            } else {
+                $response = [
+                    "statusCode" => 200,
+                    "message"    => "No records found",
+                    "total_rows" => 0,
+                    "rows"       => [],
+                ];
+            }
+        }
+        return response()->json($response, 200);
+
+    }
+
+    private function getLabourID()
+    {
+        $labourID = "";
+        $query    = DB::table("master_role")->select()->where("role_name", "=", "Labour")->first();
+        $labourID = $query->role_id;
+        return $labourID;
+    }
 }

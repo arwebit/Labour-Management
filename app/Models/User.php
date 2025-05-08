@@ -41,7 +41,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function labour_attendance(): HasMany
     {
-        return $this->hasMany(Attendance::class, "labour", "user_id")->select(["labour", "check_in", "check_out", "work_site", "description", "work_date"]);
+        return $this->hasMany(Attendance::class, "labour", "user_id")->select(["labour", "check_in", "check_out", "work_site", "description", "work_date", "labour_rate"]);
     }
 
     public function labour_normal_payment(): HasMany

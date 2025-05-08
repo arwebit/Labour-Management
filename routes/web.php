@@ -69,6 +69,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('/add', 'AttendanceController@checkIn');
             $router->put('/', 'AttendanceController@checkOut');
             $router->delete('/', 'AttendanceController@deleteAttendance');
+            $router->post('/labour-list', 'AttendanceController@getListOfLabours');
             $router->post('/current-attendance', 'AttendanceController@getWorkSiteWithAttendance');
         });
 
@@ -97,11 +98,22 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->delete('/', 'LabourSpclWagesController@deleteLabourSpclWages');
         });
 
+        $router->group(['prefix' => 'machines'], function () use ($router) {
+            $router->get('/', 'MachineController@getAllMachines');
+            $router->post('/', 'MachineController@getMachines');
+            $router->put('/', 'MachineController@saveMachines');
+            $router->post('/transfer', 'MachineController@getTransferMachines');
+            $router->put('/transfer', 'MachineController@transferMachines');
+            $router->delete('/', 'MachineController@deleteMachines');
+        });
+
         $router->group(['prefix' => 'reports'], function () use ($router) {
             $router->get('/labour-details', 'ReportsController@getLabourDetails');
             $router->post('/labour-attendance', 'ReportsController@getLabourAttendance');
             $router->post('/labour-normal-wages', 'ReportsController@getLabourNormalWages');
             $router->post('/labour-special-wages', 'ReportsController@getLabourSpecialWages');
+            $router->get('/no-of-machines', 'ReportsController@getNOOfMachines');
+            $router->post('/no-of-machines-transfered', 'ReportsController@getNOOfMachinesTransfered');
         });
     });
 });

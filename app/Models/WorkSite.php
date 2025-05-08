@@ -26,4 +26,9 @@ class WorkSite extends Model
     {
         return $this->hasOne(Attendance::class, "work_site", "work_site_id");
     }
+
+    public function machines(): HasOne
+    {
+        return $this->hasOne(Machines::class, "work_site", "work_site_id");
+    }
 }
