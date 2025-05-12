@@ -68,6 +68,10 @@ export class TopComponent {
       this.headerText = 'WAGE REPORTS';
     } else if (path.startsWith('/reports/labour-special-wages-report')) {
       this.headerText = 'ADVANCE REPORTS';
+    } else if (path.startsWith('/reports/machine-report')) {
+      this.headerText = 'MACHINE REPORTS';
+    } else if (path.startsWith('/reports/machine-transfer-report')) {
+      this.headerText = 'TRANSFER M/C REPORTS';
     }
   }
 

@@ -53,6 +53,18 @@ export class ReportsPage {
         image: '../../assets/images/menu_pics/reports.png',
         link: '/reports/labour-special-wages-report',
       },
+      {
+        id: environment.module_access.machine_report,
+        text: 'Machine',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports/machine-report',
+      },
+      {
+        id: environment.module_access.machine_transfer_report,
+        text: 'Transfer machine',
+        image: '../../assets/images/menu_pics/reports.png',
+        link: '/reports/machine-transfer-report',
+      },
     ];
 
     this.menus = allMenus.filter((menu: any) =>

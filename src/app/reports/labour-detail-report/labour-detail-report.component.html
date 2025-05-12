@@ -7,9 +7,9 @@
           <div class="col-sm-12 col-xl-6">
             <div class="card">
               <div class="card-body">
-                <table style="padding: 5px">
+                <table style="padding: 5px; width: 100%">
                   <tr>
-                    <td style="width: 98%">
+                    <td>
                       <small>Labour name</small>
                       <select
                         class="form-control"
@@ -27,8 +27,6 @@
                   </tr>
                 </table>
                 <hr />
-                <div class="spinner-border" *ngIf="isLoading"></div>
-
                 <div
                   class="table-responsive"
                   *ngIf="resultDiv"
@@ -45,182 +43,251 @@
                       <i class="fa-solid fa-print"></i>
                     </ion-fab-button>
                   </ion-fab>
+
                   <div id="pdfContent">
-                    <table class="table print-table">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <table
-                              class="table table-responsive"
-                              style="font-size: 14px"
-                            >
-                              <tr>
-                                <th>Labour Name:</th>
-                                <td>{{ fullName }}</td>
-                                <th>Rate:</th>
-                                <td>&#8377;{{ labourRate }}/-</td>
-                              </tr>
-                              <tr>
-                                <th>Aadhar No.:</th>
-                                <td>{{ aadharNo }}</td>
-                                <th>Mobile:</th>
-                                <td>{{ mobile }}</td>
-                              </tr>
-                              <tr>
-                                <th>Email:</th>
-                                <td>{{ email }}</td>
-                                <th>PAN:</th>
-                                <td>{{ panNo }}</td>
-                              </tr>
-                            </table>
-                            <hr />
-                            <div
-                              style="
-                                font-size: 14px;
-                                font-weight: bold;
-                                text-align: center;
-                              "
-                            >
-                              Labour Attendances
-                            </div>
-                            <span style="font-size: 14px; font-weight: bold"
-                              >No. of Wages : {{ totalNoOfWages }}</span
-                            >
-                            <table
-                              class="table table-responsive table-bordered"
-                              style="font-size: 14px; margin-top: 5px"
-                            >
-                              <thead>
-                                <tr>
-                                  <th colspan="2" style="text-align: center">
-                                    Work
-                                  </th>
-                                  <th colspan="2" style="text-align: center">
-                                    Check
-                                  </th>
-                                  <th rowspan="2" style="text-align: center">
-                                    Description
-                                  </th>
-                                </tr>
-                                <tr>
-                                  <th style="text-align: center">Site</th>
-                                  <th style="text-align: center">Date</th>
-                                  <th style="text-align: center">In</th>
-                                  <th style="text-align: center">Out</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  *ngFor="
-                                    let attendance of labourAttendanceDetails
-                                  "
-                                >
-                                  <td>
-                                    {{ attendance.work_site.work_site_name }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      attendance.work_date | date : "dd/MM/yyyy"
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      attendance.check_in
-                                        | date : "dd/MM/yyyy hh:mm a"
-                                    }}
-                                  </td>
-                                  <td>
-                                    {{
-                                      attendance.check_out
-                                        | date : "dd/MM/yyyy hh:mm a"
-                                    }}
-                                  </td>
-                                  <td>{{ attendance.description }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <hr />
-                            <div
-                              style="
-                                font-size: 14px;
-                                font-weight: bold;
-                                text-align: center;
-                              "
-                            >
-                              Labour Normal Wages
-                            </div>
-                            <table
-                              class="table table-responsive table-bordered"
-                              style="font-size: 14px"
-                            >
-                              <thead>
-                                <tr>
-                                  <th style="text-align: center">
-                                    Payment Date
-                                  </th>
-                                  <th style="text-align: center">
-                                    Amount (in &#8377;)
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  *ngFor="let wage of labourNormalWageDetails"
-                                >
-                                  <td>
-                                    {{
-                                      wage.payment_date | date : "dd/MM/yyyy"
-                                    }}
-                                  </td>
-                                  <td>{{ wage.paid_amount }}/-</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <hr />
-                            <div
-                              style="
-                                font-size: 14px;
-                                font-weight: bold;
-                                text-align: center;
-                              "
-                            >
-                              Labour Special Wages
-                            </div>
-                            <table
-                              class="table table-responsive table-bordered"
-                              style="font-size: 14px"
-                            >
-                              <thead>
-                                <tr>
-                                  <th style="text-align: center">
-                                    Payment Date
-                                  </th>
-                                  <th style="text-align: center">
-                                    Amount (in &#8377;)
-                                  </th>
-                                  <th style="text-align: center">
-                                    Payment Type
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  *ngFor="let wage of labourSpecialWageDetails"
-                                >
-                                  <td>
-                                    {{
-                                      wage.payment_date | date : "dd/MM/yyyy"
-                                    }}
-                                  </td>
-                                  <td>{{ wage.payment }}/-</td>
-                                  <td>{{ wage.payment_type | titlecase }}</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="body_container">
+                      <table class="table print-table">
+                        <thead>
+                          <tr class="header_color">
+                            <td style="text-align: center">Marbelzz</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <table
+                                class="table"
+                                style="
+                                  width: 100%;
+                                  border: 1px solid rgb(230, 220, 220);
+                                "
+                              >
+                                <tbody>
+                                  <tr>
+                                    <td>
+                                      <table
+                                        class="table"
+                                        style="font-size: 14px"
+                                      >
+                                        <tr>
+                                          <th>Labour Name:</th>
+                                          <td>{{ fullName }}</td>
+                                          <th>Current Rate:</th>
+                                          <td>&#8377;{{ labourRate }}/-</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Aadhar No.:</th>
+                                          <td>{{ aadharNo }}</td>
+                                          <th>Mobile:</th>
+                                          <td>{{ mobile }}</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Email:</th>
+                                          <td>{{ email }}</td>
+                                          <th>PAN:</th>
+                                          <td>{{ panNo }}</td>
+                                        </tr>
+                                      </table>
+                                      <hr />
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: bold;
+                                          text-align: center;
+                                        "
+                                      >
+                                        Labour Attendances
+                                      </div>
+                                      <span
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: bold;
+                                        "
+                                        >No. of Wages :
+                                        {{ totalNoOfWages }}</span
+                                      >
+                                      <table
+                                        class="table table-responsive table-bordered"
+                                        style="font-size: 14px; margin-top: 5px"
+                                      >
+                                        <thead>
+                                          <tr>
+                                            <th
+                                              colspan="2"
+                                              style="text-align: center"
+                                            >
+                                              Work
+                                            </th>
+                                            <th
+                                              colspan="2"
+                                              style="text-align: center"
+                                            >
+                                              Check
+                                            </th>
+                                            <th
+                                              rowspan="2"
+                                              style="text-align: center"
+                                            >
+                                              Rate
+                                            </th>
+                                            <th
+                                              rowspan="2"
+                                              style="text-align: center"
+                                            >
+                                              Description
+                                            </th>
+                                          </tr>
+                                          <tr>
+                                            <th style="text-align: center">
+                                              Site
+                                            </th>
+                                            <th style="text-align: center">
+                                              Date
+                                            </th>
+                                            <th style="text-align: center">
+                                              In
+                                            </th>
+                                            <th style="text-align: center">
+                                              Out
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr
+                                            *ngFor="
+                                              let attendance of labourAttendanceDetails
+                                            "
+                                          >
+                                            <td>
+                                              {{
+                                                attendance.work_site
+                                                  .work_site_name
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{
+                                                attendance.work_date
+                                                  | date : "dd/MM/yyyy"
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{
+                                                attendance.check_in
+                                                  | date : "dd/MM/yyyy hh:mm a"
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{
+                                                attendance.check_out
+                                                  | date : "dd/MM/yyyy hh:mm a"
+                                              }}
+                                            </td>
+                                            <td>
+                                              {{ attendance.labour_rate }}
+                                            </td>
+                                            <td>
+                                              {{ attendance.description }}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <hr />
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: bold;
+                                          text-align: center;
+                                        "
+                                      >
+                                        Labour Normal Wages
+                                      </div>
+                                      <table
+                                        class="table table-responsive table-bordered"
+                                        style="font-size: 14px"
+                                      >
+                                        <thead>
+                                          <tr>
+                                            <th style="text-align: center">
+                                              Payment Date
+                                            </th>
+                                            <th style="text-align: center">
+                                              Amount (in &#8377;)
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr
+                                            *ngFor="
+                                              let wage of labourNormalWageDetails
+                                            "
+                                          >
+                                            <td>
+                                              {{
+                                                wage.payment_date
+                                                  | date : "dd/MM/yyyy"
+                                              }}
+                                            </td>
+                                            <td>{{ wage.paid_amount }}/-</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <hr />
+                                      <div
+                                        style="
+                                          font-size: 14px;
+                                          font-weight: bold;
+                                          text-align: center;
+                                        "
+                                      >
+                                        Labour Special Wages
+                                      </div>
+                                      <table
+                                        class="table table-responsive table-bordered"
+                                        style="font-size: 14px"
+                                      >
+                                        <thead>
+                                          <tr>
+                                            <th style="text-align: center">
+                                              Payment Date
+                                            </th>
+                                            <th style="text-align: center">
+                                              Amount (in &#8377;)
+                                            </th>
+                                            <th style="text-align: center">
+                                              Payment Type
+                                            </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr
+                                            *ngFor="
+                                              let wage of labourSpecialWageDetails
+                                            "
+                                          >
+                                            <td>
+                                              {{
+                                                wage.payment_date
+                                                  | date : "dd/MM/yyyy"
+                                              }}
+                                            </td>
+                                            <td>{{ wage.payment }}/-</td>
+                                            <td>
+                                              {{
+                                                wage.payment_type | titlecase
+                                              }}
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

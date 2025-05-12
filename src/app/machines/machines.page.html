@@ -61,7 +61,7 @@
                     class="d-flex align-items-center border-bottom py-3"
                     *ngFor="let machinesList of machinesLists"
                     (click)="
-                      hasAccess(env.update_machine, userRole)
+                      hasAccess(env.save_machine, userRole)
                         ? toggleFormDiv('save', machinesList.work_site_id)
                         : denyAccess(
                             'Warning',

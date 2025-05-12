@@ -6,6 +6,8 @@ import { LabourAttendanceReportComponent } from './labour-attendance-report/labo
 import { LabourDetailReportComponent } from './labour-detail-report/labour-detail-report.component';
 import { LabourNormalWagesReportsComponent } from './labour-normal-wages-reports/labour-normal-wages-reports.component';
 import { LabourSpecialWagesReportsComponent } from './labour-special-wages-reports/labour-special-wages-reports.component';
+import { MachineReportsComponent } from './machine-reports/machine-reports.component';
+import { MachineTransferReportsComponent } from './machine-transfer-reports/machine-transfer-reports.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,16 @@ const routes: Routes = [
         path: 'labour-special-wages-report',
         component: LabourSpecialWagesReportsComponent,
         title: 'Labour Management System :: Labour Normal Wages Report',
+      },
+      {
+        path: 'machine-report',
+        component: MachineReportsComponent,
+        title: 'Labour Management System :: Machine Report',
+      },
+      {
+        path: 'machine-transfer-report',
+        component: MachineTransferReportsComponent,
+        title: 'Labour Management System :: Machine Transfer Report',
       },
     ],
   },

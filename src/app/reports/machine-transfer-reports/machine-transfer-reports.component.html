@@ -30,33 +30,11 @@
                       />
                     </td>
                   </tr>
-
-                  <tr>
-                    <td>
-                      <small
-                        >Start <b> * {{ startErr }} </b></small
-                      >
-                      <input
-                        type="text"
-                        [(ngModel)]="start"
-                        class="form-control"
-                      />
-                    </td>
-                    <td>
-                      <small>Limit</small>
-                      <input
-                        type="text"
-                        readonly
-                        [(ngModel)]="limit"
-                        class="form-control"
-                      />
-                    </td>
-                  </tr>
                 </table>
                 <button
                   class="btn btn-primary"
                   style="margin-top: 5px"
-                  (click)="getSpecialWagesList()"
+                  (click)="getMachineTransferList()"
                 >
                   Apply
                 </button>
@@ -77,6 +55,7 @@
                       <i class="fa-solid fa-print"></i>
                     </ion-fab-button>
                   </ion-fab>
+
                   <div id="pdfContent">
                     <div class="body_container">
                       <table class="table print-table">
@@ -96,7 +75,7 @@
                                   text-decoration: underline;
                                 "
                               >
-                                Special advance between
+                                Machine transfered between
                                 {{ fromDate | date : "dd/MM/yyyy" }} to
                                 {{ toDate | date : "dd/MM/yyyy" }}
                               </div>
@@ -109,44 +88,70 @@
                               >
                                 <thead>
                                   <tr>
-                                    <th>Labour Name</th>
-                                    <th>
-                                      Opening Balance (in &#8377;) as on
-                                      {{ fromDate | date : "dd/MM/yyyy" }}
-                                    </th>
-                                    <th>
-                                      Advance (in &#8377;) as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
-                                    <th>
-                                      Receive (in &#8377;) as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
-                                    <th>
-                                      Closing Balance (in &#8377;) as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
-                                    <th>
-                                      Note as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
+                                    <th>Source Work Site</th>
+                                    <th>Destination Work Site</th>
+                                    <th>Cutting Machine transferred</th>
+                                    <th>Grinder Machine transferred</th>
+                                    <th>Polish Machine transferred</th>
+                                    <th>Hand Machine transferred</th>
+                                    <th>Aluminium channel transferred</th>
+                                    <th>Matam transferred</th>
+                                    <th>Transferred by</th>
+                                    <th>Transferred on</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr *ngFor="let wages of wagesList">
+                                  <tr
+                                    *ngFor="
+                                      let machineTransfer of machineTransferList
+                                    "
+                                  >
                                     <td>
-                                      {{ wages.labour_name }}
+                                      {{
+                                        machineTransfer.source_work_site
+                                          .work_site_name
+                                      }}
                                     </td>
-                                    <td>{{ wages.opening_balance }}</td>
-                                    <td>{{ wages.advance }}</td>
-                                    <td>{{ wages.receive }}</td>
-                                    <td>{{ wages.closing_balance }}</td>
                                     <td>
-                                      <span
-                                        [innerHTML]="
-                                          duePending(wages.closing_balance)
-                                        "
-                                      ></span>
+                                      {{
+                                        machineTransfer.destination_work_site
+                                          .work_site_name
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        machineTransfer.no_of_cutting_machine
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        machineTransfer.no_of_grinder_machine
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{ machineTransfer.no_of_polish_machine }}
+                                    </td>
+                                    <td>
+                                      {{ machineTransfer.no_of_hand_machine }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        machineTransfer.no_of_aluminium_channel
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{ machineTransfer.no_of_matam }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        machineTransfer.transfered_by.full_name
+                                      }}
+                                    </td>
+                                    <td>
+                                      {{
+                                        machineTransfer.transfered_date_time
+                                          | date : "dd/MM/yyyy hh:mm:ss"
+                                      }}
                                     </td>
                                   </tr>
                                 </tbody>

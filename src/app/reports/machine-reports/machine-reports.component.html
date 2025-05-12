@@ -1,0 +1,82 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="content">
+      <app-top></app-top>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive" style="font-size: 14px">
+                  <ion-fab
+                    slot="fixed"
+                    vertical="bottom"
+                    horizontal="end"
+                    class="print"
+                    (click)="downloadPDF()"
+                  >
+                    <ion-fab-button size="small" color="primary">
+                      <i class="fa-solid fa-print"></i>
+                    </ion-fab-button>
+                  </ion-fab>
+
+                  <div id="pdfContent">
+                    <div class="body_container">
+                      <table class="table print-table">
+                        <thead>
+                          <tr class="header_color">
+                            <td style="text-align: center">Marbelzz</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <table
+                                class="table"
+                                style="
+                                  width: 100%;
+                                  border: 1px solid rgb(230, 220, 220);
+                                "
+                              >
+                                <thead>
+                                  <tr>
+                                    <th>Work Site</th>
+                                    <th>Cutting Machine</th>
+                                    <th>Grinder Machine</th>
+                                    <th>Polish Machine</th>
+                                    <th>Hand Machine</th>
+                                    <th>Aluminium channel</th>
+                                    <th>Matam</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let machine of machineList">
+                                    <td>
+                                      {{ machine.work_site.work_site_name }}
+                                    </td>
+                                    <td>{{ machine.no_of_cutting_machine }}</td>
+                                    <td>{{ machine.no_of_grinder_machine }}</td>
+                                    <td>{{ machine.no_of_polish_machine }}</td>
+                                    <td>{{ machine.no_of_hand_machine }}</td>
+                                    <td>
+                                      {{ machine.no_of_aluminium_channel }}
+                                    </td>
+                                    <td>{{ machine.no_of_matam }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
