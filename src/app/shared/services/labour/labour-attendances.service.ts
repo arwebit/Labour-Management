@@ -42,6 +42,13 @@ export class LabourAttendancesService {
       .pipe(take(1));
   }
 
+  getLabourListBasedOnCurrentAAttendance(data: any): Observable<any> {
+    return this.http
+      .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/labour-list', data, {
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
   getCurrentAttandance(data: any): Observable<any> {
     return this.http
       .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/current-attendance', data, {

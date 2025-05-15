@@ -14,6 +14,8 @@ import { SpecialWagesComponent } from './labour-wages/special-wages/special-wage
 import { LabourAttendancesComponent } from './labour-attendances/labour-attendances.component';
 import { ShowAttendanceComponent } from './labour-wages/show-attendance/show-attendance.component';
 import { ShowAttendancesComponent } from './labour-attendances/show-attendances/show-attendances.component';
+import { AddAttendancesComponent } from './labour-attendances/show-attendances/add-attendances/add-attendances.component';
+import { ViewAttendancesComponent } from './labour-attendances/show-attendances/view-attendances/view-attendances.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { ShowAttendancesComponent } from './labour-attendances/show-attendances/
     LabourAttendancesComponent,
     ShowAttendanceComponent,
     ShowAttendancesComponent,
+    AddAttendancesComponent,
+    ViewAttendancesComponent,
   ],
 })
 export class LabourPageModule {}
