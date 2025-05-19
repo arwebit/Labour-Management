@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Query;
@@ -26,9 +27,11 @@ class UserController extends Controller
                             "master_module_access.module_access_desc"
                         );
                 }])->select('role_id', 'role_name', 'tag');
-            }, 'created_by' => function ($q2) {
+            },
+            'created_by' => function ($q2) {
                 $q2->select('user_id', 'full_name');
-            }, 'updated_by' => function ($q3) {
+            },
+            'updated_by' => function ($q3) {
                 $q3->select('user_id', 'full_name');
             },
         ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time")
@@ -73,9 +76,11 @@ class UserController extends Controller
                             "master_module_access.module_access_desc"
                         );
                 }])->select('role_id', 'role_name', 'tag');
-            }, 'created_by' => function ($q2) {
+            },
+            'created_by' => function ($q2) {
                 $q2->select('user_id', 'full_name');
-            }, 'updated_by' => function ($q3) {
+            },
+            'updated_by' => function ($q3) {
                 $q3->select('user_id', 'full_name');
             },
         ])->select("user_id", "full_name", "username", "mobile", "email", "aadhar_no", "pan_no", "profile_pic", "user_role", "is_active", "created_by", "created_date_time", "updated_by", "updated_date_time");
@@ -158,7 +163,6 @@ class UserController extends Controller
                 $fileName         = $picName . "." . $getfileExtension;
                 $req->profile_pic->move(base_path("./public/images/pro_pic"), $fileName);
                 $picFile = "images/pro_pic/" . $fileName;
-
             }
 
             $saveUser = DB::table('user_details')->insert([
@@ -190,12 +194,12 @@ class UserController extends Controller
         $userID = $req->user_id;
 
         $rules = [
-            'username'    => 'required|max:20|unique:user_details,username,' . $userID . ',user_id',
-            'email'       => 'email|unique:user_details,email|max:255',
+            'username'    => 'required|max:20',
+            'email'       => 'email|max:255',
             "full_name"   => 'required|max:255',
-            "mobile"      => 'digits:10|unique:user_details,mobile,' . $userID . ',user_id',
-            "aadhar_no"   => 'required|digits:12|unique:user_details,aadhar_no,' . $userID . ',user_id',
-            "pan_no"      => 'max:20|unique:user_details,pan_no,' . $userID . ',user_id',
+            "mobile"      => 'digits:10',
+            "aadhar_no"   => 'required|digits:12',
+            "pan_no"      => 'max:20',
             'profile_pic' => 'mimes:png,jpeg,jpg|max:1024',
             "user_role"   => 'required',
             "is_active"   => 'required',
@@ -245,7 +249,6 @@ class UserController extends Controller
                 $fileName         = $picName . "." . $getfileExtension;
                 $req->profile_pic->move(base_path("./public/images/pro_pic"), $fileName);
                 $picFile = "images/pro_pic/" . $fileName;
-
             }
 
             DB::table('user_details')->where("user_id", "=", $userID)->update([
@@ -415,10 +418,8 @@ class UserController extends Controller
                 $data = $query->first();
                 return response()->json(['statusCode' => 200, 'message' => 'Successfully logged in', 'rows' => $data, "token" => $this->respondWithToken($token)->original], 200);
             } else {
-
                 return response()->json(['statusCode' => 400, 'message' => 'User is not active'], 400);
             }
-
         }
     }
 

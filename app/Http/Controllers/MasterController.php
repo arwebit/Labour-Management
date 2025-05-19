@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ModuleAccess;
 use App\Models\Query;
 use App\Models\UserRole;
+use App\Models\WagesType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator as Validator;
@@ -42,6 +43,33 @@ class MasterController extends Controller
         $sortField = "module_access_id";
         $sort      = 'asc';
         $query     = ModuleAccess::select()->orderBy($sortField, $sort)->get();
+
+        $totalRows = $query->count();
+
+        if ($totalRows > 0) {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "Records found",
+                "total_rows" => $totalRows,
+                "rows"       => $query,
+            ];
+        } else {
+            $response = [
+                "statusCode" => 200,
+                "message"    => "No records found",
+                "total_rows" => 0,
+                "rows"       => [],
+            ];
+        }
+
+        return response()->json($response, 200);
+    }
+
+    public function getWagesType()
+    {
+        $sortField = "wages_type_id";
+        $sort      = 'asc';
+        $query     = WagesType::select()->orderBy($sortField, $sort)->get();
 
         $totalRows = $query->count();
 

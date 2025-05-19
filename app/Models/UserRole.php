@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,5 +18,4 @@ class UserRole extends Model
     {
         return $this->hasMany(GroupAccess::class, "role_id", "role_id");
     }
-
 }

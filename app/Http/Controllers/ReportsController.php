@@ -27,8 +27,6 @@ class ReportsController extends Controller
             ->select("user_id", "full_name", "aadhar_no", "pan_no", "mobile", "email")
             ->where("user_id", "=", $labourID);
 
-        $totalRows = $query->count();
-
         $response = [
             "statusCode" => 200,
             "message"    => "Records found",
@@ -45,7 +43,6 @@ class ReportsController extends Controller
             'to_date'      => 'required',
             'start'        => 'required',
             'page_records' => 'required',
-
         ];
         $messages = [
             'from_date.required'    => 'From Date required',
@@ -63,42 +60,61 @@ class ReportsController extends Controller
             $toDate    = $req->input("to_date");
             $start     = $req->input("start");
             $records   = $req->input("page_records");
-            $sortField = $req->input('sort_field') == "" ? "b.full_name" : $req->input('sort_field');
+            $sortField = $req->input('sort_field') == "" ? "a.full_name" : $req->input('sort_field');
             $sort      = $req->input('sort') == -1 ? 'desc' : 'asc';
 
-            $query = DB::table('labour_attendance as a')
-                ->join('user_details as b', 'a.labour', '=', 'b.user_id')
-                ->select('b.full_name as labour_name', DB::raw('COUNT(*) as no_of_attendances'))
-                ->whereBetween('a.work_date', [$fromDate, $toDate])
-                ->whereNotNull('a.check_in')
-                ->whereNotNull('a.check_out')
-                ->groupBy('b.full_name');
+            $labourID = $this->getLabourID();
 
-            $totalRows         = $query->count();
-            $noOfRequiredPages = ceil($totalRows / $records);
-            $db                = $query->orderBy($sortField, $sort)->offset($start)->limit($records)->get();
+            // Fetch raw data
+            $query = DB::table('user_details as a')
+                ->leftJoin('labour_attendance as b', 'a.user_id', '=', 'b.labour')
+                ->select('a.user_id', 'a.full_name as labour_name', 'b.wage_type_desc', DB::raw('COUNT(*) as no_of_attendances'))
+                ->where("a.user_role", "=", $labourID)
+				->where('a.is_active', '=', 'yes')
+                ->whereBetween('b.work_date', [$fromDate, $toDate])
+                ->whereNotNull('b.check_in')
+                ->whereNotNull('b.check_out')
+                ->groupBy('a.user_id', 'a.full_name', 'b.wage_type_desc');
 
-            if ($totalRows > 0) {
-                $response = [
-                    "statusCode"           => 200,
-                    "message"              => "Records found",
-                    "total_rows"           => $totalRows,
-                    "page_rows"            => count($db),
-                    "no_of_required_pages" => $noOfRequiredPages,
-                    "rows"                 => $db,
-                ];
-            } else {
-                $response = [
-                    "statusCode" => 200,
-                    "message"    => "No records found",
-                    "total_rows" => 0,
-                    "rows"       => [],
+            $rawData = $query->orderBy($sortField, $sort)->get();
+
+            $groupedData = [];
+
+            foreach ($rawData as $row) {
+                $userId = $row->user_id;
+
+                if (! isset($groupedData[$userId])) {
+                    $groupedData[$userId] = [
+                        'user_id'     => $userId,
+                        'labour_name' => $row->labour_name,
+                        'attendance'  => [
+                            'total_attendance' => 0,
+                            'attendance_types' => [],
+                        ],
+                    ];
+                }
+
+                $groupedData[$userId]['attendance']['total_attendance'] += $row->no_of_attendances;
+                $groupedData[$userId]['attendance']['attendance_types'][] = [
+                    'wage_type_desc'    => $row->wage_type_desc,
+                    'no_of_attendances' => $row->no_of_attendances,
                 ];
             }
 
+            $groupedArray = array_values($groupedData);
+
+            $pagedData = array_slice($groupedArray, $start, $records);
+            $totalRows = count($pagedData);
+
+            $response = [
+                "statusCode" => 200,
+                "message"    => $totalRows > 0 ? "Records found" : "No records found",
+                "total_rows" => $totalRows,
+                "rows"       => $pagedData,
+            ];
+
             return response()->json($response, 200);
         }
-
     }
 
     public function getLabourNormalWages(Request $req)
@@ -119,7 +135,11 @@ class ReportsController extends Controller
         $validator = Validator::make($req->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
+            return response()->json([
+                'statusCode' => 400,
+                'message'    => 'Recorrect errors',
+                'errors'     => $validator->errors(),
+            ], 400);
         } else {
             $fromDate  = $req->input("from_date");
             $toDate    = $req->input("to_date");
@@ -131,7 +151,10 @@ class ReportsController extends Controller
             $labourID = $this->getLabourID();
 
             $query = DB::table('user_details')->select('user_id', 'full_name')
-                ->where('user_id', '>', 1)->where('user_role', '=', $labourID)->orderBy($sortField, $sort)
+                ->where('user_id', '>', 1)
+				->where('is_active', '=', 'yes')
+                ->where('user_role', '=', $labourID)
+                ->orderBy($sortField, $sort)
                 ->offset($start)
                 ->limit($records);
 
@@ -143,23 +166,36 @@ class ReportsController extends Controller
 
                 $obData = DB::table('labour_attendance')
                     ->select(DB::raw('SUM(labour_rate * no_of_wages) as payable_amount'))
-                    ->fromSub(function ($query) use ($fromDate, $toDate) {
+                    ->fromSub(function ($query) use ($fromDate) {
                         $query->select('labour', 'labour_rate', DB::raw('COUNT(*) as no_of_wages'))
                             ->from('labour_attendance')
                             ->where('work_date', "<", $fromDate)
+                            ->whereNotNull("check_in")
+                            ->whereNotNull("check_out")
                             ->groupBy('labour', 'labour_rate');
                     }, 't')
                     ->where('labour', '=', $userID)
                     ->groupBy('labour')
                     ->first();
 
+                $wagesData = DB::table('labour_attendance')
+                    ->select("labour_rate", "wage_type_desc", "wage_type_value", DB::raw('COUNT(*) as total_wages'))
+                    ->where('labour', '=', $userID)
+                    ->whereBetween('work_date', [$fromDate, $toDate])
+                    ->whereNotNull("check_in")
+                    ->whereNotNull("check_out")
+                    ->groupBy("labour_rate", "wage_type_desc", "wage_type_value")
+                    ->get();
+
                 $payableAmountData = DB::table('labour_attendance')
-                    ->select(DB::raw('SUM(labour_rate * no_of_wages) as payable_amount'))
+                    ->select(DB::raw('SUM(labour_rate * no_of_wages * wage_type_value) as payable_amount'))
                     ->fromSub(function ($query) use ($fromDate, $toDate) {
-                        $query->select('labour', 'labour_rate', DB::raw('COUNT(*) as no_of_wages'))
+                        $query->select('labour', 'labour_rate', 'wage_type_value', DB::raw('COUNT(*) as no_of_wages'))
                             ->from('labour_attendance')
                             ->whereBetween('work_date', [$fromDate, $toDate])
-                            ->groupBy('labour', 'labour_rate');
+                            ->whereNotNull("check_in")
+                            ->whereNotNull("check_out")
+                            ->groupBy('labour', 'labour_rate', 'wage_type_value');
                     }, 't')
                     ->where('labour', '=', $userID)
                     ->groupBy('labour')
@@ -179,10 +215,26 @@ class ReportsController extends Controller
                     ->groupBy('labour')
                     ->first();
 
+                // Opening balance
                 $ob             = $obData ? (float) $obData->payable_amount : 0;
                 $prevAmount     = $pwagesAmount ? (float) $pwagesAmount->payable_amount : 0;
                 $openingBalance = $ob - $prevAmount;
-                $payableAmount  = $payableAmountData ? (float) $payableAmountData->payable_amount : 0;
+
+                // Payable wages
+                $payableAmount = $payableAmountData ? (float) $payableAmountData->payable_amount : 0;
+
+                // Total wages count
+                $totalWages = 0;
+                foreach ($wagesData as $wage) {
+                    $totalWages += $wage->total_wages;
+                }
+
+                $wages = [
+                    'total_payable_amount' => $payableAmount,
+                    'total_wages'          => $totalWages,
+                    'wage_details'         => $wagesData,
+                ];
+
                 $paidAmount     = $wagesAmount ? (float) $wagesAmount->payable_amount : 0;
                 $closingBalance = $openingBalance + $payableAmount - $paidAmount;
 
@@ -190,7 +242,7 @@ class ReportsController extends Controller
                     'labour_id'       => $userID,
                     'labour_name'     => $user->full_name,
                     "opening_balance" => $openingBalance,
-                    'payable_amount'  => $payableAmount,
+                    'wages'           => $wages,
                     "paid_amount"     => $paidAmount,
                     "closing_balance" => $closingBalance,
                 ];
@@ -237,7 +289,9 @@ class ReportsController extends Controller
             $labourID = $this->getLabourID();
 
             $query = DB::table('user_details')->select('user_id', 'full_name')
-                ->where('user_id', '>', 1)->where('user_role', '=', $labourID)->orderBy($sortField, $sort)
+                ->where('user_id', '>', 1)
+				->where('is_active', '=', 'yes')
+				->where('user_role', '=', $labourID)->orderBy($sortField, $sort)
                 ->offset($start)
                 ->limit($records);
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -145,31 +146,36 @@ class AttendanceController extends Controller
         if ($validator->fails()) {
             return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
         } else {
+            $attData       = DB::table('labour_attendance')->where("attendance_id", "=", $attendanceID)->first();
+            $checkIn       = $attData->check_in;
+            $diffInSeconds = strtotime($req->input("check_out")) - strtotime($checkIn);
+            $workTime      = round($diffInSeconds / 60);
+
+            $result = DB::table('mas_wages_type')
+                ->where('min_mins', '<=', $workTime)
+                ->where(function ($query) use ($workTime) {
+                    $query->where('max_mins', '>=', $workTime)
+                        ->orWhereNull('max_mins');
+                })
+                ->select('wages_type_desc', 'wages_type_value')
+                ->first();
+
             DB::table('labour_attendance')->where("attendance_id", "=", $attendanceID)->update([
-                'check_out'           => $req->input("check_out"),
-                'description'         => $req->input("description"),
-                'check_out_location'  => $req->input("location"),
-                'check_out_latitude'  => $req->input("latitude"),
-                'check_out_longitude' => $req->input("longitude"),
+                'check_out'            => $req->input("check_out"),
+                'work_time_in_minutes' => $workTime,
+                "wage_type_desc"       => $result->wages_type_desc,
+                "wage_type_value"      => $result->wages_type_value,
+                'description'          => $req->input("description"),
+                'check_out_location'   => $req->input("location"),
+                'check_out_latitude'   => $req->input("latitude"),
+                'check_out_longitude'  => $req->input("longitude"),
             ]);
 
             return response()->json(['statusCode' => 201, 'message' => 'Successfully checked out'], 201);
         }
     }
 
-    public function deleteAttendance(Request $req)
-    {
-        $attendanceID = $req->attendance_id;
 
-        $AttendanceDlt = DB::table('labour_attendance')->where('attendance_id', '=', $attendanceID)->delete();
-
-        if ($AttendanceDlt) {
-            DB::table('note_books')->where('work_site', '=', $attendanceID)->delete();
-            return response()->json(['statusCode' => 201, 'message' => 'Successfully deleted labour attendance'], 201);
-        } else {
-            return response()->json(['statusCode' => 500, 'message' => 'Internal server error'], 500);
-        }
-    }
 
     public function getNoOfWages(Request $req)
     {
@@ -189,8 +195,10 @@ class AttendanceController extends Controller
             $condition = [];
         }
 
-        $condition = [["check_in", "not null"],
-            ["check_out", "not null"]];
+        $condition = [
+            ["check_in", "not null"],
+            ["check_out", "not null"]
+        ];
 
         $query = Query::filters($query, $condition)
             ->groupBy('work_date');
@@ -267,7 +275,7 @@ class AttendanceController extends Controller
                     $row->attendance_status = 'check-out';
                 } else {
                     $row->attendance_status = 'present';
-                    $hasOngoingAttendance   = true; // only count actual present
+                    $hasOngoingAttendance   = true;
                 }
             } else {
                 $row->attendance_status = 'absent';
@@ -283,55 +291,71 @@ class AttendanceController extends Controller
                 "user_id"   => $userQuery->user_id ?? null,
                 "full_name" => $userQuery->full_name ?? null,
             ],
-            "attendance_status" => $overallStatus, // ⬅️ Add this
+            "attendance_status" => $overallStatus,
             "rows"              => $rows,
         ], 200);
     }
 
     public function getNoOfWagesRate(Request $req)
     {
-        $labour   = $req->input("labour");
-        $fromDate = $req->input("from_date");
-        $toDate   = $req->input("to_date");
-
-        $userQuery = DB::table('user_details')
-            ->select('full_name', "user_id")
-            ->where("user_id", "=", $labour)
-            ->first();
-
-        $query = DB::table('labour_attendance')
-            ->select('labour_rate', DB::raw('COUNT(*) as no_of_wages'))
-            ->where("labour", "=", $labour);
-
-        if ($fromDate && $toDate) {
-            $query->whereBetween('work_date', [$fromDate, $toDate]);
-        }
-
-        $query->whereNotNull('check_in')
-            ->whereNotNull('check_out');
-
-        $query->groupBy('labour_rate');
-
-        $rows = $query->get();
-
-        $totalDays  = $rows->sum('no_of_wages');
-        $totalWages = $rows->sum(function ($row) {
-            return $row->labour_rate * $row->no_of_wages;
-        });
-
-        $response = [
-            "statusCode"  => 200,
-            "message"     => $rows->count() > 0 ? "Records found" : "No records found",
-            "total_days"  => $totalDays,
-            "total_wages" => $totalWages,
-            "labour"      => [
-                "user_id"   => $userQuery->user_id ?? null,
-                "full_name" => $userQuery->full_name ?? null,
-            ],
-            "rows"        => $rows,
+        $rules = [
+            'labour' => 'required',
+        ];
+        $messages = [
+            'labour.required' => 'Labour required',
         ];
 
-        return response()->json($response, 200);
+        $validator = Validator::make($req->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
+        } else {
+            $labour   = $req->input("labour");
+            $fromDate = $req->input("from_date");
+            $toDate   = $req->input("to_date");
+
+            $userQuery = DB::table('user_details')
+                ->select('full_name', "user_id")
+                ->where("user_id", "=", $labour)
+                ->first();
+
+            $query = DB::table('labour_attendance')
+                ->select('labour_rate', 'wage_type_desc', 'wage_type_value', DB::raw('COUNT(*) as no_of_wages'))
+                ->where("labour", "=", $labour);
+
+            if ($fromDate && $toDate) {
+                $query->whereBetween('work_date', [$fromDate, $toDate]);
+            }
+
+            $query->whereNotNull('check_in')
+                ->whereNotNull('check_out');
+
+            $query->groupBy('labour_rate', 'wage_type_desc', 'wage_type_value');
+
+            $rows = $query->get();
+
+            $rows = $rows->map(function ($row) {
+                $row->total_payment = $row->labour_rate * $row->wage_type_value * $row->no_of_wages;
+                return $row;
+            });
+
+            $totalDays  = $rows->sum('no_of_wages');
+            $totalWages = $rows->sum('total_payment');
+
+            $response = [
+                "statusCode"       => 200,
+                "message"          => $rows->count() > 0 ? "Records found" : "No records found",
+                "total_attendance" => $totalDays,
+                "total_amount"     => $totalWages,
+                "labour"           => [
+                    "user_id"   => $userQuery->user_id ?? null,
+                    "full_name" => $userQuery->full_name ?? null,
+                ],
+                "rows"             => $rows,
+            ];
+
+            return response()->json($response, 200);
+        }
     }
 
     public function getListOfLabours(Request $req)
@@ -365,6 +389,7 @@ class AttendanceController extends Controller
                 ->select(
                     'a.user_id',
                     'a.full_name',
+                    'b.attendance_id',
                     'b.work_date',
                     'b.check_in',
                     'b.check_out',
@@ -373,23 +398,149 @@ class AttendanceController extends Controller
                     'c.work_site_name',
                     'c.work_site_location'
                 )
-                ->where('a.user_role', $labourID)->orderBy("a.full_name", "asc")->offset($start)->limit($pageRecords)->get()->map(function ($item) {
-                if (is_null($item->check_in) && is_null($item->check_out)) {
-                    $item->attendance_status = 'Absent';
-                } elseif (! is_null($item->check_in) && is_null($item->check_out)) {
-                    $item->attendance_status = 'Present';
-                } elseif (! is_null($item->check_in) && ! is_null($item->check_out)) {
-                    $item->attendance_status = 'Checked Out';
-                } else {
-                    $item->attendance_status = 'Unknown';
-                }
-                return $item;
-            });
+                ->where('a.user_role', $labourID)
+				->where('a.is_active', "yes")->orderBy("a.full_name", "asc")->offset($start)->limit($pageRecords)->get()->map(function ($item) {
+                    if (is_null($item->check_in) && is_null($item->check_out)) {
+                        $item->attendance_status = 'Absent';
+                    } elseif (! is_null($item->check_in) && is_null($item->check_out)) {
+                        $item->attendance_status = 'Present';
+                    } elseif (! is_null($item->check_in) && ! is_null($item->check_out)) {
+                        $item->attendance_status = 'Checked Out';
+                    } else {
+                        $item->attendance_status = 'Unknown';
+                    }
+                    return $item;
+                });
 
             $response = ['statusCode' => 200, 'message' => 'Records Found', 'rows' => $userData];
             return response()->json($response, 200);
         }
     }
+
+
+    /* ********************************** MANAGE ATTENDANCE ********************************** */
+
+
+    public function manageAttendance(Request $req)
+    {
+        $attendanceID = $req->attendance_id;
+
+        if ($attendanceID) {
+            $rules = [
+                'work_date'   => 'required',
+                'labour' => 'required',
+                'labour_rate' => 'required',
+                "work_site"    => 'required',
+                'check_in'   => 'required',
+                'check_out'   => 'required',
+                'description' => 'required|max:1000000',
+                "check_in_location"    => 'required',
+                "check_out_location"    => 'required',
+            ];
+            $messages = [
+                'labour.required'   => 'Labour required',
+                'labour_rate.required' => 'Labour Rate required',
+                'work_site.required'    => 'Work Site required',
+                'work_date.required'    => 'Work Date required',
+                'check_in.required'   => 'Check in required',
+                'check_out.required'   => 'Check out required',
+                'check_in_location.required'    => 'Check in location required',
+                'check_out.required'   => 'Check out required',
+                'check_out_location.required'    => 'Check out location required',
+                'description.required'      => 'Description required',
+                'description.max'      => 'Max: 1000000 characters',
+            ];
+        } else {
+            $rules = [
+                'work_date'   => 'required',
+                'labour' => 'required',
+                'labour_rate' => 'required',
+                "work_site"    => 'required',
+                'check_in'   => 'required',
+                "check_in_location"    => 'required',
+            ];
+            $messages = [
+                'labour.required'   => 'Labour required',
+                'labour_rate.required' => 'Labour Rate required',
+                'work_site.required'    => 'Work Site required',
+                'work_date.required'    => 'Work Date required',
+                'check_in.required'   => 'Check in required',
+                'check_in_location.required'    => 'Check in location required',
+            ];
+        }
+
+
+        $validator = Validator::make($req->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json(['statusCode' => 400, 'message' => 'Recorrect errors', 'errors' => $validator->errors()], 400);
+        } else {
+            if ($attendanceID) {
+                $checkIn       = $req->input("check_in");
+                $checkOut      = $req->input("check_out");
+                $diffInSeconds = strtotime($checkOut) - strtotime($checkIn);
+                $workTime      = round($diffInSeconds / 60);
+
+                $result = DB::table('mas_wages_type')
+                    ->where('min_mins', '<=', $workTime)
+                    ->where(function ($query) use ($workTime) {
+                        $query->where('max_mins', '>=', $workTime)
+                            ->orWhereNull('max_mins');
+                    })
+                    ->select('wages_type_desc', 'wages_type_value')
+                    ->first();
+
+                DB::table('labour_attendance')->where("attendance_id", "=", $attendanceID)->update([
+                    'labour'            => $req->input("labour"),
+                    'labour_rate'            => $req->input("labour_rate"),
+                    'work_date'            => $req->input("work_date"),
+                    'work_site'            => $req->input("work_site"),
+                    'check_in'            => $req->input("check_in"),
+                    'check_out'            => $req->input("check_out"),
+                    'work_time_in_minutes' => $workTime,
+                    "wage_type_desc"       => $result->wages_type_desc,
+                    "wage_type_value"      => $result->wages_type_value,
+                    'description'          => $req->input("description"),
+                    'check_in_location'   => $req->input("check_in_location"),
+                    'check_in_latitude'   => $req->input("check_in_latitude"),
+                    'check_in_longitude'  => $req->input("check_in_longitude"),
+                    'check_out_location'   => $req->input("check_out_location"),
+                    'check_out_latitude'   => $req->input("check_out_latitude"),
+                    'check_out_longitude'  => $req->input("check_out_longitude"),
+                ]);
+
+                return response()->json(['statusCode' => 201, 'message' => 'Successfully saved attendance'], 201);
+            } else {
+                DB::table('labour_attendance')->insert([
+                    'labour'               => $req->input("labour"),
+                    'labour_rate'            => $req->input("labour_rate"),
+                    'work_date'            => $req->input("work_date"),
+                    'work_site'            => $req->input("work_site"),
+                    'check_in'             => $req->input("check_in"),
+                    'check_in_location'    => $req->input("check_in_location"),
+                    'check_in_latitude'    => $req->input("check_in_latitude"),
+                    'check_in_longitude'   => $req->input("check_in_longitude"),
+                ]);
+
+                return response()->json(['statusCode' => 201, 'message' => 'Successfully saved attendance'], 201);
+            }
+        }
+    }
+
+    public function deleteAttendance(Request $req)
+    {
+        $attendanceID = $req->attendance_id;
+
+        $AttendanceDlt = DB::table('labour_attendance')->where('attendance_id', '=', $attendanceID)->delete();
+
+        if ($AttendanceDlt) {
+            return response()->json(['statusCode' => 201, 'message' => 'Successfully deleted labour attendance'], 201);
+        } else {
+            return response()->json(['statusCode' => 500, 'message' => 'Internal server error'], 500);
+        }
+    }
+    /* ********************************** MANAGE ATTENDANCE ********************************** */
+
 
     private function getLabourID()
     {

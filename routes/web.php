@@ -29,6 +29,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['middleware' => ['auth']], function () use ($router) {
         $router->group(['prefix' => 'master'], function () use ($router) {
             $router->get('/user-roles', 'MasterController@getAllUserRoles');
+            $router->get('/wages-type', 'MasterController@getWagesType');
             $router->get('/module-access', 'MasterController@getAllModuleAccess');
             $router->post('/group-access', 'MasterController@getGroupAccess');
             $router->put('/group-access', 'MasterController@saveGroupAccess');
@@ -68,9 +69,17 @@ $router->group(['prefix' => 'api'], function () use ($router) {
             $router->post('/no-of-wages-rate', 'AttendanceController@getNoOfWagesRate');
             $router->post('/add', 'AttendanceController@checkIn');
             $router->put('/', 'AttendanceController@checkOut');
-            $router->delete('/', 'AttendanceController@deleteAttendance');
             $router->post('/labour-list', 'AttendanceController@getListOfLabours');
             $router->post('/current-attendance', 'AttendanceController@getWorkSiteWithAttendance');
+
+            /* ********************************** MANAGE ATTENDANCE ********************************** */
+
+            $router->group(['prefix' => 'manage'], function () use ($router) {
+                $router->post('/', 'AttendanceController@manageAttendance');
+                $router->delete('/', 'AttendanceController@deleteAttendance');
+            });
+
+            /* ********************************** MANAGE ATTENDANCE ********************************** */
         });
 
         $router->group(['prefix' => 'labour-rates'], function () use ($router) {
