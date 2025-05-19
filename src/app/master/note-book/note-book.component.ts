@@ -142,7 +142,7 @@ export class NoteBookComponent {
     );
   }
 
-  getNoteBooks() {
+  getNoteBooks(condition: any = []) {
     this.loader = true;
 
     if (this.loading) return;
@@ -150,7 +150,7 @@ export class NoteBookComponent {
 
     const postData = {
       filter: {
-        condition: this.condition,
+        condition: condition,
       },
       start_row: this.offset,
       page_records: this.limit,
@@ -325,7 +325,7 @@ export class NoteBookComponent {
   }
 
   infiniteScroll(ev: any) {
-    this.getNoteBooks();
+    this.getNoteBooks(this.condition);
 
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

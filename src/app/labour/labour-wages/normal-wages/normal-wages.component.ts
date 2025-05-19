@@ -27,8 +27,8 @@ export class NormalWagesComponent {
   labourID: string = '';
   labourRole: any = '';
   labourTotalPayment: number = 0;
-  labourTotalWages: number = 0;
-  labourTotalDays: number = 0;
+  labourTotalAmount: number = 0;
+  labourTotalAttendance: number = 0;
   addWageForm!: FormGroup;
   labourLists: any = [];
   offset: number = 0;
@@ -211,15 +211,8 @@ export class NormalWagesComponent {
       this.attendances = false;
       this.labourRate = 0;
       this.labourTotalPayment = 0;
-      this.labourTotalWages = 0;
+      this.labourTotalAmount = 0;
     }
-  }
-
-  get labourTotal(): number {
-    return this.labourRate.reduce(
-      (sum: any, rate: any) => sum + rate.no_of_wages * rate.labour_rate,
-      0
-    );
   }
 
   getNoOfWagesWithRates(userID: any, fromDate: any = '', toDate: any = '') {
@@ -232,8 +225,8 @@ export class NormalWagesComponent {
     this.attSrv.getNoOfWagesWithRates(postData).subscribe(
       (result: any) => {
         this.labourName = result.labour.full_name;
-        this.labourTotalDays = result.total_days;
-        this.labourTotalWages = result.total_wages;
+        this.labourTotalAttendance = result.total_attendance;
+        this.labourTotalAmount = result.total_amount;
         this.labourRate = result.rows;
       },
       (err: HttpErrorResponse) => {

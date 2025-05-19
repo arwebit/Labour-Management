@@ -102,27 +102,72 @@
                                 {{ toDate | date : "dd/MM/yyyy" }}
                               </div>
                               <table
-                                class="table"
-                                style="
-                                  width: 100%;
-                                  border: 1px solid rgb(230, 220, 220);
-                                "
+                                class="table table-bordered"
+                                style="width: 100%"
                               >
                                 <thead>
                                   <tr>
-                                    <th>Labour Name</th>
-                                    <th>Number of Wages</th>
+                                    <th style="text-align: center" rowspan="2">
+                                      Labour Name
+                                    </th>
+                                    <th style="text-align: center" colspan="2">
+                                      Wages
+                                    </th>
+                                    <th style="text-align: center" rowspan="2">
+                                      Total
+                                    </th>
+                                  </tr>
+                                  <tr>
+                                    <th style="text-align: center">Types</th>
+                                    <th style="text-align: center">Nos.</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr
-                                    *ngFor="let attendances of attendanceList"
+                                  <ng-container
+                                    *ngFor="let item of attendanceList"
                                   >
-                                    <td>
-                                      {{ attendances.labour_name }}
-                                    </td>
-                                    <td>{{ attendances.no_of_attendances }}</td>
-                                  </tr>
+                                    <ng-container
+                                      *ngFor="
+                                        let type of item.attendance
+                                          .attendance_types;
+                                        let j = index
+                                      "
+                                    >
+                                      <tr>
+                                        <!-- Labour Name - only for the first row -->
+                                        <td
+                                          *ngIf="j === 0"
+                                          [attr.rowspan]="
+                                            item.attendance.attendance_types
+                                              .length
+                                          "
+                                        >
+                                          {{ item.labour_name }}
+                                        </td>
+
+                                        <!-- Wage Type -->
+                                        <td>{{ type.wage_type_desc }}</td>
+
+                                        <!-- Number of Attendances -->
+                                        <td>{{ type.no_of_attendances }}</td>
+
+                                        <!-- Total Attendance - only for the first row -->
+                                        <td
+                                          style="
+                                            vertical-align: middle;
+                                            text-align: center;
+                                          "
+                                          *ngIf="j === 0"
+                                          [attr.rowspan]="
+                                            item.attendance.attendance_types
+                                              .length
+                                          "
+                                        >
+                                          {{ item.attendance.total_attendance }}
+                                        </td>
+                                      </tr>
+                                    </ng-container>
+                                  </ng-container>
                                 </tbody>
                               </table>
                             </td>

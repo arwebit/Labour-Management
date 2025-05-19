@@ -15,7 +15,7 @@ export class LabourAttendanceReportComponent {
   toDate: any = '';
   start: number = 0;
   limit: number = 50;
-  sortField: string = 'b.full_name';
+  sortField: string = 'a.full_name';
   sortBy: string = '1';
 
   attendanceList: any = [];
@@ -56,6 +56,7 @@ export class LabourAttendanceReportComponent {
       (res: any) => {
         this.resultDiv = true;
         this.attendanceList = res.rows;
+        console.log(this.attendanceList);
       },
       (err: HttpErrorResponse) => {
         this.emptyErrors();

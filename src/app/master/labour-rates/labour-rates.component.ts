@@ -247,7 +247,7 @@ export class LabourRatesComponent {
   }
 
   infiniteScroll(ev: any) {
-    this.getLabourRates();
+    this.getLabourRates(this.condition);
 
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

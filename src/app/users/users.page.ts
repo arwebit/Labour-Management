@@ -417,7 +417,7 @@ export class UsersPage {
       );
   }
   infiniteScroll(ev: any) {
-    this.getUser();
+    this.getUser(this.condition);
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();
     }, 500);

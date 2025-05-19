@@ -2,9 +2,9 @@ export const environment = {
   production: true,
   version: '1.0.0',
   stayLogin: true,
-  baseURL: 'https://arweb.in/labour/server',
-  imageURL: 'https://arweb.in/labour/server/public',
-  appLink: 'https://arweb.in/labour/server/public',
+  baseURL: 'https://marblezzcrafters.com/server',
+  imageURL: 'https://marblezzcrafters.com/public',
+  appLink: 'https://marblezzcrafters.com/public',
   module_access: {
     view_users: 1,
     add_user: 2,
@@ -50,5 +50,6 @@ export const environment = {
     labour_special_wages_report: 42,
     machine_report: 43,
     machine_transfer_report: 44,
+    update_attendance: 45,
   },
 };

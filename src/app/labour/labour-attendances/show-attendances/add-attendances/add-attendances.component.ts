@@ -223,6 +223,8 @@ export class AddAttendancesComponent {
   }
 
   emptyErrors() {
+    this.labourID = '';
+    this.labourRate = '';
     this.labourErr = '';
     this.labourRateErr = '';
     this.checkInErr = '';
@@ -276,12 +278,13 @@ export class AddAttendancesComponent {
             this.emptyErrors();
             this.saveMsg = '';
             this.saveMsg = res.message;
+            this.checkInFormInit();
             this.hasPresent = false;
-            this.checkOutFormInit();
             this.setToastOpen(true);
           },
           (err: HttpErrorResponse) => {
-            this.descriptionErr = '';
+            this.emptyErrors();
+            this.locationErr = err.error.errors.location;
             this.descriptionErr = err.error.errors.description;
             this.saveMsg = '';
             this.saveMsg = err.error.message;

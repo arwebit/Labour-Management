@@ -54,6 +54,7 @@ export const environment = {
     labour_special_wages_report: 42,
     machine_report: 43,
     machine_transfer_report: 44,
+    update_attendance: 45,
   },
 };
 

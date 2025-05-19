@@ -102,7 +102,7 @@
                                 {{ toDate | date : "dd/MM/yyyy" }}
                               </div>
                               <table
-                                class="table"
+                                class="table table-bordered"
                                 style="
                                   width: 100%;
                                   border: 1px solid rgb(230, 220, 220);
@@ -110,27 +110,25 @@
                               >
                                 <thead>
                                   <tr>
-                                    <th>Labour Name</th>
-                                    <th>
+                                    <th rowspan="2">Labour Name</th>
+                                    <th rowspan="2">
                                       Opening Balance (in &#8377;) as on
                                       {{ fromDate | date : "dd/MM/yyyy" }}
+                                      (A)
                                     </th>
-                                    <th>
-                                      Labour due amount (in &#8377;) as on
+                                    <th colspan="5" style="text-align: center">
+                                      As on
                                       {{ toDate | date : "dd/MM/yyyy" }}
                                     </th>
+                                  </tr>
+                                  <tr>
+                                    <th>No. of Wages</th>
+                                    <th>Labour due amount (in &#8377;) (B)</th>
+                                    <th>Paid amount (in &#8377;) (C)</th>
                                     <th>
-                                      Paid amount (in &#8377;) as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
+                                      Closing Balance (in &#8377;) (A+B-C)
                                     </th>
-                                    <th>
-                                      Closing Balance (in &#8377;) as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
-                                    <th>
-                                      Note as on
-                                      {{ toDate | date : "dd/MM/yyyy" }}
-                                    </th>
+                                    <th>Note</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -139,7 +137,40 @@
                                       {{ wages.labour_name }}
                                     </td>
                                     <td>{{ wages.opening_balance }}</td>
-                                    <td>{{ wages.payable_amount }}</td>
+                                    <td>
+                                      <table class="table table-bordered">
+                                        <thead>
+                                          <tr>
+                                            <th>Rate</th>
+                                            <th>Type</th>
+                                            <th>Count</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr
+                                            *ngFor="
+                                              let wage of wages.wages
+                                                .wage_details
+                                            "
+                                          >
+                                            <td>{{ wage.labour_rate }}</td>
+                                            <td>{{ wage.wage_type_desc }}</td>
+                                            <td>{{ wage.total_wages }}</td>
+                                          </tr>
+                                        </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <th colspan="2">Total</th>
+                                            <th>
+                                              {{ wages.wages.total_wages }}
+                                            </th>
+                                          </tr>
+                                        </tfoot>
+                                      </table>
+                                    </td>
+                                    <td>
+                                      {{ wages.wages.total_payable_amount }}
+                                    </td>
                                     <td>{{ wages.paid_amount }}</td>
                                     <td>{{ wages.closing_balance }}</td>
                                     <td>

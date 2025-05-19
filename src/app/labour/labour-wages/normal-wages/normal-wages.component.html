@@ -10,35 +10,45 @@
   <hr />
   <p><b>Labour Name : </b>{{ labourName }}</p>
   <p>Till today</p>
-  <table class="table table-bordered" width="100%">
-    <thead>
-      <tr>
-        <th>No. of attendance</th>
-        <th>Rate (in ₹)</th>
-        <th>Total (in ₹)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let rates of labourRate">
-        <td>{{ rates.no_of_wages }}</td>
-        <td>{{ rates.labour_rate }}/-</td>
-        <th>{{ rates.no_of_wages * rates.labour_rate }}/-</th>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th colspan="2">Total</th>
-        <th>{{ labourTotal }}/-</th>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-bordered" width="100%">
+      <thead>
+        <tr>
+          <th>Wage Type</th>
+          <th>Wage Value (A)</th>
+          <th>Rate (B)</th>
+          <th>No.of Wages (C)</th>
+          <th>Total (in ₹) (A*B*C)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rates of labourRate">
+          <td>{{ rates.wage_type_desc }}</td>
+          <td>{{ rates.wage_type_value }}</td>
+          <td>{{ rates.labour_rate }}/-</td>
+          <td>{{ rates.no_of_wages }}</td>
+          <th>
+            {{
+              rates.no_of_wages * rates.labour_rate * rates.wage_type_value
+            }}/-
+          </th>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4">Total</th>
+          <th>{{ labourTotalAmount }}/-</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
   <p>
-    <b>Labour total attendance : </b> {{ labourTotalDays }}<br />
-    <b>Labour total wages : </b> &#8377;{{ labourTotalWages }}<br />
+    <b>Labour total attendance : </b> {{ labourTotalAttendance }}<br />
+    <b>Labour total wages : </b> &#8377;{{ labourTotalAmount }}<br />
     <b>Labour total advance : </b> &#8377;{{ labourTotalPayment }}/-<br /><br />
     <span
-      [innerHTML]="duePending(labourTotalPayment, labourTotalWages)"
+      [innerHTML]="duePending(labourTotalPayment, labourTotalAmount)"
       style="color: rgb(173, 66, 4); font-weight: bold"
     ></span>
   </p>

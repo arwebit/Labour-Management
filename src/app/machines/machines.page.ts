@@ -138,7 +138,7 @@ export class MachinesPage {
     );
   }
 
-  getMachines() {
+  getMachines(condition: any = []) {
     this.loader = true;
 
     if (this.loading) return;
@@ -146,7 +146,7 @@ export class MachinesPage {
 
     const postData = {
       filter: {
-        condition: this.condition,
+        condition: condition,
       },
       start_row: this.offset,
       page_records: this.limit,
@@ -324,7 +324,7 @@ export class MachinesPage {
     }
   }
   infiniteScroll(ev: any) {
-    this.getMachines();
+    this.getMachines(this.condition);
 
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

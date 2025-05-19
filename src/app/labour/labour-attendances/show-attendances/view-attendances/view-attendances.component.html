@@ -9,7 +9,16 @@
         <h6 class="mb-0">{{ labour.full_name }}</h6>
         <small>Status: {{ labour.attendance_status }}</small>
       </div>
-      <small> {{ labour.work_site_name ?? "No Work Site" }}</small>
+      <small> {{ labour.work_site_name ?? "No Work Site" }}</small
+      ><br />
+      <div style="font-size: 12px">
+        <div class="float-start" style="color: green">
+          In : {{ labour?.check_in | date : "dd/MM/yyyy hh:mm a" }}
+        </div>
+        <div class="float-end" style="color: red">
+          Out : {{ labour?.check_out | date : "dd/MM/yyyy hh:mm a" }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

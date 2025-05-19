@@ -274,4 +274,7 @@
     [duration]="3000"
     (didDismiss)="setToastOpen(false)"
   ></ion-toast>
+  <ion-infinite-scroll (ionInfinite)="infiniteScroll($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

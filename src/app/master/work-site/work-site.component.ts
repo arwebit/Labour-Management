@@ -115,7 +115,7 @@ export class WorkSiteComponent {
     }
   }
 
-  getWorkSites() {
+  getWorkSites(condition: any = []) {
     this.loader = true;
 
     if (this.loading) return;
@@ -123,7 +123,7 @@ export class WorkSiteComponent {
 
     const postData = {
       filter: {
-        condition: this.condition,
+        condition: condition,
       },
       start_row: this.offset,
       page_records: this.limit,
@@ -286,7 +286,7 @@ export class WorkSiteComponent {
   }
 
   infiniteScroll(ev: any) {
-    this.getWorkSites();
+    this.getWorkSites(this.condition);
 
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();

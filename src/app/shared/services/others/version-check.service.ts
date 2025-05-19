@@ -17,7 +17,7 @@ export class VersionCheckService {
 
   async getUpdates(): Promise<any> {
     const data = {
-      app_name: 'Support',
+      app_name: 'Labour',
     };
     return firstValueFrom(
       this.http.post(API_LINKS.VERSION_URL + '/latest', data)
