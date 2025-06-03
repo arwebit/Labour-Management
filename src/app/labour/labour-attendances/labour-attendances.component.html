@@ -101,6 +101,8 @@
                   <b>Your check in time :</b>
                   {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
                   <b>Your Location :</b> {{ currentLocation }}<br /><br />
+                  <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
+                  <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
                   <button class="btn btn-primary" (click)="checkIn()">
                     Check In
                   </button>
@@ -113,6 +115,8 @@
                     <b>Your check out time :</b>
                     {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
                     <b>Your Location :</b> {{ currentLocation }}<br /><br />
+                    <b>Your Latitude :</b>{{ currentLatitude }}<br /><br />
+                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
                     <b>
                       Description :
                       <span class="text-danger">

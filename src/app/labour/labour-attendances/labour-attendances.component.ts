@@ -187,13 +187,13 @@ export class LabourAttendancesComponent {
     this.currentDateTime = formattedDateTime;
   }
 
-  /*async getLocation() {
+  async getLocation() {
     try {
       const position = await Geolocation.getCurrentPosition();
       this.currentLatitude = position.coords.latitude;
       this.currentLongitude = position.coords.longitude;
 
-      const apiKey = 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8';
+      const apiKey = environment.google_api_key;
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.currentLatitude},${this.currentLongitude}&key=${apiKey}`
       );
@@ -208,22 +208,6 @@ export class LabourAttendancesComponent {
     } catch (error) {
       console.error('Error getting location or place name:', error);
       this.currentLocation = 'Error fetching location';
-    }
-  }*/
-
-  async getLocation() {
-    try {
-      const position = await Geolocation.getCurrentPosition();
-      this.currentLatitude = position.coords.latitude;
-      this.currentLongitude = position.coords.longitude;
-
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${this.currentLatitude}&lon=${this.currentLongitude}`
-      );
-      const data = await response.json();
-      this.currentLocation = data.display_name;
-    } catch (error) {
-      console.error('Error getting location or place name:', error);
     }
   }
 
@@ -328,7 +312,7 @@ export class LabourAttendancesComponent {
   checkOutFormInit(attendanceID: any = '') {
     this.checkOutForm = new FormGroup({
       attendance_id: new FormControl(attendanceID),
-      check_out: new FormControl(this.currentDate),
+      check_out: new FormControl(this.currentDateTime),
       description: new FormControl(''),
       location: new FormControl(this.currentLocation),
       latitude: new FormControl(this.currentLatitude),

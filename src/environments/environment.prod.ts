@@ -1,10 +1,11 @@
 export const environment = {
   production: true,
-  version: '1.0.0',
+  version: '1.0.1',
   stayLogin: true,
+  google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'https://marblezzcrafters.com/server',
-  imageURL: 'https://marblezzcrafters.com/public',
-  appLink: 'https://marblezzcrafters.com/public',
+  imageURL: 'https://marblezzcrafters.com/public/',
+  appLink: 'https://marblezzcrafters.com/public/',
   module_access: {
     view_users: 1,
     add_user: 2,

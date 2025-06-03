@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  version: '1.0.0',
+  version: '1.0.1',
   stayLogin: false,
+  google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'http://localhost:8000',
   imageURL: 'http://localhost:8000',
   appLink: 'http://localhost:8000/',
