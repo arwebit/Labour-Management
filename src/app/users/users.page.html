@@ -68,10 +68,16 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
+                <input
+                  type="text"
+                  [(ngModel)]="filterUser"
+                  placeholder="Search by Staff Name"
+                  class="form-control"
+                />
                 <div *ngIf="showLists">
                   <div
                     class="d-flex align-items-center border-bottom py-3"
-                    *ngFor="let userList of userLists"
+                    *ngFor="let userList of userLists | searchUser:filterUser"
                     (click)="hasAccess(env.edit_user, userRole)?toggleFormDiv('edit', userList.user_id):denyAccess('Warning','You have no permission to access this module')"
                   >
                     <img

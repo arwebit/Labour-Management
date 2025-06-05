@@ -13,6 +13,8 @@ import { WorkSiteComponent } from './work-site/work-site.component';
 import { LabourRatesComponent } from './labour-rates/labour-rates.component';
 import { NoteBookComponent } from './note-book/note-book.component';
 import { NoteBookNotificationComponent } from './note-book/note-book-notification/note-book-notification.component';
+import { SearchWorkSitePipe } from './pipes/search-work-site.pipe';
+import { SearchLabourPipe } from './pipes/search-labour.pipe';
 
 @NgModule({
   imports: [
@@ -30,6 +32,8 @@ import { NoteBookNotificationComponent } from './note-book/note-book-notificatio
     LabourRatesComponent,
     NoteBookComponent,
     NoteBookNotificationComponent,
+    SearchWorkSitePipe,
+    SearchLabourPipe,
   ],
 })
 export class MasterPageModule {}

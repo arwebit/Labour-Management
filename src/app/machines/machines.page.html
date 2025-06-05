@@ -47,19 +47,16 @@
             <div class="card">
               <div class="card-body">
                 <div *ngIf="showLists">
-                  <div
-                    style="
-                      margin-bottom: 10px;
-                      font-weight: bold;
-                      text-decoration: underline;
-                      text-align: center;
-                    "
-                  >
-                    NUMBER OF MACHINES AT WORK SITES
-                  </div>
+                  <input
+                    type="text"
+                    [(ngModel)]="filterWorkSite"
+                    class="form-control"
+                    placeholder="Search by work site name"
+                  />
+
                   <div
                     class="d-flex align-items-center border-bottom py-3"
-                    *ngFor="let machinesList of machinesLists"
+                    *ngFor="let machinesList of machinesLists  | searchWorkSite : filterWorkSite"
                     (click)="
                       hasAccess(env.save_machine, userRole)
                         ? toggleFormDiv('save', machinesList.work_site_id)

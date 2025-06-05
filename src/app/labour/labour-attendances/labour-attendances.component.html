@@ -99,7 +99,8 @@
                   <b>You are about to check in from : {{ siteName }}</b
                   ><br /><br />
                   <b>Your check in time :</b>
-                  {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
+                  {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
+                  }}<br /><br />
                   <b>Your Location :</b> {{ currentLocation }}<br /><br />
                   <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
                   <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
@@ -113,9 +114,10 @@
                     <b>You are about to check out from : {{ siteName }} </b
                     ><br /><br />
                     <b>Your check out time :</b>
-                    {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a" }}<br />
+                    {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
+                    }}<br /><br />
                     <b>Your Location :</b> {{ currentLocation }}<br /><br />
-                    <b>Your Latitude :</b>{{ currentLatitude }}<br /><br />
+                    <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
                     <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
                     <b>
                       Description :
@@ -127,12 +129,25 @@
                       class="form-control"
                       formControlName="description"
                       placeholder="Enter description"
-                    ></textarea
-                    ><br />
-                    <button class="btn btn-danger" (click)="checkOut()">
-                      Check Out
-                    </button>
+                    ></textarea>
+                    <div style="margin-top: 10px">
+                      <button class="btn btn-danger" (click)="checkOut()">
+                        Check Out
+                      </button>
+                    </div>
                   </form>
+                </div>
+                <br />
+                <div class="text-danger" *ngIf="errorDiv">
+                  <ol>
+                    <li>{{ labourErr }}</li>
+                    <li>{{ labourRateErr }}</li>
+                    <li>{{ workSiteErr }}</li>
+                    <li>{{ workDateErr }}</li>
+                    <li>{{ locationErr }}</li>
+                    <li>{{ checkInErr }}</li>
+                    <li>{{ checkOutErr }}</li>
+                  </ol>
                 </div>
               </div>
             </div>

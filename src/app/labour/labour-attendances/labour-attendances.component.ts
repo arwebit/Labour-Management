@@ -48,13 +48,21 @@ export class LabourAttendancesComponent {
   sortBy: string = 'work_site_id';
   sortType: any = -1;
   condition: any = [];
+
   descriptionErr: string = '';
+  labourErr: string = '';
+  labourRateErr: string = '';
+  workSiteErr: string = '';
+  workDateErr: string = '';
+  locationErr: string = '';
+  checkInErr: string = '';
+  checkOutErr: string = '';
+  errorDiv: boolean = false;
   saveMsg: string = '';
   isToastOpen: boolean = false;
   hasPresent: boolean = false;
   labourRate: any = '';
   siteName: string = '';
-  liveLocationErr: string = '';
   attendanceList: any = [];
   currentLocation: any = '';
   currentLatitude: any = '';
@@ -76,6 +84,7 @@ export class LabourAttendancesComponent {
   }
 
   ionViewWillEnter(): void {
+    this.emptyErrors();
     this.getUserDetails();
     this.getLabourRates();
     this.getLocation();
@@ -244,7 +253,6 @@ export class LabourAttendancesComponent {
   }
 
   getWorkSites() {
-    this.workSitesLists = [];
     const postData = {
       labour: this.loggedInUserID,
       work_date: this.currentDate,
@@ -296,6 +304,17 @@ export class LabourAttendancesComponent {
     this.isToastOpen = isOpen;
   }
 
+  emptyErrors() {
+    this.descriptionErr = '';
+    this.labourErr = '';
+    this.labourRateErr = '';
+    this.workSiteErr = '';
+    this.workDateErr = '';
+    this.locationErr = '';
+    this.checkInErr = '';
+    this.checkOutErr = '';
+  }
+
   checkInFormInit(workSiteID: any = '') {
     this.checkInForm = new FormGroup({
       labour: new FormControl(this.loggedInUserID),
@@ -328,6 +347,8 @@ export class LabourAttendancesComponent {
     if (confirmation) {
       this.attendanceSrv.checkIn(this.checkInForm.value).subscribe(
         (res: any) => {
+          this.emptyErrors();
+          this.errorDiv = false;
           this.saveMsg = '';
           this.saveMsg = res.message;
           this.workSitesLists = [];
@@ -339,8 +360,25 @@ export class LabourAttendancesComponent {
           this.checkOutFormDiv = false;
         },
         (err: HttpErrorResponse) => {
+          this.emptyErrors();
           this.saveMsg = '';
           this.saveMsg = err.error.message;
+          this.labourErr = err.error.errors.labour;
+          this.labourRateErr = err.error.errors.labour_rate;
+          this.workSiteErr = err.error.errors.work_site;
+          this.workDateErr = err.error.errors.work_date;
+          this.locationErr = err.error.errors.location;
+          this.checkInErr = err.error.errors.check_in;
+          if (
+            this.labourErr ||
+            this.labourRateErr ||
+            this.workSiteErr ||
+            this.workDateErr ||
+            this.locationErr ||
+            this.checkInErr
+          ) {
+            this.errorDiv = true;
+          }
           this.setToastOpen(true);
           this.showLists = false;
           this.checkInFormDiv = true;
@@ -363,6 +401,8 @@ export class LabourAttendancesComponent {
         )
         .subscribe(
           (res: any) => {
+            this.emptyErrors();
+            this.errorDiv = false;
             this.saveMsg = '';
             this.saveMsg = res.message;
             this.workSitesLists = [];
@@ -374,8 +414,15 @@ export class LabourAttendancesComponent {
             this.checkOutFormDiv = false;
           },
           (err: HttpErrorResponse) => {
-            this.descriptionErr = '';
+            this.emptyErrors();
+
             this.descriptionErr = err.error.errors.description;
+            this.checkOutErr = err.error.errors.check_out;
+            this.locationErr = err.error.errors.location;
+
+            if (this.checkOutErr || this.locationErr) {
+              this.errorDiv = true;
+            }
             this.saveMsg = '';
             this.saveMsg = err.error.message;
             this.setToastOpen(true);

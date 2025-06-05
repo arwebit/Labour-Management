@@ -54,10 +54,19 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
+                <input
+                  type="text"
+                  [(ngModel)]="filterWorkSite"
+                  class="form-control"
+                  placeholder="Search by work site name"
+                />
                 <div *ngIf="showLists">
                   <div
                     class="d-flex align-items-center border-bottom py-3"
-                    *ngFor="let workSitesList of workSitesLists"
+                    *ngFor="
+                      let workSitesList of workSitesLists
+                        | searchWorkSite : filterWorkSite
+                    "
                     (click)="
                       hasAccess(env.edit_work_site, userRole)
                         ? toggleFormDiv('edit', workSitesList.work_site_id)

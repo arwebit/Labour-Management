@@ -58,6 +58,8 @@ export class TopComponent {
       this.headerText = 'LABOUR ATTENDANCE';
     } else if (path === '/labour/labour-attendance/show-attendances') {
       this.headerText = 'LABOUR ATTENDANCE';
+    } else if (path === '/labour/labour-attendance/manage-attendance') {
+      this.headerText = 'MANAGE ATTENDANCE';
     } else if (path === '/reports') {
       this.headerText = 'REPORTS';
     } else if (path.startsWith('/reports/labour-report')) {

@@ -9,6 +9,7 @@ export const loginGuard: CanActivateFn = (route, state) => {
   if (loginService.isLoggedIn()) {
     return true;
   } else {
+    alert('You must be logged in to access this page.');
     router.navigate(['']);
     return false;
   }

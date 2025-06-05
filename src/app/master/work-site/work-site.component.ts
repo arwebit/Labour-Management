@@ -33,7 +33,7 @@ export class WorkSiteComponent {
   workSiteNameErr: string = '';
   workSiteLocationErr: string = '';
   statusErr: string = '';
-
+  filterWorkSite: string = '';
   showLists: boolean = true;
   entryForm: boolean = false;
   editForm: boolean = false;

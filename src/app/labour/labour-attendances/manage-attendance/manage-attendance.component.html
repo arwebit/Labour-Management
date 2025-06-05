@@ -1,0 +1,65 @@
+<ion-content [fullscreen]="true">
+  <div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="content">
+      <app-top></app-top>
+      <ion-fab
+        slot="fixed"
+        vertical="bottom"
+        horizontal="end"
+        class="add"
+        (click)="getList('save')"
+        *ngIf="hasAccess(env.create_attendance, userRole)"
+      >
+        <ion-fab-button size="small" color="primary">
+          <i class="fa-solid fa-plus"></i>
+        </ion-fab-button>
+      </ion-fab>
+      <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+          <div class="col-sm-12 col-xl-6">
+            <table
+              style="width: 100%; margin-bottom: 10px"
+              [cellSpacing]="0"
+              [cellPadding]="'10px'"
+              border="0"
+            >
+              <tr>
+                <td>
+                  <small>WorkDate :</small>
+                  <input
+                    type="date"
+                    class="work_date_field"
+                    [(ngModel)]="currentDate"
+                  />
+                </td>
+                <td style="vertical-align: middle">
+                  <button class="btn btn-primary" (click)="getList('view')">
+                    View
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <div *ngIf="showAttendanceDiv">
+              <app-view-manage-attendance
+                #viewAttendanceComp
+                [workDate]="currentDate"
+                (attendanceID)="getAttendanceID($event)"
+              ></app-view-manage-attendance>
+            </div>
+            <div *ngIf="addAttendanceDiv">
+              <app-save-attendance
+                [workDate]="currentDate"
+              ></app-save-attendance>
+            </div>
+            <div *ngIf="updateAttendanceDiv">
+              <app-update-attendance
+                [workDate]="currentDate"
+                [attendanceID]="attendanceID"
+              ></app-update-attendance>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -29,7 +29,7 @@ export class UsersPage {
   sortType: any = -1;
   condition: any = [];
   filter: any = [];
-
+  filterUser: string = '';
   roleList: any = [];
   roleErr: string = '';
   nameErr: string = '';

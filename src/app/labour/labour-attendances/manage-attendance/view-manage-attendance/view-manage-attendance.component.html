@@ -1,0 +1,51 @@
+<div class="bg-light rounded h-100 p-4">
+  <h6 class="mb-4">Attendance as on {{ workDate | date : "dd/MM/yyyy" }}</h6>
+  <div
+    class="d-flex align-items-center border-bottom py-3"
+    *ngFor="let labour of labourLists"
+  >
+    <div class="w-100 ms-3">
+      <div class="d-flex w-100 justify-content-between">
+        <h6 class="mb-0">{{ labour.full_name }}</h6>
+        <small>Status: {{ labour.attendance_status }}</small>
+      </div>
+      <small> {{ labour.work_site_name ?? "No Work Site" }}</small
+      ><br />
+      <div style="font-size: 12px">
+        <div class="float-start" style="color: green">
+          In : {{ labour?.check_in | date : "dd/MM/yyyy hh:mm a" }}
+        </div>
+        <div class="float-end" style="color: red">
+          Out : {{ labour?.check_out | date : "dd/MM/yyyy hh:mm a" }}
+        </div>
+      </div>
+      <div style="clear: both"></div>
+      <div *ngIf="labour?.check_in" style="margin-top: 15px">
+        <button
+          class="btn btn-warning btn-sm"
+          *ngIf="hasAccess(env.update_attendance, userRole)"
+          (click)="getUpdateAtttendanceID(labour.attendance_id)"
+        >
+          <i class="fa-solid fa-edit"></i>
+        </button>
+        &nbsp;&nbsp;
+        <button
+          class="btn btn-danger btn-sm"
+          (click)="deleteAttendance(labour.attendance_id)"
+          *ngIf="hasAccess(env.delete_attendance, userRole)"
+        >
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ion-infinite-scroll (ionInfinite)="infiniteScroll($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+<ion-toast
+  [isOpen]="isToastOpen"
+  [message]="saveMsg"
+  [duration]="3000"
+  (didDismiss)="setToastOpen(false)"
+></ion-toast>

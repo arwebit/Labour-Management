@@ -59,7 +59,7 @@
                 size="small"
                 (click)="toggleReportList('attendance')"
                 [disabled]="attendanceBtn"
-                *ngIf="hasAccess(env.show_attendances, userRole)"
+                *ngIf="hasAccess(env.manage_attendance, userRole)"
               >
                 <i class="fa-solid fa-calendar"></i>
               </ion-fab-button>

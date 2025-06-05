@@ -13,10 +13,11 @@ import { NormalWagesComponent } from './labour-wages/normal-wages/normal-wages.c
 import { SpecialWagesComponent } from './labour-wages/special-wages/special-wages.component';
 import { LabourAttendancesComponent } from './labour-attendances/labour-attendances.component';
 import { ShowAttendanceComponent } from './labour-wages/show-attendance/show-attendance.component';
-import { ShowAttendancesComponent } from './labour-attendances/show-attendances/show-attendances.component';
-import { AddAttendancesComponent } from './labour-attendances/show-attendances/add-attendances/add-attendances.component';
-import { ViewAttendancesComponent } from './labour-attendances/show-attendances/view-attendances/view-attendances.component';
 
+import { ManageAttendanceComponent } from './labour-attendances/manage-attendance/manage-attendance.component';
+import { ViewManageAttendanceComponent } from './labour-attendances/manage-attendance/view-manage-attendance/view-manage-attendance.component';
+import { SaveAttendanceComponent } from './labour-attendances/manage-attendance/save-attendance/save-attendance.component';
+import { UpdateAttendanceComponent } from './labour-attendances/manage-attendance/update-attendance/update-attendance.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -33,9 +34,10 @@ import { ViewAttendancesComponent } from './labour-attendances/show-attendances/
     SpecialWagesComponent,
     LabourAttendancesComponent,
     ShowAttendanceComponent,
-    ShowAttendancesComponent,
-    AddAttendancesComponent,
-    ViewAttendancesComponent,
+    ManageAttendanceComponent,
+    ViewManageAttendanceComponent,
+    SaveAttendanceComponent,
+    UpdateAttendanceComponent,
   ],
 })
 export class LabourPageModule {}

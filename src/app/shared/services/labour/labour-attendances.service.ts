@@ -42,7 +42,7 @@ export class LabourAttendancesService {
       .pipe(take(1));
   }
 
-  getLabourListBasedOnCurrentAAttendance(data: any): Observable<any> {
+  getLabourListBasedOnCurrentAttendance(data: any): Observable<any> {
     return this.http
       .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/labour-list', data, {
         headers: this.header,
@@ -75,10 +75,20 @@ export class LabourAttendancesService {
       .pipe(take(1));
   }
 
+  manageLabourAttendance(data: any, attendanceID: any = ''): Observable<any> {
+    const params = new HttpParams().set('attendance_id', attendanceID);
+    return this.http
+      .post(API_LINKS.LABOUR_ATTENDANCE_URL + '/manage', data, {
+        params: params,
+        headers: this.header,
+      })
+      .pipe(take(1));
+  }
+
   deleteLabourAttendance(attendanceID: any): Observable<any> {
     const params = new HttpParams().set('attendance_id', attendanceID);
     return this.http
-      .delete(API_LINKS.LABOUR_ATTENDANCE_URL, {
+      .delete(API_LINKS.LABOUR_ATTENDANCE_URL + '/manage', {
         params: params,
         headers: this.header,
       })

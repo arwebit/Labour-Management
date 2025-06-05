@@ -22,8 +22,8 @@ export class LoginPage implements OnInit {
   constructor(private loginSrv: LoginService, private router: Router) {
     this.version = environment.version;
     this.emptyErrors();
-    localStorage.clear();
     this.isLoading = false;
+    localStorage.clear();
   }
 
   loginFormInit() {
@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
         this.loginFormInit();
         localStorage.setItem('user_id', result.rows.user_id);
         localStorage.setItem('token', result.token.access_token);
-        this.router.navigate(['dashboard']);
+        this.router.navigateByUrl('/dashboard');
       },
       (err: HttpErrorResponse): void => {
         this.isLoading = false;

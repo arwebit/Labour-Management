@@ -9,6 +9,7 @@ import { UsersPageRoutingModule } from './users-routing.module';
 import { UsersPage } from './users.page';
 import { LayoutsModule } from '../layouts/layouts.module';
 import { ProfileComponent } from './profile/profile.component';
+import { SearchUserPipe } from './pipes/search-user.pipe';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { ProfileComponent } from './profile/profile.component';
     IonicModule,
     UsersPageRoutingModule,
   ],
-  declarations: [UsersPage, ProfileComponent],
+  declarations: [UsersPage, ProfileComponent, SearchUserPipe],
 })
 export class UsersPageModule {}

@@ -43,10 +43,18 @@
           <div class="col-sm-12 col-md-12 col-xl-4">
             <div class="card">
               <div class="card-body">
+                <input
+                  type="text"
+                  [(ngModel)]="filterLabour"
+                  class="form-control"
+                  placeholder="Search by labour"
+                />
                 <div *ngIf="showLists">
                   <div
                     class="d-flex align-items-center border-bottom py-3"
-                    *ngFor="let rates of labourRateLists"
+                    *ngFor="
+                      let rates of labourRateLists | searchLabour : filterLabour
+                    "
                     (click)="
                       hasAccess(env.save_labour_rates, userRole)
                         ? toggleFormDiv('save_form', rates.user_id)

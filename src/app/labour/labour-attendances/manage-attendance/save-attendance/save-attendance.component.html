@@ -1,8 +1,17 @@
 <div class="bg-light rounded h-100 p-4">
   <h6 class="mb-4">
-    Give attendance as on {{ currentDate | date : "dd/MM/yyyy" }}
+    Save attendance as on {{ workDate | date : "dd/MM/yyyy" }}
   </h6>
-  <form [formGroup]="hasPresent ? checkOutForm : checkInForm">
+  <form [formGroup]="saveAttendanceForm">
+    <input
+      type="date"
+      class="form-control"
+      formControlName="work_date"
+      [(ngModel)]="workDate"
+      [value]="workDate"
+      style="display: none"
+    />
+    <b class="text-danger">{{ workDateErr }} </b>
     <div class="mb-3">
       <label class="form-label"
         >Labour
@@ -11,7 +20,8 @@
       <select
         class="form-control"
         formControlName="labour"
-        (change)="getLabourDetails($event)"
+        [(ngModel)]="labourID"
+        (change)="getLabourDetails()"
       >
         <option value="">Select Labour</option>
         <option [value]="labours.user_id" *ngFor="let labours of labourLists">
@@ -20,22 +30,12 @@
       </select>
     </div>
 
-    <div class="mb-3" *ngIf="hasPresent">
-      <label class="form-label">Checked Out From : {{ siteName }} </label>
-    </div>
-    <input
-      type="hidden"
-      *ngIf="hasPresent"
-      class="form-control"
-      formControlName="attendance_id"
-    />
-    <div class="mb-3" *ngIf="!hasPresent">
+    <div class="mb-3">
       <label class="form-label"
         >Labour Rate
         <b class="text-danger"> * {{ labourRateErr }}</b>
       </label>
       <input
-        readonly
         [(ngModel)]="labourRate"
         type="text"
         class="form-control"
@@ -43,7 +43,7 @@
         formControlName="labour_rate"
       />
     </div>
-    <div class="mb-3" *ngIf="!hasPresent">
+    <div class="mb-3">
       <label class="form-label"
         >Work Site
         <b class="text-danger"> * {{ workSiteErr }}</b>
@@ -51,58 +51,39 @@
       <select class="form-control" formControlName="work_site">
         <option value="">Select work site</option>
         <option
-          [value]="workSite.WorkSiteID"
+          [value]="workSite.work_site_id"
           *ngFor="let workSite of workSiteLists"
-          [disabled]="workSite.Disabled"
         >
-          {{ workSite.WorkSiteName }} -
-          {{ workSite.AttendanceStatus }}
+          {{ workSite.work_site_name }}
         </option>
       </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Check In Time
+        <b class="text-danger"> * {{ checkInErr }}</b>
+      </label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        placeholder="Enter Check In Time"
+        formControlName="check_in"
+      />
     </div>
 
     <div class="mb-3">
       <label class="form-label"
-        >Location
-        <b class="text-danger"> * {{ locationErr }}</b>
+        >Check In Location
+        <b class="text-danger"> * {{ checkInLocationErr }}</b>
       </label>
       <textarea
         class="form-control"
-        placeholder="Enter Location"
-        formControlName="location"
+        placeholder="Enter Check In Location"
+        formControlName="check_in_location"
       ></textarea>
     </div>
-    <div class="mb-3" *ngIf="hasPresent">
-      <label class="form-label"
-        >Description
-        <b class="text-danger"> * {{ descriptionErr }}</b>
-      </label>
-      <textarea
-        class="form-control"
-        placeholder="Enter Description"
-        formControlName="description"
-      ></textarea>
-    </div>
-    <div class="mb-3">
-      <button
-        type="submit"
-        *ngIf="!hasPresent"
-        tabindex="8"
-        class="btn btn-info"
-        (click)="checkIn()"
-      >
-        Check In
-      </button>
-      <button
-        type="submit"
-        *ngIf="hasPresent"
-        tabindex="8"
-        class="btn btn-danger"
-        (click)="checkOut()"
-      >
-        Check Out
-      </button>
-    </div>
+
+    <button class="btn btn-primary" (click)="saveAttendance()">Save</button>
   </form>
 </div>
 <ion-toast

@@ -8,6 +8,7 @@ import { MachinesPageRoutingModule } from './machines-routing.module';
 
 import { MachinesPage } from './machines.page';
 import { LayoutsModule } from '../layouts/layouts.module';
+import { SearchWorkSitePipe } from './pipes/search-work-site.pipe';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { LayoutsModule } from '../layouts/layouts.module';
     ReactiveFormsModule,
     LayoutsModule,
   ],
-  declarations: [MachinesPage],
+  declarations: [MachinesPage, SearchWorkSitePipe],
 })
 export class MachinesPageModule {}

@@ -33,7 +33,7 @@ export class MachinesPage {
   condition: any = [];
   saveMsg: string = '';
   isToastOpen: boolean = false;
-
+  filterWorkSite: string = '';
   sourceWorkSiteErr: string = '';
   destinationWorkSiteErr: string = '';
   cuttingMachineErr: string = '';

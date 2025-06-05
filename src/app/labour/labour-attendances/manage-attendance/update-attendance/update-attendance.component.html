@@ -1,0 +1,113 @@
+<div class="bg-light rounded h-100 p-4">
+  <h6 class="mb-4">
+    Update attendance as on {{ workDate | date : "dd/MM/yyyy" }}
+  </h6>
+  <form [formGroup]="saveAttendanceForm">
+    <input
+      type="date"
+      class="form-control"
+      formControlName="work_date"
+      [(ngModel)]="workDate"
+      [value]="workDate"
+      style="display: none"
+    />
+    <b class="text-danger">{{ workDateErr }} {{ labourErr }} </b>
+    <div class="mb-3">
+      <label class="form-label">Labour : {{ labourNane }} </label>
+      <input type="hidden" formControlName="labour" />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"
+        >Labour Rate
+        <b class="text-danger"> * {{ labourRateErr }}</b>
+      </label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter labour Rate"
+        formControlName="labour_rate"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Work Site
+        <b class="text-danger"> * {{ workSiteErr }}</b>
+      </label>
+      <select class="form-control" formControlName="work_site">
+        <option value="">Select work site</option>
+        <option
+          [value]="workSite.work_site_id"
+          *ngFor="let workSite of workSiteLists"
+        >
+          {{ workSite.work_site_name }}
+        </option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Check In Time
+        <b class="text-danger"> * {{ checkInErr }}</b>
+      </label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        placeholder="Enter Check In Time"
+        formControlName="check_in"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"
+        >Check In Location
+        <b class="text-danger"> * {{ checkInLocationErr }}</b>
+      </label>
+      <textarea
+        class="form-control"
+        placeholder="Enter Check In Location"
+        formControlName="check_in_location"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Check Out Time
+        <b class="text-danger"> * {{ checkOutErr }}</b>
+      </label>
+      <input
+        type="datetime-local"
+        class="form-control"
+        placeholder="Enter Check Out Time"
+        formControlName="check_out"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Check Out Location
+        <b class="text-danger"> * {{ checkOutLocationErr }}</b>
+      </label>
+      <textarea
+        class="form-control"
+        placeholder="Enter Check Out Location"
+        formControlName="check_out_location"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label"
+        >Description
+        <b class="text-danger"> * {{ descriptionErr }}</b>
+      </label>
+      <textarea
+        class="form-control"
+        placeholder="Enter Description"
+        formControlName="description"
+      ></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="saveAttendance()">Save</button>
+  </form>
+</div>
+<ion-toast
+  [isOpen]="isToastOpen"
+  [message]="saveMsg"
+  [duration]="3000"
+  (didDismiss)="setToastOpen(false)"
+></ion-toast>

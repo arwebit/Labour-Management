@@ -34,7 +34,7 @@ export class LabourRatesComponent {
   isToastOpen: boolean = false;
   labourErr: string = '';
   labourRateErr: string = '';
-
+  filterLabour: string = '';
   saveWageForm: boolean = false;
   showLists: boolean = true;
 

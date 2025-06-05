@@ -1,59 +1,43 @@
-import { HttpErrorResponse } from '@angular/common/module.d-CnjH8Dlt';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
-import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
-import { HelpersService } from 'src/app/shared/services/others/helpers.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/shared/services/users/user.service';
+import { environment } from 'src/environments/environment';
+import { ViewManageAttendanceComponent } from './view-manage-attendance/view-manage-attendance.component';
 
-interface WorkSite {
-  WorkSiteID: string;
-  WorkSiteName: string;
-  WorkSiteLocation: string;
-  AttendanceStatus: string;
-  Disabled: boolean;
-  Attendance: {
-    AttendanceID: string;
-    LabourRate: string;
-    CheckIn: string;
-    CheckOut: string;
-    WorkDate: string;
-    Description: string;
-  };
-}
 @Component({
-  selector: 'app-show-attendances',
+  selector: 'app-manage-attendance',
   standalone: false,
-  templateUrl: './show-attendances.component.html',
-  styleUrls: ['./show-attendances.component.scss'],
+  templateUrl: './manage-attendance.component.html',
+  styleUrls: ['./manage-attendance.component.scss'],
 })
-export class ShowAttendancesComponent implements OnInit {
+export class ManageAttendanceComponent implements OnInit {
+  env: any = environment.module_access;
   showAttendanceDiv: boolean = true;
   addAttendanceDiv: boolean = false;
-
-  currentDate: any = '';
-  currentDateTime: any = '';
+  updateAttendanceDiv: boolean = false;
+  attendanceID: any = '';
+  workDate: any = '';
   loggedInUserID: any = localStorage.getItem('user_id');
   userRole: any = '';
   userModuleAccess: number[] = [];
+  currentDate: any = '';
+  @ViewChild('viewAttendanceComp')
+  viewAttendanceComp!: ViewManageAttendanceComponent;
 
   constructor(private userSrv: UserService) {}
 
   ionViewWillEnter() {
     this.getUserDetails();
-    this.getCurrentDate();
   }
+
   ngOnInit() {
     this.getCurrentDate();
   }
-  toggleFormDiv(str: string) {
-    if (str === 'view') {
-      this.showAttendanceDiv = true;
-      this.addAttendanceDiv = false;
-    } else {
-      this.showAttendanceDiv = false;
-      this.addAttendanceDiv = true;
-    }
+
+  getAttendanceID(attendance_id: any) {
+    this.attendanceID = attendance_id;
+    this.showAttendanceDiv = false;
+    this.addAttendanceDiv = false;
+    this.updateAttendanceDiv = true;
   }
 
   getCurrentDate() {
@@ -68,9 +52,28 @@ export class ShowAttendancesComponent implements OnInit {
     const hours = String(istDate.getHours()).padStart(2, '0');
     const minutes = String(istDate.getMinutes()).padStart(2, '0');
     const seconds = String(istDate.getSeconds()).padStart(2, '0');
-    const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     this.currentDate = `${year}-${month}-${day}`;
-    this.currentDateTime = formattedDateTime;
+  }
+
+  getList(type: string) {
+    if (this.currentDate) {
+      if (type === 'view') {
+        this.showAttendanceDiv = true;
+        this.addAttendanceDiv = false;
+        this.updateAttendanceDiv = false;
+        setTimeout(() => {
+          if (this.viewAttendanceComp) {
+            this.viewAttendanceComp.loadAttendances();
+          }
+        });
+      } else {
+        this.showAttendanceDiv = false;
+        this.addAttendanceDiv = true;
+        this.updateAttendanceDiv = false;
+      }
+    } else {
+      alert('Please provide work date');
+    }
   }
 
   async getUserDetails() {

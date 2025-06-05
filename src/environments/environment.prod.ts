@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
-  version: '1.0.1',
+  version: '1.0.2',
   stayLogin: true,
   google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'https://marblezzcrafters.com/server',
-  imageURL: 'https://marblezzcrafters.com/public/',
-  appLink: 'https://marblezzcrafters.com/public/',
+  imageURL: 'https://marblezzcrafters.com/server/public/',
+  appLink: 'https://marblezzcrafters.com/server/public/',
   module_access: {
     view_users: 1,
     add_user: 2,
@@ -39,7 +39,7 @@ export const environment = {
     check_in: 30,
     check_out: 31,
     delete_attendance: 32,
-    show_attendances: 33,
+    manage_attendance: 33,
     view_machines: 34,
     save_machine: 35,
     delete_machine: 36,
@@ -51,6 +51,7 @@ export const environment = {
     labour_special_wages_report: 42,
     machine_report: 43,
     machine_transfer_report: 44,
-    update_attendance: 45,
+    create_attendance: 45,
+    update_attendance: 46,
   },
 };

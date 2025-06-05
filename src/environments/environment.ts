@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  version: '1.0.1',
+  version: '1.0.2',
   stayLogin: false,
   google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'http://localhost:8000',
@@ -43,7 +43,7 @@ export const environment = {
     check_in: 30,
     check_out: 31,
     delete_attendance: 32,
-    show_attendances: 33,
+    manage_attendance: 33,
     view_machines: 34,
     save_machine: 35,
     delete_machine: 36,
@@ -55,7 +55,8 @@ export const environment = {
     labour_special_wages_report: 42,
     machine_report: 43,
     machine_transfer_report: 44,
-    update_attendance: 45,
+    create_attendance: 45,
+    update_attendance: 46,
   },
 };
 

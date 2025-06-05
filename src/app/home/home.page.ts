@@ -66,17 +66,21 @@ export class HomePage {
         image: '../../assets/images/menu_pics/labour_wages.png',
         link: '/labour/labour-wages',
       },
+      ...(this.userRole > -1
+        ? [
+            {
+              id: environment.module_access.labour_attendances,
+              text: 'Labour attendance',
+              image: '../../assets/images/menu_pics/labour_attendance.png',
+              link: '/labour/labour-attendance',
+            },
+          ]
+        : []),
       {
-        id: environment.module_access.labour_attendances,
-        text: 'Attendance',
-        image: '../../assets/images/menu_pics/labour_attendance.png',
-        link: '/labour/labour-attendance',
-      },
-      {
-        id: environment.module_access.show_attendances,
-        text: 'Show Attendance',
-        image: '../../assets/images/menu_pics/labour_attendance.png',
-        link: '/labour/labour-attendance/show-attendances',
+        id: environment.module_access.manage_attendance,
+        text: 'Manage Attendance',
+        image: '../../assets/images/menu_pics/manage_attendance.png',
+        link: '/labour/labour-attendance/manage-attendance',
       },
       {
         id: environment.module_access.view_machines,
