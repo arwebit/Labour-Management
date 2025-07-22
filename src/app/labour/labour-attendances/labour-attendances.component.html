@@ -104,7 +104,11 @@
                   <b>Your Location :</b> {{ currentLocation }}<br /><br />
                   <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
                   <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
-                  <button class="btn btn-primary" (click)="checkIn()">
+                  <button
+                    class="btn btn-primary"
+                    (click)="checkIn()"
+                    *ngIf="checkBtn"
+                  >
                     Check In
                   </button>
                 </div>
@@ -131,7 +135,11 @@
                       placeholder="Enter description"
                     ></textarea>
                     <div style="margin-top: 10px">
-                      <button class="btn btn-danger" (click)="checkOut()">
+                      <button
+                        class="btn btn-danger"
+                        (click)="checkOut()"
+                        *ngIf="checkBtn"
+                      >
                         Check Out
                       </button>
                     </div>

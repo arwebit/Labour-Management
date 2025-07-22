@@ -72,6 +72,8 @@ export class LabourAttendancesComponent {
   checkInFormDiv: boolean = false;
   checkOutFormDiv: boolean = false;
 
+  checkBtn: boolean = true;
+
   constructor(
     private userSrv: UserService,
     private ratesSrv: LabourRatesService,
@@ -198,9 +200,19 @@ export class LabourAttendancesComponent {
 
   async getLocation() {
     try {
-      const position = await Geolocation.getCurrentPosition();
+      const position = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      });
       this.currentLatitude = position.coords.latitude;
       this.currentLongitude = position.coords.longitude;
+
+      if (this.currentLatitude && this.currentLongitude) {
+        this.checkBtn = true;
+      } else {
+        this.checkBtn = false;
+      }
 
       const apiKey = environment.google_api_key;
       const response = await fetch(

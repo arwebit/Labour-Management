@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  version: '1.0.2',
+  version: '1.0.3',
   stayLogin: false,
   google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'http://localhost:8000',
