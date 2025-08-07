@@ -416,6 +416,39 @@ export class UsersPage {
         }
       );
   }
+
+  deleteUser() {
+    const confirmation = confirm(
+      "Are you sure you want to delete? This can't be undone"
+    );
+    if (confirmation) {
+      this.userSrv.deleteUser(this.editUserForm.value.user_id).subscribe(
+        (result: any) => {
+          this.saveMsg = '';
+          this.emptyErrors();
+          this.offset = 0;
+          this.limit = 10;
+          this.userLists = [];
+          this.editProfileImage = '';
+          this.saveMsg = result.message;
+          this.setToastOpen(true);
+          this.getUser(this.condition);
+          this.showLists = true;
+          this.addUserDiv = false;
+          this.editUserDiv = false;
+        },
+        (err: HttpErrorResponse) => {
+          this.saveMsg = '';
+          this.emptyErrors();
+          this.saveMsg = 'Cannot delete';
+          this.setToastOpen(true);
+          this.showLists = false;
+          this.addUserDiv = false;
+          this.editUserDiv = true;
+        }
+      );
+    }
+  }
   infiniteScroll(ev: any) {
     this.getUser(this.condition);
     setTimeout(() => {

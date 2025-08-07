@@ -96,25 +96,41 @@
                 </div>
                 <!-- Check-In -->
                 <div *ngIf="checkInFormDiv">
-                  <b>You are about to check in from : {{ siteName }}</b
-                  ><br /><br />
-                  <b>Your check in time :</b>
-                  {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
-                  }}<br /><br />
-                  <b>Your Location :</b> {{ currentLocation }}<br /><br />
-                  <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
-                  <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
-                  <button
-                    class="btn btn-primary"
-                    (click)="checkIn()"
-                    *ngIf="checkBtn"
-                  >
-                    Check In
-                  </button>
+                  <form [formGroup]="checkInForm">
+                    <input type="hidden" formControlName="labour" />
+                    <input type="hidden" formControlName="labour_rate" />
+                    <input type="hidden" formControlName="check_in" />
+                    <input type="hidden" formControlName="work_site" />
+                    <input type="hidden" formControlName="work_date" />
+                    <input type="hidden" formControlName="location" />
+                    <input type="hidden" formControlName="latitude" />
+                    <input type="hidden" formControlName="longitude" />
+
+                    <b>You are about to check in from : {{ siteName }}</b
+                    ><br /><br />
+                    <b>Your check in time :</b>
+                    {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
+                    }}<br /><br />
+                    <b>Your Location :</b> {{ currentLocation }}<br /><br />
+                    <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
+                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
+                    <button
+                      class="btn btn-primary"
+                      (click)="checkIn()"
+                      *ngIf="checkBtn"
+                    >
+                      Check In
+                    </button>
+                  </form>
                 </div>
                 <!-- Check-Out -->
                 <div *ngIf="checkOutFormDiv">
                   <form [formGroup]="checkOutForm">
+                    <input type="hidden" formControlName="attendance_id" />
+                    <input type="hidden" formControlName="check_out" />
+                    <input type="hidden" formControlName="location" />
+                    <input type="hidden" formControlName="latitude" />
+                    <input type="hidden" formControlName="longitude" />
                     <b>You are about to check out from : {{ siteName }} </b
                     ><br /><br />
                     <b>Your check out time :</b>

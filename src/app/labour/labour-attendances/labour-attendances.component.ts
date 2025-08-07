@@ -89,11 +89,11 @@ export class LabourAttendancesComponent {
     this.emptyErrors();
     this.getUserDetails();
     this.getLabourRates();
-    this.getLocation();
     this.getCurrentDate();
     this.checkInFormInit();
     this.checkOutFormInit();
     this.getWorkSites();
+    this.getLocation();
   }
 
   async getUserDetails() {
@@ -222,6 +222,16 @@ export class LabourAttendancesComponent {
 
       if (data.status === 'OK' && data.results.length > 0) {
         this.currentLocation = data.results[0].formatted_address;
+        this.checkInForm.patchValue({
+          location: this.currentLocation,
+          latitude: this.currentLatitude,
+          longitude: this.currentLongitude,
+        });
+        this.checkOutForm.patchValue({
+          location: this.currentLocation,
+          latitude: this.currentLatitude,
+          longitude: this.currentLongitude,
+        });
       } else {
         console.warn('No results found or geocoding failed.');
         this.currentLocation = 'Unknown Location';
@@ -334,9 +344,9 @@ export class LabourAttendancesComponent {
       check_in: new FormControl(this.currentDateTime),
       work_site: new FormControl(workSiteID),
       work_date: new FormControl(this.currentDate),
-      location: new FormControl(this.currentLocation),
-      latitude: new FormControl(this.currentLatitude),
-      longitude: new FormControl(this.currentLongitude),
+      location: new FormControl(''),
+      latitude: new FormControl(''),
+      longitude: new FormControl(''),
     });
   }
 
@@ -345,9 +355,9 @@ export class LabourAttendancesComponent {
       attendance_id: new FormControl(attendanceID),
       check_out: new FormControl(this.currentDateTime),
       description: new FormControl(''),
-      location: new FormControl(this.currentLocation),
-      latitude: new FormControl(this.currentLatitude),
-      longitude: new FormControl(this.currentLongitude),
+      location: new FormControl(''),
+      latitude: new FormControl(''),
+      longitude: new FormControl(''),
     });
   }
 

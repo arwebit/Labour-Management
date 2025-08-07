@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  version: '1.0.3',
+  version: '1.0.4',
   stayLogin: true,
   google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
   baseURL: 'https://marblezzcrafters.com/server',
