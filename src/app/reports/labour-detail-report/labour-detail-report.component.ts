@@ -64,7 +64,7 @@ export class LabourDetailReportComponent {
     this.isLoading = true;
     const postData = {
       filter: {
-        condition: [['user_role', '=', labourRole]],
+        condition: [['user_role', '=', labourRole], ['is_active', '=', 'yes']],
       },
       start_row: 0,
       page_records: 1000000,

@@ -4,7 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { AlertController, InfiniteScrollCustomEvent } from '@ionic/angular';
 import { LabourAttendancesService } from 'src/app/shared/services/labour/labour-attendances.service';
 import { UserService } from 'src/app/shared/services/users/user.service';
-import { Geolocation } from '@capacitor/geolocation';
+// import { Geolocation } from '@capacitor/geolocation';
 import { WorkSiteService } from 'src/app/shared/services/master/work-site.service';
 import { environment } from 'src/environments/environment';
 import { LabourRatesService } from 'src/app/shared/services/master/labour-rates.service';
@@ -72,7 +72,8 @@ export class LabourAttendancesComponent {
   checkInFormDiv: boolean = false;
   checkOutFormDiv: boolean = false;
 
-  checkBtn: boolean = true;
+  checkBtn: boolean = false;
+  resetBtn: boolean = false;
 
   constructor(
     private userSrv: UserService,
@@ -93,7 +94,7 @@ export class LabourAttendancesComponent {
     this.checkInFormInit();
     this.checkOutFormInit();
     this.getWorkSites();
-    this.getLocation();
+    // this.getLocation();
   }
 
   async getUserDetails() {
@@ -157,15 +158,15 @@ export class LabourAttendancesComponent {
 
   toggleFormDiv(str: string, attendanceID: any = '', workSiteID: any = '') {
     if (str === 'check-in') {
+      // this.getLocation();
       this.showLists = false;
       this.checkInFormDiv = true;
       this.checkOutFormDiv = false;
-      this.getLocation();
       this.getCurrentDate();
       this.getParticularWorkSites(workSiteID);
       this.checkInFormInit(workSiteID);
     } else if (str === 'check-out') {
-      this.getLocation();
+      // this.getLocation();
       this.getCurrentDate();
       this.getParticularWorkSites(workSiteID);
       this.checkOutFormInit(attendanceID);
@@ -198,49 +199,78 @@ export class LabourAttendancesComponent {
     this.currentDateTime = formattedDateTime;
   }
 
-  async getLocation() {
-    try {
-      const position = await Geolocation.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0,
-      });
-      this.currentLatitude = position.coords.latitude;
-      this.currentLongitude = position.coords.longitude;
+//   async getLocation() {
+//     const position = await Geolocation.getCurrentPosition({
+//       enableHighAccuracy: true,
+//       timeout: 10000,
+//       maximumAge: 0,
+//     });
+//     this.currentLatitude = position.coords.latitude;
+//     this.currentLongitude = position.coords.longitude;
 
-      if (this.currentLatitude && this.currentLongitude) {
-        this.checkBtn = true;
-      } else {
-        this.checkBtn = false;
-      }
+//     if (!this.currentLatitude || !this.currentLongitude) {
+//       this.currentLocation = 'No location found';
+//       this.currentLatitude = 'No latitude found';
+//       this.currentLongitude = 'No longitude found';
 
-      const apiKey = environment.google_api_key;
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.currentLatitude},${this.currentLongitude}&key=${apiKey}`
-      );
-      const data = await response.json();
+//       this.checkInForm.patchValue({
+//         longitude: '',
+//         latitude: '',
+//         location: '',
+//       });
 
-      if (data.status === 'OK' && data.results.length > 0) {
-        this.currentLocation = data.results[0].formatted_address;
-        this.checkInForm.patchValue({
-          location: this.currentLocation,
-          latitude: this.currentLatitude,
-          longitude: this.currentLongitude,
-        });
-        this.checkOutForm.patchValue({
-          location: this.currentLocation,
-          latitude: this.currentLatitude,
-          longitude: this.currentLongitude,
-        });
-      } else {
-        console.warn('No results found or geocoding failed.');
-        this.currentLocation = 'Unknown Location';
-      }
-    } catch (error) {
-      console.error('Error getting location or place name:', error);
-      this.currentLocation = 'Error fetching location';
-    }
-  }
+//       this.checkOutForm.patchValue({
+//         location: '',
+//         longitude: '',
+//         latitude: '',
+//       });
+
+//       this.checkBtn = false;
+//       this.resetBtn = true;
+
+//       return;
+//     }
+
+//     const apiKey = environment.location_api_key;
+
+//     const response = await fetch(
+//       /* `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.currentLatitude},${this.currentLongitude}&key=${apiKey}`*/
+//       `https://us1.locationiq.com/v1/reverse.php?key=${apiKey}&lat=${this.currentLatitude}&lon=${this.currentLongitude}&format=json
+// `
+//     );
+//     const data = await response.json();
+
+//     if (data.error) {
+//       this.currentLocation = 'No location found';
+//       this.checkInForm.patchValue({
+//         longitude: '',
+//         latitude: '',
+//         location: '',
+//       });
+//       this.checkOutForm.patchValue({
+//         location: '',
+//         longitude: '',
+//         latitude: '',
+//       });
+//       this.checkBtn = false;
+//       this.resetBtn = true;
+//     } else {
+//       this.currentLocation = data.display_name;
+//       this.checkInForm.patchValue({
+//         location: this.currentLocation,
+//         latitude: this.currentLatitude,
+//         longitude: this.currentLongitude,
+//       });
+//       this.checkOutForm.patchValue({
+//         location: this.currentLocation,
+//         latitude: this.currentLatitude,
+//         longitude: this.currentLongitude,
+//       });
+
+//       this.checkBtn = true;
+//       this.resetBtn = false;
+//     }
+//   }
 
   async popup(hdrStr: string, msgStr: string) {
     const alert = await this.alertController.create({
@@ -295,6 +325,12 @@ export class LabourAttendancesComponent {
           } else {
             status = 'Absent';
           }
+    this.checkInForm.patchValue({
+      location: sites.work_site_location,
+    });
+    this.checkOutForm.patchValue({
+      location: sites.work_site_location,
+    });
           items = {
             WorkSiteID: sites.work_site_id,
             WorkSiteName: sites.work_site_name,
@@ -354,7 +390,7 @@ export class LabourAttendancesComponent {
     this.checkOutForm = new FormGroup({
       attendance_id: new FormControl(attendanceID),
       check_out: new FormControl(this.currentDateTime),
-      description: new FormControl(''),
+      description: new FormControl(''),   
       location: new FormControl(''),
       latitude: new FormControl(''),
       longitude: new FormControl(''),
@@ -456,11 +492,11 @@ export class LabourAttendancesComponent {
     }
   }
 
-  infiniteScroll(ev: any) {
-    this.getWorkSites();
+  // infiniteScroll(ev: any) {
+  //   this.getWorkSites();
 
-    setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 500);
-  }
+  //   setTimeout(() => {
+  //     (ev as InfiniteScrollCustomEvent).target.complete();
+  //   }, 500);
+  // }
 }

@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  version: '1.0.4',
+  version: '1.0.5',
   stayLogin: true,
-  google_api_key: 'AIzaSyA0Fc1oBN6ND1WzYapVOXziKVusOeXtcK8',
+  location_api_key: 'pk.01327582a512a06cd1cdbbbc8de5a64c',
   baseURL: 'https://marblezzcrafters.com/server',
   imageURL: 'https://marblezzcrafters.com/server/public/',
   appLink: 'https://marblezzcrafters.com/server/public/',

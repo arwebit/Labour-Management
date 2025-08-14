@@ -102,7 +102,7 @@
                     <input type="hidden" formControlName="check_in" />
                     <input type="hidden" formControlName="work_site" />
                     <input type="hidden" formControlName="work_date" />
-                    <input type="hidden" formControlName="location" />
+                    <!-- <input type="text" formControlName="location" /> -->
                     <input type="hidden" formControlName="latitude" />
                     <input type="hidden" formControlName="longitude" />
 
@@ -111,16 +111,17 @@
                     <b>Your check in time :</b>
                     {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
                     }}<br /><br />
-                    <b>Your Location :</b> {{ currentLocation }}<br /><br />
-                    <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
-                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
+                    <b>Your Location : <span class="text-danger">* {{locationErr}} </span></b>
+                    <input type="text" class="form-control" [(ngModel)]="siteName" formControlName="location" /><br /><br />
+                    <!-- <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
+                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br /> -->
                     <button
                       class="btn btn-primary"
-                      (click)="checkIn()"
-                      *ngIf="checkBtn"
+                      (click)="checkIn()"                     
                     >
                       Check In
                     </button>
+           
                   </form>
                 </div>
                 <!-- Check-Out -->
@@ -128,7 +129,7 @@
                   <form [formGroup]="checkOutForm">
                     <input type="hidden" formControlName="attendance_id" />
                     <input type="hidden" formControlName="check_out" />
-                    <input type="hidden" formControlName="location" />
+                    <!-- <input type="hidden" formControlName="location" /> -->
                     <input type="hidden" formControlName="latitude" />
                     <input type="hidden" formControlName="longitude" />
                     <b>You are about to check out from : {{ siteName }} </b
@@ -136,9 +137,9 @@
                     <b>Your check out time :</b>
                     {{ currentDateTime | date : "dd/MM/yyyy hh:mm:ss a"
                     }}<br /><br />
-                    <b>Your Location :</b> {{ currentLocation }}<br /><br />
-                    <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
-                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br />
+                   <b>Your Location : <span class="text-danger">* {{locationErr}} </span></b> <input type="text" class="form-control" [(ngModel)]="siteName" formControlName="location" /><br /><br />
+                    <!-- <b>Your Latitude :</b> {{ currentLatitude }}<br /><br />
+                    <b>Your Longitude :</b> {{ currentLongitude }}<br /><br /> -->
                     <b>
                       Description :
                       <span class="text-danger">
@@ -153,11 +154,11 @@
                     <div style="margin-top: 10px">
                       <button
                         class="btn btn-danger"
-                        (click)="checkOut()"
-                        *ngIf="checkBtn"
+                        (click)="checkOut()"                      
                       >
                         Check Out
                       </button>
+                 
                     </div>
                   </form>
                 </div>
@@ -187,7 +188,5 @@
     [duration]="3000"
     (didDismiss)="setToastOpen(false)"
   ></ion-toast>
-  <ion-infinite-scroll (ionInfinite)="infiniteScroll($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+
 </ion-content>

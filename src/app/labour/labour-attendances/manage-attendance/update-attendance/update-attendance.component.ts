@@ -130,7 +130,7 @@ export class UpdateAttendanceComponent implements OnInit {
           check_in_location: new FormControl(details.check_in_location),
           check_out_latitude: new FormControl(details.check_out_latitude),
           check_out_longitude: new FormControl(details.check_out_longitude),
-          check_out_location: new FormControl(details.check_out_location),
+          check_out_location: new FormControl(details.check_out_location?details.check_out_location:details.check_in_location),
         });
       },
       (err: HttpErrorResponse) => {

@@ -145,8 +145,8 @@ export class SaveAttendanceComponent implements OnInit {
     this.saveAttendanceForm = new FormGroup({
       labour: new FormControl(''),
       labour_rate: new FormControl(''),
-      check_in: new FormControl(),
-      check_out: new FormControl(),
+      check_in: new FormControl(''),
+      check_out: new FormControl(''),
       description: new FormControl(),
       work_site: new FormControl(''),
       work_date: new FormControl(''),
